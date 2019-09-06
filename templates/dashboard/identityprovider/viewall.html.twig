@@ -1,0 +1,48 @@
+{% extends 'dashboard/dashboardbase.html.twig' %}
+
+{% block panel %}
+
+<div class="dashboard-subheader">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-container">
+          <span class="breadcrumb">Identity Providers</span>
+        </div>
+        <a class="action-btn btn btn-primary pull-right" href="/dashboard/identityproviders/add">Add Identity Provider</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-panels">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <table id="identity-provider-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for idp in identityProviders %}
+            <tr data-id="{{ idp.hashid }}">
+              <td>{{ idp.name }}</td>
+              <td>
+                <button class="btn btn-error pull-right btn-delete">Delete</button>
+                <a href="/dashboard/identityproviders/{{ idp.hashid }}" class="btn btn-primary pull-right">Edit</a>
+              </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

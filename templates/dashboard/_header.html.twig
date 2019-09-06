@@ -1,0 +1,18 @@
+<div class="dashboard-header">
+  <a class="dashboard-logo" href="/dashboard">
+    <i class="logo-icon far fa-bookmark"></i>
+    <span class="logo-text">DAS</span>
+  </a>
+  <div class="dashboard-profile">
+    <span class="profile-name">{{ app.user.fullName }}</span>
+    <img class="profile-avatar" src="{{ app.user.gravatar }}">
+    <div class="profile-menu">
+      <h4>{{ app.user.fullName }}</h4>
+      <a href="/dashboard/account">Account</a>
+      <a href="#">Help</a>
+      <a href="#">About</a>
+      <span class="separator"></span>
+      <a href="/dashboard/logout">Sign Out</a>
+    </div>
+  </div>
+</div>

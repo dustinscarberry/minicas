@@ -1,0 +1,50 @@
+{% extends 'dashboard/dashboardbase.html.twig' %}
+
+{% block panel %}
+
+<div class="dashboard-subheader">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-container">
+          <span class="breadcrumb">Attributes</span>
+        </div>
+        <a class="action-btn btn btn-primary pull-right" href="/dashboard/attributes/add">Add Attribute</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-panels">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <table id="attribute-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
+          <thead>
+            <tr>
+              <th>Friendly Name</th>
+              <th>AD Attribute</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for attribute in attributes %}
+            <tr data-id="{{ attribute.hashid }}">
+              <td>{{ attribute.friendlyName }}</td>
+              <td>{{ attribute.adAttribute }}</td>
+              <td>
+                <button class="btn btn-error pull-right btn-delete">Delete</button>
+                <a href="/dashboard/attributes/{{ attribute.hashid }}" class="btn btn-primary pull-right">Edit</a>
+              </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

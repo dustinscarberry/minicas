@@ -1,0 +1,54 @@
+{% extends 'dashboard/dashboardbase.html.twig' %}
+{% form_theme form.attributeMappings 'form/fields-collections-two-column.html.twig' %}
+{% form_theme form 'form/fields.html.twig' %}
+
+{% block panel %}
+
+<div class="dashboard-subheader">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-container">
+          <a class="breadcrumb-link" href="/dashboard/identityproviders">Service Providers</a>
+          <span class="breadcrumb">Add</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-panels">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="dashboard-panel-block">
+
+          {{ form_start(form) }}
+          {{ form_row(form.enabled) }}
+          {{ form_row(form.name) }}
+          {{ form_row(form.type) }}
+          {{ form_row(form.identifier) }}
+          {{ form_row(form.identityProvider) }}
+
+          <fieldset id="service-attribute-mappings-group" class="form-group collection-group">
+            <legend>
+              Mapped Attributes
+              <button type="button" class="collection-add-btn">Add New</button>
+            </legend>
+            <div class="collection-subform container-fluid" data-prototype="{{ form_widget(form.attributeMappings.vars.prototype)|e('html_attr') }}">
+              <div class="row collection-header">
+                <label class="col-sm-6">Mapped Name</label>
+                <label class="col-sm-6">AD Attribute Name</label>
+              </div>
+            </div>
+          </fieldset>
+          <button class="btn btn-primary" type="submit">Create</button>
+          <a class="btn btn-error" href="/dashboard/serviceproviders">Back</a>
+          {{ form_widget(form._token) }}
+          {{ form_end(form, {'render_rest': false}) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

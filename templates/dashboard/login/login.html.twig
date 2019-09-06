@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DAS | Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    {{ encore_entry_link_tags('dashboard') }}
+  </head>
+  <body class="dashboard-login">
+    <div class="login-form-wrapper">
+      <form method="post" class="login-form">
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <h3 class="login-description">Log in to dashboard</h3>
+        <h3 class="login-title">DAS</h3>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" name="username" id="username" placeholder="Username" class="form-control"/>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" class="form-control"/>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button type="submit" class="btn btn-primary btn-large">Login</button>
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {{ encore_entry_script_tags('dashboard') }}
+  </body>
+</html>
