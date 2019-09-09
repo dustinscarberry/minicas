@@ -68,26 +68,44 @@ class CasEndpointController extends AbstractController
         }
         else
         {
-          //create authenticated session
-          $session = $authSessionManager->createSession();
-
           //create authenticated service
-          $service = $authServiceManager->createService($registeredService, $session, $service);
+          $sessionService = $authServiceManager->createService($registeredService, $validSession, $service);
 
-          //redirect based on idp type
-          if ($registeredService->getIdentityProvider()->getType() == 'saml2')
-          {
-            //get redirect url for idp
-            $redirectURL = SAML2Generator::getRequestURL(
-              $service->getTrackingId(),
-              $registeredService->getIdentityProvider()->getLoginURL(),
-              $registeredService->getIdentityProvider()->getIdentifier(),
-              $appConfig->getSiteHostname() . '/idpsamlvalidate'
-            );
+          //get parameters from config
+          $attributeMappings = $registeredService->getAttributeMappings();
+          $userFilterAttributeMapping = $registeredService->getIdentityProvider()
+            ->getUserAttributeMapping()
+            ->getAdAttribute();
 
-            //redirect
-            return $this->redirect($redirectURL);
-          }
+          //get user attribute override mapping for service if specified
+          if ($service->getUserAttribute())
+            $userAttributeMapping = $registeredService->getUserAttribute()->getAdAttribute();
+          else
+            $userAttributeMapping = null;
+
+          //get mapped attributes for authenticated user
+          $mappedAttributes = AuthGenerator::resolveAttributes(
+            $validSession->getUser(),
+            $userFilterAttributeMapping,
+            $attributeMappings,
+            $userAttributeMapping
+          );
+
+          //update user session
+          $sessionService->setAttributes($mappedAttributes);
+          $this->getDoctrine()->getManager()->flush();
+
+          //create new cas ticket
+          $casTicket = $casManager->createTicket($sessionService);
+
+          //get redirect url
+          $redirectURL = CASGenerator::getTicketRedirectUrl(
+            $sessionService->getReplyTo(),
+            $casTicket->getTicket()
+          );
+
+          //redirect to cas service
+          return $this->redirect($redirectURL);
         }
       }
       else
