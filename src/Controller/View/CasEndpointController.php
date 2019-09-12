@@ -230,6 +230,74 @@ class CasEndpointController extends AbstractController
     }
   }
 
+
+
+
+
+
+
+
+
+  /**
+   * @Route("/cas/samlValidate", methods={"POST"})
+   */
+  public function samlValidate(Request $req, CASManager $casManager)
+  {
+    try
+    {
+
+      dd('test');
+      
+      //get service and ticket params
+      $service = $req->query->get('TARGET');
+      $ticket = $req->query->get('ticket');
+
+      //check for required parameters
+      if (empty($service) || empty($ticket))
+        throw new InvalidRequestException("'TARGET' and 'ticket' parameters are both required");
+
+      //validate cas ticket and service
+      $validCasTicket = $casManager->validateTicket($ticket, $service);
+
+      //get authenticated user, service override or session default
+      if ($validCasTicket->getService()->getAttributes()->user)
+        $authUser = $validCasTicket->getService()->getAttributes()->user;
+      else
+        $authUser = $validCasTicket->getService()->getSession()->getUser();
+
+      //create cas response
+      $casResponse = new CAS2Response(
+        $authUser,
+        $validCasTicket->getService()->getAttributes()->attributes,
+        true
+      );
+
+      //send cas response
+      $response = new Response(
+        $casResponse->getXML(),
+        Response::HTTP_OK,
+        ['Content-Type', 'text/xml']
+      );
+
+      return $response;
+    }
+    catch (\Exception $e)
+    {
+      throw $e;
+      return CASGenerator::getErrorResponse($e);
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
   /**
    * @Route("/cas/logout")
    */
