@@ -31,6 +31,17 @@ class AuthenticatedSessionManager
     return $session;
   }
 
+  public function updateSessionUsername(
+    AuthenticatedSession $authenticatedSession,
+    string $username
+  )
+  {
+    $authenticatedSession->setUser($username);
+    $this->em->flush();
+
+    return $authenticatedSession;
+  }
+
   public function deleteSession($authenticatedSession)
   {
     $this->em->remove($authenticatedSession);

@@ -15,11 +15,12 @@ class IdentityProviderController extends AbstractController
    */
   public function view()
   {
+    //get identity providers
     $idps = $this->getDoctrine()
       ->getRepository(IdentityProvider::class)
       ->findAll();
 
-    //render page
+    //render view
     return $this->render('dashboard/identityprovider/viewall.html.twig', [
       'identityProviders' => $idps
     ]);
@@ -50,7 +51,7 @@ class IdentityProviderController extends AbstractController
       return $this->redirectToRoute('viewIdentityProviders');
     }
 
-    //render page
+    //render view
     return $this->render('dashboard/identityprovider/add.html.twig', [
       'form' => $form->createView()
     ]);
@@ -61,6 +62,7 @@ class IdentityProviderController extends AbstractController
    */
   public function edit($hashId, Request $req)
   {
+    //get identity provider to edit
     $identityProvider = $this->getDoctrine()
       ->getRepository(IdentityProvider::class)
       ->findByHashId($hashId);
@@ -80,7 +82,7 @@ class IdentityProviderController extends AbstractController
       return $this->redirectToRoute('viewIdentityProviders');
     }
 
-    //render page
+    //render view
     return $this->render('dashboard/identityprovider/edit.html.twig', [
       'form' => $form->createView()
     ]);

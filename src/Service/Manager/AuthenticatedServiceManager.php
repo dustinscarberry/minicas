@@ -7,29 +7,28 @@ use App\Entity\AuthenticatedSession;
 use App\Entity\AuthenticatedService;
 use App\Entity\ServiceProvider;
 use App\Service\Generator\SAML2Generator;
-use App\Model\AppConfig;
+use App\Service\Generator\AuthGenerator;
 
 class AuthenticatedServiceManager
 {
   private $em;
-  private $appConfig;
 
-  public function __construct(EntityManagerInterface $em, AppConfig $appConfig)
+  public function __construct(EntityManagerInterface $em)
   {
     $this->em = $em;
-    $this->appConfig = $appConfig;
   }
 
+  //create new authenticated service
   public function createService(
-    ServiceProvider $registeredService,
-    AuthenticatedSession $session,
+    ServiceProvider $serviceProvider,
+    AuthenticatedSession $authenticatedSession,
     ?string $replyTo = null
   )
   {
     $service = new AuthenticatedService();
-    $service->setService($registeredService);
+    $service->setService($serviceProvider);
     $service->setTrackingId(SAML2Generator::generateID());
-    $service->setSession($session);
+    $service->setSession($authenticatedSession);
 
     if ($replyTo)
       $service->setReplyTo($replyTo);
@@ -40,15 +39,62 @@ class AuthenticatedServiceManager
     return $service;
   }
 
-  //returns a valid authenticated service from a session if found or null if not
-  public function getSessionService(
-    AuthenticatedSession $session,
-    ServiceProvider $service
+  //get authenticated service by tracking id
+  public function getServiceByTrackingId($trackingId)
+  {
+    return $this->em
+      ->getRepository(AuthenticatedService::class)
+      ->findByTrackingId($trackingId);
+  }
+
+  //update authenticated service with attribute mappings for username
+  public function mapServiceAttributes(
+    AuthenticatedService $authenticatedService,
+    string $username
   )
   {
-    foreach ($session->getAuthenticatedServices() as $authService)
+    //get service provider ref
+    $serviceProvider = $authenticatedService->getService();
+
+    //get attribute mappings of service provider
+    $attributeMappings = $serviceProvider->getAttributeMappings();
+    //get identity provider user filter
+    $userFilterAttributeMapping = $serviceProvider->getIdentityProvider()
+      ->getUserAttributeMapping()
+      ->getAdAttribute();
+
+    //get user attribute override mapping for service provider if specified
+    if ($serviceProvider->getUserAttribute())
+      $userAttributeMapping = $registeredService->getUserAttribute()->getAdAttribute();
+    else
+      $userAttributeMapping = null;
+
+    //get mapped attributes for authenticated user
+    $mappedAttributes = AuthGenerator::resolveAttributes(
+      $username,
+      $userFilterAttributeMapping,
+      $attributeMappings,
+      $userAttributeMapping
+    );
+
+    //update user session
+    $authenticatedService->setAttributes($mappedAttributes);
+    $this->em->flush();
+
+    //return updated authenticated service
+    return $authenticatedService;
+  }
+
+
+  //returns a valid authenticated service from a session if found or null if not
+  public function getSessionService(
+    AuthenticatedSession $authenticatedSession,
+    ServiceProvider $serviceProvider
+  )
+  {
+    foreach ($authenticatedSession->getAuthenticatedServices() as $authService)
     {
-      if ($authService->getService() == $service)
+      if ($authService->getService() == $serviceProvider)
         return $authService;
     }
 

@@ -16,9 +16,10 @@ class AttributeController extends AbstractController
    */
   public function view(AttributeManager $attrManager)
   {
+    //get attributes
     $attributes = $attrManager->getAttributes();
 
-    //render page
+    //render view
     return $this->render('dashboard/attribute/viewall.html.twig', [
       'attributes' => $attributes
     ]);
@@ -46,7 +47,7 @@ class AttributeController extends AbstractController
       return $this->redirectToRoute('viewAttributes');
     }
 
-    //render page
+    //render view
     return $this->render('dashboard/attribute/add.html.twig', [
       'form' => $form->createView()
     ]);
@@ -74,7 +75,7 @@ class AttributeController extends AbstractController
       return $this->redirectToRoute('viewAttributes');
     }
 
-    //render page
+    //render view
     return $this->render('dashboard/attribute/edit.html.twig', [
       'form' => $form->createView()
     ]);
