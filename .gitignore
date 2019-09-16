@@ -5,7 +5,7 @@
 ### Project Specific ###
 
 public/build
-vagrant/caslink
+vagrant/caslink/debug.log
 
 
 ### Linux ###
