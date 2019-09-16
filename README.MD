@@ -16,6 +16,17 @@ DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only 
 * [Composer](https://getcomposer.org/)
 * [NPM](https://nodejs.org/)
 
+## Supported Protocols
+
+DAS support the following CAS protocols.
+
+CAS 2.0
+CAS 3.0
+
+(Note: Proxies are not supported)
+
+SAML Validation is supported (currently in alpha)
+
 ## Installation
 
 Clone repository.
@@ -73,6 +84,7 @@ Run server (if needed)
 
 Nginx Basic Config
 
+```nginx
 server {
     listen 443 ssl http2;
     ssl_certificate /etc/nginx/ssl/cert.cer;
@@ -97,6 +109,7 @@ server {
      return 404;
    }
 }
+```
 
 ## Documentation
 

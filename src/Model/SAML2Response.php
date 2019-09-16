@@ -16,7 +16,7 @@ class SAML2Response
   public function loadFromString($responseString)
   {
     //base64_decode raw response
-    $responseString = base64_decode($responseString)
+    $responseString = base64_decode($responseString);
 
     //parse response to object
     $deserializationContext = new DeserializationContext();
