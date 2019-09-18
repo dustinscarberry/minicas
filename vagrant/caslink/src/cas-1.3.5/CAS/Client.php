@@ -3205,6 +3205,13 @@ class CAS_Client
         $dom->preserveWhiteSpace = false;
         // CAS servers should only return data in utf-8
         $dom->encoding = "utf-8";
+
+        //output debugging info for cas response
+        //echo '<pre>';
+        //var_dump($text_response);
+        //echo '</pre>';
+        //exit;
+
         // read the response of the CAS server into a DOMDocument object
         if ( !($dom->loadXML($text_response))) {
             // read failed
