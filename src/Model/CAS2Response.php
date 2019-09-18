@@ -44,7 +44,15 @@ class CAS2Response
     $attributesXML = '';
 
     foreach ($this->attributes as $attr)
-      $attributesXML .= '<cas:' . $attr->name . '>' . $attr->value . '</cas:' . $attr->name . '>';
+    {
+      if (is_array($attr->value))
+      {
+        foreach ($attr->value as $multiAttr)
+          $attributesXML .= '<cas:' . $attr->name . '>' . $multiAttr . '</cas:' . $attr->name . '>';
+      }
+      else
+        $attributesXML .= '<cas:' . $attr->name . '>' . $attr->value . '</cas:' . $attr->name . '>';
+    }
 
     return $attributesXML;
   }

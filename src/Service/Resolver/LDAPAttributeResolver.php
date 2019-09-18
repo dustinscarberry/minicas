@@ -65,7 +65,8 @@ class LDAPAttributeResolver
     foreach ($mappings as $mapping)
     {
       $attrValue = $entry->getAttribute($mapping->getAdAttribute()->getAdAttribute());
-      if ($attrValue && is_array($attrValue))
+
+      if ($attrValue && is_array($attrValue) && count($attrValue) == 1)
         $attrValue = reset($attrValue);
 
       $userAttributes['attributes'][] = (object)[
