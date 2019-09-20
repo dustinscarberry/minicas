@@ -4,7 +4,7 @@ DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only 
 
 ## Tech
 
-* [Symfony 4.2] - PHP MVC Framework
+* [Symfony 4.3] - PHP MVC Framework
 * [composer] - PHP Dependency Manager
 * [npm] - JS Dependency Manager
 * [jQuery] - More JS stuff
