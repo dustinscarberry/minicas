@@ -111,6 +111,30 @@ server {
 }
 ```
 
+## Upgrades
+
+1. Get updates from repo.
+
+```sh
+git pull
+```
+
+2. Run database migrations.
+
+```sh
+php bin/console doctrine:migrations:migrate
+```
+
+> WARNING: Do not install fixtures unless needed. Failure to do so will result in total loss of data!
+
+3. Install new fixtures (if needed) - None currently
+
+4. Clear cache.
+
+```sh
+rm -rf var/cache/*
+```
+
 ## Documentation
 
 Each service must be a registered service provider in order to use the DAS server. Identity Providers are required (you will only need one for sso) to delegate authentication to for each registered service.
