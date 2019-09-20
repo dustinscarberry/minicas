@@ -7,9 +7,6 @@
         "useBuiltIns": "entry",
         "debug": true
       }
-    ],
-    [
-      "@babel/preset-react"
     ]
   ]
 }
