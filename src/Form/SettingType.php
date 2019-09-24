@@ -28,13 +28,13 @@ class SettingType extends AbstractType
       ->add('locale', LocaleType::class)
       ->add('language', LanguageType::class)
       ->add('sessionTimeout', IntegerType::class, [
-        'label' => 'Session Timeout (in minutes)'
+        'label' => 'Session Timeout (minutes)'
       ])
       ->add('casTicketTimeout', IntegerType::class, [
-        'label' => 'CAS Ticket Timeout (in minutes)'
+        'label' => 'CAS Ticket Timeout (minutes)'
       ])
       ->add('autoDeleteExpiredSessions', IntegerType::class, [
-        'label' => 'test'
+        'label' => 'Session Retention Time (days) [0 Never]'
       ]);
   }
 
