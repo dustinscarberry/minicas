@@ -1,4 +1,5 @@
 {% extends 'dashboard/dashboardbase.html.twig' %}
+{% form_theme form.attributeMappings 'form/fields-collections-three-column.html.twig' %}
 {% form_theme form 'form/fields.html.twig' %}
 
 {% block panel %}
@@ -34,6 +35,12 @@
               <button type="button" class="collection-add-btn">Add New</button>
             </legend>
             <div class="collection-subform container-fluid" data-prototype="{{ form_widget(form.attributeMappings.vars.prototype)|e('html_attr') }}">
+              <div class="row collection-header">
+                <label class="col-sm-4">Mapped Name</label>
+                <label class="col-sm-4">AD Attribute Name</label>
+                <label class="col-sm-4">Transformation</label>
+              </div>
+
               {% for mapping in form.attributeMappings %}
                 {{ form_widget(mapping, {'attr': {'class': 'row'}}) }}
               {% endfor %}

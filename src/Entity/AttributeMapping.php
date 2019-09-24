@@ -33,6 +33,11 @@ class AttributeMapping
      */
     private $adAttribute;
 
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $transformation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class AttributeMapping
     public function setAdAttribute(?Attribute $adAttribute): self
     {
         $this->adAttribute = $adAttribute;
+
+        return $this;
+    }
+
+    public function getTransformation(): ?string
+    {
+        return $this->transformation;
+    }
+
+    public function setTransformation(?string $transformation): self
+    {
+        $this->transformation = $transformation;
 
         return $this;
     }

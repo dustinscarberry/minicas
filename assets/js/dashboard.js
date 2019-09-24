@@ -267,7 +267,7 @@ $(document).ready(function(){
 
 
   //create collections
-  let serviceAttributeMappingsCollection = new ServiceCollection('#service-attribute-mappings-group', 2);
+  let serviceAttributeMappingsCollection = new ServiceCollection('#service-attribute-mappings-group', 3);
 
   //add delete button to collection item forms
   $('.collection-subform .row').not('.collection-header').each(function(){
@@ -336,10 +336,14 @@ class ServiceCollection
     //replace __name__ with index
     prototype = prototype.replace(/__name__/g, index);
 
-    if (this.columns == 2)
+    /*
+    if (this.columns == 3)
+      prototype = prototype.replace(/form-group/g, 'form-group col-sm-4');
+    else if (this.columns == 2)
       prototype = prototype.replace(/form-group/g, 'form-group col-sm-6');
     else if (this.columns == 1)
       prototype = prototype.replace(/form-group/g, 'form-group col-sm-12');
+    */
 
     //add [row] class
     let formRow = $(prototype).addClass('row');

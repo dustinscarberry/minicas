@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\AttributeMapping;
 use App\Entity\Attribute;
@@ -26,6 +27,19 @@ class AttributeMappingType extends AbstractType
         },
         'label' => false,
         'placeholder' => ''
+      ])
+      ->add('transformation', ChoiceType::class, [
+        'label' => false,
+        'placeholder' => '',
+        'choices' => [
+          'Uppercase' => 'uppercase',
+          'Lowercase' => 'lowercase',
+          'Extract Mail Prefix' => 'extractmailprefix',
+          'Simplified Groups' => 'simplifiedgroups',
+          'Expanded Groups' => 'expandedgroups',
+          'Simplified Expanded Groups' => 'simplifiedexpandedgroups'
+        ],
+        'required' => false
       ]);
   }
 

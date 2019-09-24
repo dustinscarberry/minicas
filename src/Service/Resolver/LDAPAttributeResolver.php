@@ -42,19 +42,8 @@ class LDAPAttributeResolver
   //gets mapped attributes to be used for return value to service
   public function getMappedAttributes($user, $adFilter, $mappings, $userMapping = null)
   {
-    //check for valid ldap handle
-    if (!$this->ldapHandle)
-      throw new Exception('LDAP Attribute Resolver not configured');
-
-    //get user ldap entry
-    $queryFilter = '(&(objectclass=person)(' . $adFilter . '=' . $user . '))';
-    $query = $this->ldapHandle->query($this->ldapSearchBase, $queryFilter);
-    $result = $query->execute();
-
-    if (!$result)
-      throw new Exception('User not found in LDAP');
-
-    $entry = $result[0];
+    //get user entry
+    $entry = $this->getLdapResult($adFilter, $user, 'person');
 
     //map user attributes to return
     $userAttributes = [
@@ -64,11 +53,16 @@ class LDAPAttributeResolver
 
     foreach ($mappings as $mapping)
     {
+      //get attribute value
       $attrValue = $entry->getAttribute($mapping->getAdAttribute()->getAdAttribute());
 
       if ($attrValue && is_array($attrValue) && count($attrValue) == 1)
         $attrValue = reset($attrValue);
 
+      //apply transformations
+      $attrValue = $this->transformAttribute($attrValue, $mapping->getTransformation());
+
+      //add mapped attributes to array
       $userAttributes['attributes'][] = (object)[
         'name' => $mapping->getName(),
         'value' => $attrValue
@@ -83,6 +77,148 @@ class LDAPAttributeResolver
         $userAttributes['user'] = reset($userAttributes['user']);
     }
 
+    //return attributes
     return $userAttributes;
+  }
+
+  //get ldap result by search filter
+  private function getLdapResult($filterAttribute, $filterValue, $objectType = 'person')
+  {
+    //check for valid ldap handle
+    if (!$this->ldapHandle)
+      throw new Exception('LDAP Attribute Resolver not configured');
+
+    //get ldap entry
+    $queryFilter = '(&(objectclass=' . $objectType . ')(' . $filterAttribute . '=' . $filterValue . '))';
+    $query = $this->ldapHandle->query($this->ldapSearchBase, $queryFilter);
+    $result = $query->execute();
+
+    if (!$result)
+      throw new Exception('Result not found in LDAP');
+
+    return $result[0];
+  }
+
+  //get ldap result by fully qualified dn
+  private function getFullyQualifiedLdapResult($dn, $objectType = 'group')
+  {
+    //check for valid ldap handle
+    if (!$this->ldapHandle)
+      throw new Exception('LDAP Attribute Resolver not configured');
+
+    //get ldap entry
+    $queryFilter = '(objectclass=' . $objectType . ')';
+    $query = $this->ldapHandle->query($dn, $queryFilter);
+    $result = $query->execute();
+
+    return $result[0];
+  }
+
+  private function transformAttribute($attrValue, $transform = null)
+  {
+    if ($transform == 'expandedgroups'
+      || $transform == 'simplifiedexpandedgroups'
+    )
+    {
+      //expand groups
+      $attrValue = $this->expandGroups($attrValue);
+
+      //filter out duplicates
+      $attrValue = array_unique($attrValue);
+
+      if ($transform == 'simplifiedexpandedgroups')
+      {
+        //extractCNs
+        return $this->extractCNs($attrValue);
+      }
+
+      return $attrValue;
+    }
+    else if ($transform == 'simplifiedgroups')
+    {
+      //extractCNs
+      return $this->extractCNs($attrValue);
+    }
+    else if ($transform == 'extractmailprefix')
+    {
+      if (is_array($attrValue))
+      {
+        array_walk($attrValue, function(&$item, $key) {
+          $item = substr($item, 0, strpos($item, '@'));
+        });
+
+        return $attrValue;
+      }
+      else
+        return substr($attrValue, 0, strpos($attrValue, '@'));
+    }
+    else if ($transform == 'uppercase')
+    {
+      if (is_array($attrValue))
+      {
+        array_walk($attrValue, function(&$item, $key) {
+          $item = strtoupper($item);
+        });
+
+        return $attrValue;
+      }
+      else
+        return strtoupper($attrValue);
+    }
+    else if ($transform == 'lowercase')
+    {
+      if (is_array($attrValue))
+      {
+        array_walk($attrValue, function(&$item, $key) {
+          $item = strtolower($item);
+        });
+
+        return $attrValue;
+      }
+      else
+        return strtolower($attrValue);
+    }
+    else
+      return $attrValue;
+  }
+
+  private function expandGroups($dns, $results = [])
+  {
+    foreach ($dns as $dn)
+    {
+      //add dn to final results
+      $results[] = $dn;
+
+      //lookup dn
+      $groups = $this->getFullyQualifiedLdapResult($dn, 'group');
+
+      //if found
+      if ($groups)
+      {
+        //get memberOf for group
+        $groups = $groups->getAttribute('memberOf');
+
+        //if results recurse through them
+        if ($groups && count($groups) > 0)
+          $results = $this->expandGroups($groups, $results);
+      }
+    }
+
+    return $results;
+  }
+
+  private function extractCNs($dns)
+  {
+    $results = [];
+
+    foreach ($dns as $dn)
+    {
+      $start = strpos($dn, '=') + 1;
+      $endlength = strpos($dn, ',') - $start;
+
+      $results[] = substr($dn, $start, $endlength);
+    }
+
+    return $results;
   }
 }
