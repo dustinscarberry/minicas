@@ -34,7 +34,7 @@ class CASManager
     //find matching service provider
     foreach ($registeredServices as $registeredService)
     {
-      $identifier = CASGenerator::cleanService($registeredService);
+      $identifier = CASGenerator::cleanService($registeredService->getIdentifier());
 
       if ($cleanedService == $identifier && $registeredService->getEnabled())
         return $registeredService;
