@@ -37,7 +37,7 @@ class CASManager
       $identifier = CASGenerator::cleanService($registeredService);
 
       if ($cleanedService == $identifier && $registeredService->getEnabled())
-        return $service;
+        return $registeredService;
     }
 
     return null;
