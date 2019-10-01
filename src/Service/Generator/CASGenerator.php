@@ -22,6 +22,7 @@ class CASGenerator
     $service = rtrim($service, '/');
     $service = str_replace('https://', '', $service);
     $service = str_replace('http://', '', $service);
+    $service = strtolower($service);
 
     return $service;
   }

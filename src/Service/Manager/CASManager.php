@@ -26,12 +26,19 @@ class CASManager
     //normalize service for lookup
     $cleanedService = CASGenerator::cleanService($service);
 
-    $service = $this->em
+    //get all services to compare with
+    $registeredServices = $this->em
       ->getRepository(ServiceProvider::class)
-      ->findByIdentifier($cleanedService);
+      ->findAll();
 
-    if ($service && $service->getEnabled())
-      return $service;
+    //find matching service provider
+    foreach ($registeredServices as $registeredService)
+    {
+      $identifier = CASGenerator::cleanService($registeredService);
+
+      if ($cleanedService == $identifier && $registeredService->getEnabled())
+        return $service;
+    }
 
     return null;
   }
