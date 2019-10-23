@@ -63,7 +63,7 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
   public function findAllOldSessions($timeCutoff)
   {
     return $this->createQueryBuilder('a')
-      ->andWhere('a.expiration < :timeCutoff')
+      ->andWhere('a.expiration < :expiration')
       ->setParameter('expiration', $timeCutoff)
       ->getQuery()
       ->getResult();
