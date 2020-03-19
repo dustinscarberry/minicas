@@ -18,12 +18,13 @@ class AuthenticatedSessionManager
     $this->appConfig = $appConfig;
   }
 
-  public function createSession()
+  public function createSession($remoteIp)
   {
     $session = new AuthenticatedSession();
     $session->setTrackingId(SAML2Generator::generateID());
     $sessionTimeout = (time() + ($this->appConfig->getSessionTimeout() * 60));
     $session->setExpiration($sessionTimeout);
+    $session->setRemoteIp($remoteIp);
 
     $this->em->persist($session);
     $this->em->flush();

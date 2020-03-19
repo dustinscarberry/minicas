@@ -57,6 +57,11 @@ class AuthenticatedSession
    */
   private $expiration;
 
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $remoteIp;
+
   public function __construct()
   {
     $this->authenticatedServices = new ArrayCollection();
@@ -183,6 +188,18 @@ class AuthenticatedSession
   public function setHashId(string $hashId): self
   {
       $this->hashId = $hashId;
+
+      return $this;
+  }
+
+  public function getRemoteIp(): ?string
+  {
+      return $this->remoteIp;
+  }
+
+  public function setRemoteIp(?string $remoteIp): self
+  {
+      $this->remoteIp = $remoteIp;
 
       return $this;
   }

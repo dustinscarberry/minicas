@@ -101,8 +101,14 @@ class CasEndpointController extends AbstractController
       }
       else
       {
+        // get remote ip address
+        if ($req->server->get('HTTP_X_FORWARDED_FOR'))
+          $remoteIp = $req->server->get('HTTP_X_FORWARDED_FOR');
+        else
+          $remoteIp = $req->server->get('REMOTE_ADDR');
+
         //create authenticated session
-        $session = $authSessionManager->createSession();
+        $session = $authSessionManager->createSession($remoteIp);
 
         //create authenticated service
         $service = $authServiceManager->createService($registeredService, $session, $service);
