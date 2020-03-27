@@ -36,7 +36,12 @@ class CASManager
     {
       $identifier = CASGenerator::cleanService($registeredService->getIdentifier());
 
-      if ($cleanedService == $identifier && $registeredService->getEnabled())
+      if (
+        $cleanedService == $identifier
+          && $registeredService->getEnabled()
+        || $registeredService->getDomainIdentifier()
+          && strpos($identifier, strtok($identifier, '/')) === 0
+      )
         return $registeredService;
     }
 

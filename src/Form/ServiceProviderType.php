@@ -50,6 +50,10 @@ class ServiceProviderType extends AbstractType
         ]
       ])
       ->add('identifier', TextType::class)
+      ->add('domainIdentifier', CheckboxType::class, [
+        'required' => false,
+        'label' => 'Use As Domain Identifier (Use Sparingly)'
+      ])
       ->add('identityProvider', EntityType::class, [
         'class' => IdentityProvider::class,
         'choice_label' => 'name',

@@ -39,7 +39,7 @@ class CasEndpointController extends AbstractController
       $service = $req->query->get('service');
       $commonAuthCookie = $req->cookies->get('commonauth');
 
-      //get registered service
+      // get registered service
       $registeredService = $casManager->getServiceIfRegistered($service);
 
       //check for valid registered service

@@ -62,6 +62,11 @@ class ServiceProvider
    */
   private $enabled;
 
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  private $domainIdentifier;
+
   public function __construct()
   {
       $this->attributeMappings = new ArrayCollection();
@@ -189,6 +194,18 @@ class ServiceProvider
   public function setEnabled(bool $enabled): self
   {
       $this->enabled = $enabled;
+
+      return $this;
+  }
+
+  public function getDomainIdentifier(): ?bool
+  {
+      return $this->domainIdentifier;
+  }
+
+  public function setDomainIdentifier(bool $domainIdentifier): self
+  {
+      $this->domainIdentifier = $domainIdentifier;
 
       return $this;
   }
