@@ -17,6 +17,7 @@ use App\Exception\InvalidRequestException;
 use App\Service\Manager\CASManager;
 use App\Service\Manager\AuthenticatedSessionManager;
 use App\Service\Manager\AuthenticatedServiceManager;
+use App\Service\Manager\InvalidServiceManager;
 use App\Model\AppConfig;
 
 class CasEndpointController extends AbstractController
@@ -30,21 +31,30 @@ class CasEndpointController extends AbstractController
     CASManager $casManager,
     AuthenticatedSessionManager $authSessionManager,
     AuthenticatedServiceManager $authServiceManager,
+    InvalidServiceManager $invalidServiceManager,
     AppConfig $appConfig
   )
   {
     try
     {
-      //get params
+      // get params
       $service = $req->query->get('service');
       $commonAuthCookie = $req->cookies->get('commonauth');
+
+      // get remote ip address
+      if ($req->server->get('HTTP_X_FORWARDED_FOR'))
+        $remoteIp = $req->server->get('HTTP_X_FORWARDED_FOR');
+      else
+        $remoteIp = $req->server->get('REMOTE_ADDR');
 
       // get registered service
       $registeredService = $casManager->getServiceIfRegistered($service);
 
-      //check for valid registered service
-      if (!$registeredService)
+      // check for valid registered service
+      if (!$registeredService) {
+        $invalidServiceManager->createInvalidService($service, $remoteIp);
         throw new InvalidServiceException('CAS service not registered or enabled');
+      }
 
       //get valid session
       $validSession = $authSessionManager->getSessionNotExpired($commonAuthCookie);
@@ -101,12 +111,6 @@ class CasEndpointController extends AbstractController
       }
       else
       {
-        // get remote ip address
-        if ($req->server->get('HTTP_X_FORWARDED_FOR'))
-          $remoteIp = $req->server->get('HTTP_X_FORWARDED_FOR');
-        else
-          $remoteIp = $req->server->get('REMOTE_ADDR');
-
         //create authenticated session
         $session = $authSessionManager->createSession($remoteIp);
 

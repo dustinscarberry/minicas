@@ -38,8 +38,8 @@
                   {{ session.user }}
                 {% endif %}
               </td>
-              <td>{{ session.created|date("m/d/Y g:ia", config.siteTimezone) }}</td>
-              <td>{{ session.expiration|date("m/d/Y g:ia", config.siteTimezone) }}</td>
+              <td data-order="{{ session.created }}">{{ session.created|date("m/d/Y g:ia", config.siteTimezone) }}</td>
+              <td data-order="{{ session.expiration }}">{{ session.expiration|date("m/d/Y g:ia", config.siteTimezone) }}</td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
               </td>

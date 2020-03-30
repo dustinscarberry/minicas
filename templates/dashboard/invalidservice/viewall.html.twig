@@ -1,0 +1,46 @@
+{% extends 'dashboard/dashboardbase.html.twig' %}
+
+{% block panel %}
+
+<div class="dashboard-subheader">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-container">
+          <span class="breadcrumb">Invalid Services</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dashboard-panels">
+  <div class="container-fluid container-fixed-lg">
+    <div class="row">
+      <div class="col-lg-12">
+        <table id="invalid-service-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th>Remote IP</th>
+              <th>Accessed</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for invalidService in invalidServices %}
+            <tr data-id="{{ invalidService.id }}">
+              <td>{{ invalidService.service }}</td>
+              <td>{{ invalidService.remoteIp }}</td>
+              <td data-order="{{ invalidService.created }}">{{ invalidService.created|date("m/d/Y g:ia", config.siteTimezone) }}</td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

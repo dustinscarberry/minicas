@@ -167,6 +167,18 @@ $(document).ready(function(){
     }
   });
 
+  const invalidServiceViewDataTable = $('#invalid-service-view-table').DataTable({
+    paging: false,
+    info: false,
+    order: [[2, 'desc']],
+    language: {
+      emptyTable: 'No invalid services accessed'
+    },
+    initComplete: function() {
+      $(this).removeClass('is-hidden');
+    }
+  });
+
   //delete records ajax
   $('#user-view-table').on('click', '.btn-delete', function(){
     confirmDelete(

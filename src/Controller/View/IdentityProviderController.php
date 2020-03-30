@@ -13,7 +13,7 @@ class IdentityProviderController extends AbstractController
   /**
    * @Route("/dashboard/identityproviders", name="viewIdentityProviders")
    */
-  public function view()
+  public function viewAll()
   {
     //get identity providers
     $idps = $this->getDoctrine()
