@@ -23,15 +23,15 @@ class CASManager
 
   public function getServiceIfRegistered(string $service)
   {
-    //normalize service for lookup
+    // normalize service for lookup
     $cleanedService = CASGenerator::cleanService($service);
 
-    //get all services to compare with
+    // get all services to compare with
     $registeredServices = $this->em
       ->getRepository(ServiceProvider::class)
       ->findAll();
 
-    //find matching service provider
+    // find matching service provider
     foreach ($registeredServices as $registeredService)
     {
       $identifier = CASGenerator::cleanService($registeredService->getIdentifier());
@@ -40,7 +40,8 @@ class CASManager
         $cleanedService == $identifier
           && $registeredService->getEnabled()
         || $registeredService->getDomainIdentifier()
-          && strpos($identifier, strtok($identifier, '/')) === 0
+          && strpos($cleanedService, strtok($identifier, '/')) === 0
+          && $registeredService->getEnabled()
       )
         return $registeredService;
     }
