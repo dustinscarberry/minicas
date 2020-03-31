@@ -14,15 +14,19 @@ class IdentityProviderManager
     $this->em = $em;
   }
 
-  public function createIdentityProvider($identityProvider)
+  public function createIdentityProvider(IdentityProvider $identityProvider)
   {
+    $this->em->persist($identityProvider);
+    $this->em->flush();
   }
 
-  public function updateIdentityProvider($identityProvider)
+  public function updateIdentityProvider()
   {
+    // just flush entity already mapped to form :)
+    $this->em->flush();
   }
 
-  public function deleteIdentityProvider($identityProvider)
+  public function deleteIdentityProvider(IdentityProvider $identityProvider)
   {
     $this->em->remove($identityProvider);
     $this->em->flush();

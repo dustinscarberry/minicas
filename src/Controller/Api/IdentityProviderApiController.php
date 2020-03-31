@@ -13,19 +13,21 @@ class IdentityProviderApiController extends ApiController
    * @Route("/api/v1/identityproviders/{hashId}", name="deleteIdentityProvider", methods={"DELETE"})
    * @Security("is_granted('ROLE_ADMIN')")
    */
-  public function deleteIdentityProvider($hashId, IdentityProviderManager $identityProviderManager)
+  public function deleteIdentityProvider(
+    $hashId,
+    IdentityProviderManager $identityProviderManager
+  )
   {
-    //get identity provider
+    // get identity provider
     $identityProvider = $identityProviderManager->getIdentityProvider($hashId);
 
-    //check for valid identity provider
+    // check for valid identity provider
     if (!$identityProvider)
       return $this->respondWithErrors(['Invalid data']);
 
-    //delete identity provider
+    // delete identity provider
     $identityProviderManager->deleteIdentityProvider($identityProvider);
 
-    //respond with object
     return $this->respond($identityProvider);
   }
 }

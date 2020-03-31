@@ -28,16 +28,16 @@ class UserController extends AbstractController
    */
   public function add(Request $req, UserManager $userManager)
   {
-    //create user object
+    // create user object
     $user = new User();
 
-    //create form object for user
+    // create form
     $form = $this->createForm(UserType::class, $user);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
       $userManager->createUser($user);
@@ -46,7 +46,6 @@ class UserController extends AbstractController
       return $this->redirectToRoute('viewUsers');
     }
 
-    //render user add page
     return $this->render('dashboard/user/add.html.twig', [
       'userForm' => $form->createView()
     ]);
@@ -57,43 +56,26 @@ class UserController extends AbstractController
    */
   public function edit($hashId, Request $req, UserManager $userManager)
   {
-    //get user from database
+    // get user from database
     $user = $userManager->getUser($hashId);
 
-    //create form object for user
+    // create form
     $form = $this->createForm(UserType::class, $user);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      $action = $req->request->get('regenerateApiToken')
-        ? 'regenerateApiToken'
-        : 'updateUser';
+      // get new password field and update user
+      $newPassword = $form->get('password')->getData();
+      $userManager->updateUser($user, $newPassword);
 
-      if ($action == 'regenerateApiToken')
-      {
-        $user = $userManager->regenerateApiToken($user);
-
-        //refresh form with new api token included for user
-        $form = $this->createForm(UserType::class, $user);
-
-        $this->addFlash('success', 'API Token Regenerated');
-      }
-      else if ($action == 'updateUser')
-      {
-        //get new password field and update user
-        $newPassword = $form->get('password')->getData();
-        $userManager->updateUser($user, $newPassword);
-
-        $this->addFlash('success', 'User updated');
-        return $this->redirectToRoute('viewUsers');
-      }
+      $this->addFlash('success', 'User updated');
+      return $this->redirectToRoute('viewUsers');
     }
 
-    //render service add page
     return $this->render('dashboard/user/edit.html.twig', [
       'userForm' => $form->createView()
     ]);

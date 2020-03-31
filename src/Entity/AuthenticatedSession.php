@@ -142,65 +142,61 @@ class AuthenticatedSession
    */
   public function getAuthenticatedServices(): Collection
   {
-      return $this->authenticatedServices;
+    return $this->authenticatedServices;
   }
 
   public function addAuthenticatedService(AuthenticatedService $authenticatedService): self
   {
-      if (!$this->authenticatedServices->contains($authenticatedService)) {
-          $this->authenticatedServices[] = $authenticatedService;
-          $authenticatedService->setSession($this);
-      }
+    if (!$this->authenticatedServices->contains($authenticatedService)) {
+      $this->authenticatedServices[] = $authenticatedService;
+      $authenticatedService->setSession($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeAuthenticatedService(AuthenticatedService $authenticatedService): self
   {
-      if ($this->authenticatedServices->contains($authenticatedService)) {
-          $this->authenticatedServices->removeElement($authenticatedService);
-          // set the owning side to null (unless already changed)
-          if ($authenticatedService->getSession() === $this) {
-              $authenticatedService->setSession(null);
-          }
-      }
+    if ($this->authenticatedServices->contains($authenticatedService)) {
+      $this->authenticatedServices->removeElement($authenticatedService);
+      // set the owning side to null (unless already changed)
+      if ($authenticatedService->getSession() === $this)
+        $authenticatedService->setSession(null);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function getExpiration(): ?int
   {
-      return $this->expiration;
+    return $this->expiration;
   }
 
   public function setExpiration(int $expiration): self
   {
-      $this->expiration = $expiration;
-
-      return $this;
+    $this->expiration = $expiration;
+    return $this;
   }
 
   public function getHashId(): ?string
   {
-      return $this->hashId;
+    return $this->hashId;
   }
 
   public function setHashId(string $hashId): self
   {
-      $this->hashId = $hashId;
-
-      return $this;
+    $this->hashId = $hashId;
+    return $this;
   }
 
   public function getRemoteIp(): ?string
   {
-      return $this->remoteIp;
+    return $this->remoteIp;
   }
 
   public function setRemoteIp(?string $remoteIp): self
   {
-      $this->remoteIp = $remoteIp;
-
-      return $this;
+    $this->remoteIp = $remoteIp;
+    return $this;
   }
 }

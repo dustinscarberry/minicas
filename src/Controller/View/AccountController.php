@@ -17,23 +17,22 @@ class AccountController extends AbstractController
   {
     $user = $this->getUser();
 
-    //create form object for user
+    // create form
     $form = $this->createForm(UserType::class, $user);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      //get new password field and update user
+      // get new password field and update user
       $newPassword = $form->get('password')->getData();
       $userManager->updateUser($user, $newPassword);
 
       $this->addFlash('success', 'Account updated');
     }
 
-    //render acccount page
     return $this->render('dashboard/account/view.html.twig', [
       'form' => $form->createView()
     ]);

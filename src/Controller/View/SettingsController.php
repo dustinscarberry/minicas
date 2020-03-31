@@ -17,12 +17,16 @@ class SettingsController extends AbstractController
    */
   public function update(Request $request, AppConfig $appConfig)
   {
+    // create form
     $form = $this->createForm(SettingType::class, $appConfig);
 
+    // handle form request
     $form->handleRequest($request);
 
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
+      // save app config
       $appConfig->save();
       $this->addFlash('success', 'App settings updated');
     }

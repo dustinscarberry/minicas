@@ -95,13 +95,12 @@ class Attribute
 
   public function getDeleted(): ?bool
   {
-      return $this->deleted;
+    return $this->deleted;
   }
 
   public function setDeleted(bool $deleted): self
   {
-      $this->deleted = $deleted;
-
-      return $this;
+    $this->deleted = $deleted;
+    return $this;
   }
 }

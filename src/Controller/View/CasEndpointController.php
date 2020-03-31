@@ -125,7 +125,7 @@ class CasEndpointController extends AbstractController
             $service->getTrackingId(),
             $registeredService->getIdentityProvider()->getLoginURL(),
             $registeredService->getIdentityProvider()->getIdentifier(),
-            $appConfig->getSiteHostname() . '/idpsamlvalidate'
+            $_ENV['APP_HOST'] . '/idpsamlvalidate'
           );
 
           //redirect

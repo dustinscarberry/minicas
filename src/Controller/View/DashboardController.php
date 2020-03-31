@@ -13,10 +13,9 @@ class DashboardController extends AbstractController
    */
   public function home(AuthenticatedSessionManager $authSessionManager)
   {
-    //get unexpired sessions
+    // get unexpired sessions
     $sessions = $authSessionManager->getSessionsNotExpired();
 
-    //render view
     return $this->render('dashboard/home.html.twig', [
       'sessions' => $sessions
     ]);

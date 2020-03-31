@@ -145,6 +145,9 @@ mysql -e "CREATE DATABASE demo;"
 sed -i 's/www-data/vagrant/g' /etc/nginx/nginx.conf
 sed -i 's/www-data/vagrant/g' /etc/php/7.3/fpm/pool.d/www.conf
 
+# fix ldap config for dev
+echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
+
 #restart services
 systemctl restart php7.3-fpm
 systemctl restart nginx

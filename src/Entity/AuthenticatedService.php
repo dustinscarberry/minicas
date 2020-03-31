@@ -52,36 +52,34 @@ class AuthenticatedService
 
   public function __construct()
   {
-      $this->casTickets = new ArrayCollection();
+    $this->casTickets = new ArrayCollection();
   }
 
   public function getId(): ?int
   {
-      return $this->id;
+    return $this->id;
   }
 
   public function getService(): ?ServiceProvider
   {
-      return $this->service;
+    return $this->service;
   }
 
   public function setService(?ServiceProvider $service): self
   {
-      $this->service = $service;
-
-      return $this;
+    $this->service = $service;
+    return $this;
   }
 
   public function getSession(): ?AuthenticatedSession
   {
-      return $this->session;
+    return $this->session;
   }
 
   public function setSession(?AuthenticatedSession $session): self
   {
-      $this->session = $session;
-
-      return $this;
+    $this->session = $session;
+    return $this;
   }
 
   public function getAttributes(): ?object
@@ -125,29 +123,28 @@ class AuthenticatedService
    */
   public function getCasTickets(): Collection
   {
-      return $this->casTickets;
+    return $this->casTickets;
   }
 
   public function addCasTicket(CasTicket $casTicket): self
   {
-      if (!$this->casTickets->contains($casTicket)) {
-          $this->casTickets[] = $casTicket;
-          $casTicket->setService($this);
-      }
+    if (!$this->casTickets->contains($casTicket)) {
+      $this->casTickets[] = $casTicket;
+      $casTicket->setService($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeCasTicket(CasTicket $casTicket): self
   {
-      if ($this->casTickets->contains($casTicket)) {
-          $this->casTickets->removeElement($casTicket);
-          // set the owning side to null (unless already changed)
-          if ($casTicket->getService() === $this) {
-              $casTicket->setService(null);
-          }
-      }
+    if ($this->casTickets->contains($casTicket)) {
+      $this->casTickets->removeElement($casTicket);
+      // set the owning side to null (unless already changed)
+      if ($casTicket->getService() === $this)
+        $casTicket->setService(null);
+    }
 
-      return $this;
+    return $this;
   }
 }

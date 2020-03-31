@@ -15,17 +15,16 @@ class UserApiController extends ApiController
    */
   public function deleteUser($hashId, UserManager $userManager)
   {
-    //get user
+    // get user
     $user = $userManager->getUser($hashId);
 
-    //check for valid user
+    // check for valid user
     if (!$user)
       return $this->respondWithErrors(['Invalid data']);
 
-    //delete user
+    // delete user
     $userManager->deleteUser($user);
 
-    //respond with object
     return $this->respond($user);
   }
 }

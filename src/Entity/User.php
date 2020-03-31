@@ -96,14 +96,13 @@ class User implements UserInterface
 
   public function getHashId(): ?string
   {
-      return $this->hashId;
+    return $this->hashId;
   }
 
   public function setHashId(string $hashId): self
   {
-      $this->hashId = $hashId;
-
-      return $this;
+    $this->hashId = $hashId;
+    return $this;
   }
 
   /**

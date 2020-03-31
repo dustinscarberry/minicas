@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\IdentityProvider;
 use App\Form\IdentityProviderType;
+use App\Service\Manager\IdentityProviderManager;
 
 class IdentityProviderController extends AbstractController
 {
@@ -15,43 +16,40 @@ class IdentityProviderController extends AbstractController
    */
   public function viewAll()
   {
-    //get identity providers
-    $idps = $this->getDoctrine()
+    // get identity providers
+    $identityProviders = $this->getDoctrine()
       ->getRepository(IdentityProvider::class)
       ->findAll();
 
-    //render view
     return $this->render('dashboard/identityprovider/viewall.html.twig', [
-      'identityProviders' => $idps
+      'identityProviders' => $identityProviders
     ]);
   }
 
   /**
    * @Route("/dashboard/identityproviders/add")
    */
-  public function add(Request $req)
+  public function add(Request $req, IdentityProviderManager $idpManager)
   {
+    // create identity provider object
     $identityProvider = new IdentityProvider();
 
-    //create form object
+    // create form
     $form = $this->createForm(IdentityProviderType::class, $identityProvider);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      $em = $this->getDoctrine()->getManager();
-
-      $em->persist($identityProvider);
-      $em->flush();
+      // create identity provider
+      $idpManager->createIdentityProvider($identityProvider);
 
       $this->addFlash('success', 'Identity Provider created');
       return $this->redirectToRoute('viewIdentityProviders');
     }
 
-    //render view
     return $this->render('dashboard/identityprovider/add.html.twig', [
       'form' => $form->createView()
     ]);
@@ -60,29 +58,29 @@ class IdentityProviderController extends AbstractController
   /**
    * @Route("/dashboard/identityproviders/{hashId}", name="editIdentityProvider")
    */
-  public function edit($hashId, Request $req)
+  public function edit($hashId, Request $req, IdentityProviderManager $idpManager)
   {
-    //get identity provider to edit
+    // get identity provider
     $identityProvider = $this->getDoctrine()
       ->getRepository(IdentityProvider::class)
       ->findByHashId($hashId);
 
-    //create form object
+    // create form
     $form = $this->createForm(IdentityProviderType::class, $identityProvider);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      $this->getDoctrine()->getManager()->flush();
+      // update identity provider
+      $idpManager->updateIdentityProvider();
 
       $this->addFlash('success', 'Identity Provider updated');
       return $this->redirectToRoute('viewIdentityProviders');
     }
 
-    //render view
     return $this->render('dashboard/identityprovider/edit.html.twig', [
       'form' => $form->createView()
     ]);

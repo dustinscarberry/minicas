@@ -15,17 +15,16 @@ class AttributeApiController extends ApiController
    */
   public function deleteAttribute($hashId, AttributeManager $attributeManager)
   {
-    //get attribute
+    // get attribute
     $attribute = $attributeManager->getAttribute($hashId);
 
-    //check for valid attribute
+    // check for valid attribute
     if (!$attribute)
       return $this->respondWithErrors(['Invalid data']);
 
-    //delete attribute
+    // delete attribute
     $attributeManager->deleteAttribute($attribute);
 
-    //respond with object
     return $this->respond($attribute);
   }
 }

@@ -23,7 +23,6 @@ class SettingType extends AbstractType
   {
     $builder
       ->add('siteName', TextType::class)
-      ->add('siteHostname', TextType::class)
       ->add('siteTimezone', TimezoneType::class)
       ->add('locale', LocaleType::class)
       ->add('language', LanguageType::class)

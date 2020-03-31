@@ -38,7 +38,6 @@ class AppFixtures extends Fixture
       ['friendlyName' => 'User Principal Name', 'adAttribute' => 'userPrincipalName'],
       ['friendlyName' => 'sAMAccountName', 'adAttribute' => 'sAMAccountName'],
       ['friendlyName' => 'Display Name', 'adAttribute' => 'displayName'],
-      ['friendlyName' => 'Full Name', 'adAttribute' => 'name/cn'],
       ['friendlyName' => 'Description', 'adAttribute' => 'description'],
       ['friendlyName' => 'Office', 'adAttribute' => 'physicalDeliveryOfficeName'],
       ['friendlyName' => 'Telephone Number', 'adAttribute' => 'telephoneNumber'],
@@ -138,7 +137,6 @@ class AppFixtures extends Fixture
     $settings['language'] = 'en';
     $settings['locale'] = 'en';
     $settings['siteName'] = 'DAS';
-    $settings['siteHostname'] = 'http://localhost/';
     $settings['siteTimezone'] = 'America/New_York';
     $settings['sessionTimeout'] = 60; //in minutes
     $settings['casTicketTimeout'] = 1; //in minutes

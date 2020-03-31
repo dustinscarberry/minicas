@@ -16,7 +16,7 @@ class LDAPAttributeResolver
     $ldapPort = 636,
     $ldapReferrals = false,
     $ldapVersion = 3,
-    $ldapUser = '',//pass dn string format
+    $ldapUser = '', // pass dn string format
     $ldapPassword = '',
     $ldapSearchBase = ''
   )
@@ -77,11 +77,11 @@ class LDAPAttributeResolver
         $userAttributes['user'] = reset($userAttributes['user']);
     }
 
-    //return attributes
+    // return attributes
     return $userAttributes;
   }
 
-  //get ldap result by search filter
+  // get ldap result by search filter
   private function getLdapResult($filterAttribute, $filterValue, $objectType = 'person')
   {
     //check for valid ldap handle

@@ -69,8 +69,8 @@ class ServiceProvider
 
   public function __construct()
   {
-      $this->attributeMappings = new ArrayCollection();
-      $this->enabled = true;
+    $this->attributeMappings = new ArrayCollection();
+    $this->enabled = true;
   }
 
   /**
@@ -88,14 +88,13 @@ class ServiceProvider
 
   public function getHashId(): ?string
   {
-      return $this->hashId;
+    return $this->hashId;
   }
 
   public function setHashId(string $hashId): self
   {
-      $this->hashId = $hashId;
-
-      return $this;
+    $this->hashId = $hashId;
+    return $this;
   }
 
   public function getName(): ?string
@@ -133,14 +132,13 @@ class ServiceProvider
 
   public function getIdentityProvider(): ?IdentityProvider
   {
-      return $this->identityProvider;
+    return $this->identityProvider;
   }
 
   public function setIdentityProvider(?IdentityProvider $identityProvider): self
   {
-      $this->identityProvider = $identityProvider;
-
-      return $this;
+    $this->identityProvider = $identityProvider;
+    return $this;
   }
 
   /**
@@ -153,60 +151,56 @@ class ServiceProvider
 
   public function addAttributeMapping(AttributeMapping $attributeMapping): self
   {
-      if (!$this->attributeMappings->contains($attributeMapping)) {
-          $this->attributeMappings[] = $attributeMapping;
-          $attributeMapping->setService($this);
-      }
+    if (!$this->attributeMappings->contains($attributeMapping)) {
+      $this->attributeMappings[] = $attributeMapping;
+      $attributeMapping->setService($this);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function removeAttributeMapping(AttributeMapping $attributeMapping): self
   {
-      if ($this->attributeMappings->contains($attributeMapping)) {
-          $this->attributeMappings->removeElement($attributeMapping);
-          // set the owning side to null (unless already changed)
-          if ($attributeMapping->getService() === $this) {
-              $attributeMapping->setService(null);
-          }
-      }
+    if ($this->attributeMappings->contains($attributeMapping)) {
+      $this->attributeMappings->removeElement($attributeMapping);
+      // set the owning side to null (unless already changed)
+      if ($attributeMapping->getService() === $this)
+        $attributeMapping->setService(null);
+    }
 
-      return $this;
+    return $this;
   }
 
   public function getUserAttribute(): ?Attribute
   {
-      return $this->userAttribute;
+    return $this->userAttribute;
   }
 
   public function setUserAttribute(?Attribute $userAttribute): self
   {
-      $this->userAttribute = $userAttribute;
-
-      return $this;
+    $this->userAttribute = $userAttribute;
+    return $this;
   }
 
   public function getEnabled(): ?bool
   {
-      return $this->enabled;
+    return $this->enabled;
   }
 
   public function setEnabled(bool $enabled): self
   {
-      $this->enabled = $enabled;
-
-      return $this;
+    $this->enabled = $enabled;
+    return $this;
   }
 
   public function getDomainIdentifier(): ?bool
   {
-      return $this->domainIdentifier;
+    return $this->domainIdentifier;
   }
 
   public function setDomainIdentifier(bool $domainIdentifier): self
   {
-      $this->domainIdentifier = $domainIdentifier;
-
-      return $this;
+    $this->domainIdentifier = $domainIdentifier;
+    return $this;
   }
 }

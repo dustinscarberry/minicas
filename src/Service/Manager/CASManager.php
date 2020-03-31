@@ -3,6 +3,7 @@
 namespace App\Service\Manager;
 
 use App\Service\Generator\CASGenerator;
+use App\Service\Generator\UtilityGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\ServiceProvider;
 use App\Entity\CasTicket;
@@ -24,7 +25,7 @@ class CASManager
   public function getServiceIfRegistered(string $service)
   {
     // normalize service for lookup
-    $cleanedService = CASGenerator::cleanService($service);
+    $cleanedService = UtilityGenerator::cleanService($service);
 
     // get all services to compare with
     $registeredServices = $this->em
@@ -34,7 +35,7 @@ class CASManager
     // find matching service provider
     foreach ($registeredServices as $registeredService)
     {
-      $identifier = CASGenerator::cleanService($registeredService->getIdentifier());
+      $identifier = UtilityGenerator::cleanService($registeredService->getIdentifier());
 
       if (
         $cleanedService == $identifier

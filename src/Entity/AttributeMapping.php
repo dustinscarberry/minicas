@@ -9,85 +9,82 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AttributeMapping
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+  /**
+   * @ORM\Id()
+   * @ORM\GeneratedValue()
+   * @ORM\Column(type="integer")
+   */
+  private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+  /**
+   * @ORM\Column(type="string", length=255)
+   */
+  private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ServiceProvider", inversedBy="attributeMappings")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $service;
+  /**
+   * @ORM\ManyToOne(targetEntity="App\Entity\ServiceProvider", inversedBy="attributeMappings")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $service;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $adAttribute;
+  /**
+   * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
+   * @ORM\JoinColumn(nullable=false)
+   */
+  private $adAttribute;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $transformation;
+  /**
+   * @ORM\Column(type="string", length=50, nullable=true)
+   */
+  private $transformation;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+  public function getName(): ?string
+  {
+    return $this->name;
+  }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+  public function setName(string $name): self
+  {
+      $this->name = $name;
 
-        return $this;
-    }
+      return $this;
+  }
 
-    public function getService(): ?ServiceProvider
-    {
-        return $this->service;
-    }
+  public function getService(): ?ServiceProvider
+  {
+    return $this->service;
+  }
 
-    public function setService(?ServiceProvider $service): self
-    {
-        $this->service = $service;
+  public function setService(?ServiceProvider $service): self
+  {
+    $this->service = $service;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getAdAttribute(): ?Attribute
+  {
+    return $this->adAttribute;
+  }
 
-    public function getAdAttribute(): ?Attribute
-    {
-        return $this->adAttribute;
-    }
+  public function setAdAttribute(?Attribute $adAttribute): self
+  {
+    $this->adAttribute = $adAttribute;
+    return $this;
+  }
 
-    public function setAdAttribute(?Attribute $adAttribute): self
-    {
-        $this->adAttribute = $adAttribute;
+  public function getTransformation(): ?string
+  {
+    return $this->transformation;
+  }
 
-        return $this;
-    }
-
-    public function getTransformation(): ?string
-    {
-        return $this->transformation;
-    }
-
-    public function setTransformation(?string $transformation): self
-    {
-        $this->transformation = $transformation;
-
-        return $this;
-    }
+  public function setTransformation(?string $transformation): self
+  {
+    $this->transformation = $transformation;
+    return $this;
+  }
 }

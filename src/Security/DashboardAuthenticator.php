@@ -109,7 +109,7 @@ class DashboardAuthenticator extends AbstractFormLoginAuthenticator
 
       //check for matched user
       if (!$user)
-        throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        throw new CustomUserMessageAuthenticationException('Username or password incorrect');
     }
 
     return $user;

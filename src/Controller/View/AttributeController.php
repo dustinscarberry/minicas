@@ -16,10 +16,9 @@ class AttributeController extends AbstractController
    */
   public function view(AttributeManager $attrManager)
   {
-    //get attributes
+    // get attributes
     $attributes = $attrManager->getAttributes();
 
-    //render view
     return $this->render('dashboard/attribute/viewall.html.twig', [
       'attributes' => $attributes
     ]);
@@ -32,10 +31,10 @@ class AttributeController extends AbstractController
   {
     $attribute = new Attribute();
 
-    //create form object
+    // create form object
     $form = $this->createForm(AttributeType::class, $attribute);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
     //save form data to database if posted and validated
@@ -47,7 +46,6 @@ class AttributeController extends AbstractController
       return $this->redirectToRoute('viewAttributes');
     }
 
-    //render view
     return $this->render('dashboard/attribute/add.html.twig', [
       'form' => $form->createView()
     ]);
@@ -58,15 +56,16 @@ class AttributeController extends AbstractController
    */
   public function edit($hashId, Request $req, AttributeManager $attrManager)
   {
+    // get attribute
     $attribute = $attrManager->getAttribute($hashId);
 
-    //create form object
+    // create form object
     $form = $this->createForm(AttributeType::class, $attribute);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
       $attrManager->updateAttribute();
@@ -75,7 +74,6 @@ class AttributeController extends AbstractController
       return $this->redirectToRoute('viewAttributes');
     }
 
-    //render view
     return $this->render('dashboard/attribute/edit.html.twig', [
       'form' => $form->createView()
     ]);

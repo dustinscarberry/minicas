@@ -3,6 +3,7 @@
 namespace App\Service\Manager;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\ServiceProvider;
 
 class ServiceProviderManager
@@ -14,12 +15,25 @@ class ServiceProviderManager
     $this->em = $em;
   }
 
-  public function createServiceProvider($serviceProvider)
+  public function createServiceProvider(ServiceProvider $serviceProvider)
   {
+    $this->em->persist($serviceProvider);
+    $this->em->flush();
   }
 
-  public function updateServiceProvider($serviceProvider)
+  public function updateServiceProvider(
+    ServiceProvider $serviceProvider,
+    ArrayCollection $originalAttributes
+  )
   {
+    // remove deleted services from database
+    foreach ($originalAttributes as $attribute)
+    {
+      if ($serviceProvider->getAttributeMappings()->contains($attribute) === false)
+        $this->em->remove($attribute);
+    }
+
+    $this->em->flush();
   }
 
   public function deleteServiceProvider($serviceProvider)

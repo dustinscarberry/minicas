@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\ServiceProvider;
 use App\Form\ServiceProviderType;
+use App\Service\Manager\ServiceProviderManager;
 
 class ServiceProviderController extends AbstractController
 {
@@ -16,11 +17,11 @@ class ServiceProviderController extends AbstractController
    */
   public function view()
   {
+    // get service providers
     $serviceProviders = $this->getDoctrine()
       ->getRepository(ServiceProvider::class)
       ->findAll();
 
-    //render page
     return $this->render('dashboard/serviceprovider/viewall.html.twig', [
       'serviceProviders' => $serviceProviders
     ]);
@@ -29,29 +30,27 @@ class ServiceProviderController extends AbstractController
   /**
    * @Route("/dashboard/serviceproviders/add", name="addServiceProvider")
    */
-  public function add(Request $req)
+  public function add(Request $req, ServiceProviderManager $spManager)
   {
+    // create service provider object
     $serviceProvider = new ServiceProvider();
 
-    //create form object
+    // create form
     $form = $this->createForm(ServiceProviderType::class, $serviceProvider);
 
-    //handle form request if posted
+    // handle form reques
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      $em = $this->getDoctrine()->getManager();
-
-      $em->persist($serviceProvider);
-      $em->flush();
+      // create service provider
+      $spManager->createServiceProvider($serviceProvider);
 
       $this->addFlash('success', 'Service Provider created');
       return $this->redirectToRoute('viewServiceProviders');
     }
 
-    //render page
     return $this->render('dashboard/serviceprovider/add.html.twig', [
       'form' => $form->createView()
     ]);
@@ -60,40 +59,34 @@ class ServiceProviderController extends AbstractController
   /**
    * @Route("/dashboard/serviceproviders/{hashId}", name="editServiceProvider")
    */
-  public function edit($hashId, Request $req)
+  public function edit($hashId, Request $req, ServiceProviderManager $spManager)
   {
+    // get service provider
     $serviceProvider = $this->getDoctrine()
       ->getRepository(ServiceProvider::class)
       ->findByHashId($hashId);
 
-    //get original attributes to compare against
+    // get original attributes to compare against
     $originalAttributes = new ArrayCollection();
     foreach ($serviceProvider->getAttributeMappings() as $mapping)
       $originalAttributes->add($mapping);
 
-    //create form object
+    // create form
     $form = $this->createForm(ServiceProviderType::class, $serviceProvider);
 
-    //handle form request if posted
+    // handle form request
     $form->handleRequest($req);
 
-    //save form data to database if posted and validated
+    // save form data to database if posted and validated
     if ($form->isSubmitted() && $form->isValid())
     {
-      //remove deleted services from database
-      foreach ($originalAttributes as $attribute)
-      {
-        if ($serviceProvider->getAttributeMappings()->contains($attribute) === false)
-          $this->getDoctrine()->getManager()->remove($attribute);
-      }
-
-      $this->getDoctrine()->getManager()->flush();
-
+      // update service provider
+      $spManager->updateServiceProvider($serviceProvider, $originalAttributes);
+      
       $this->addFlash('success', 'Service Provider updated');
       return $this->redirectToRoute('viewServiceProviders');
     }
 
-    //render page
     return $this->render('dashboard/serviceprovider/edit.html.twig', [
       'form' => $form->createView()
     ]);

@@ -10,7 +10,6 @@ class AppConfig
   private $locale;
   private $language;
   private $siteName;
-  private $siteHostname;
   private $siteTimezone;
   private $sessionTimeout;
   private $casTicketTimeout;
@@ -55,17 +54,6 @@ class AppConfig
   public function setSiteName(?string $siteName): self
   {
     $this->siteName = $siteName;
-    return $this;
-  }
-
-  public function getSiteHostname(): string
-  {
-    return $this->siteHostname;
-  }
-
-  public function setSiteHostname(string $siteUrl): self
-  {
-    $this->siteHostname = rtrim($siteUrl, '/');
     return $this;
   }
 

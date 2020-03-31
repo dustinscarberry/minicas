@@ -16,17 +16,6 @@ class CASGenerator
     return 'ST-' . bin2hex(openssl_random_pseudo_bytes(12));
   }
 
-  public static function cleanService($service = '')
-  {
-    $service = strtok($service, '?');
-    $service = rtrim($service, '/');
-    $service = str_replace('https://', '', $service);
-    $service = str_replace('http://', '', $service);
-    $service = strtolower($service);
-
-    return $service;
-  }
-
   public static function getTicketRedirectUrl(string $replyToUrl, string $ticket)
   {
     $urlParts = parse_url($replyToUrl);
