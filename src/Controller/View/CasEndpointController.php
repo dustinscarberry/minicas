@@ -2,9 +2,12 @@
 
 namespace App\Controller\View;
 
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\HeaderUtils;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Generator\CASGenerator;
 use App\Service\Generator\SAML2Generator;
@@ -325,6 +328,26 @@ class CasEndpointController extends AbstractController
 
     //clear cookie
     $response->headers->clearCookie('commonauth');
+    return $response;
+  }
+
+  /**
+   * @Route("/cas/certificate")
+   */
+  public function downloadCASCertificate()
+  {
+    $context = stream_context_create (['ssl' => ['capture_peer_cert' => true]]);
+    $stream = fopen($_ENV['APP_HOST'], 'rb', false, $context);
+    $streamParams = stream_context_get_params($stream);
+    openssl_x509_export($streamParams['options']['ssl']['peer_certificate'], $certificateData);
+
+    $response = new Response($certificateData);
+    $disposition = HeaderUtils::makeDisposition(
+      HeaderUtils::DISPOSITION_ATTACHMENT,
+      'certificate.cer'
+    );
+    $response->headers->set('Content-Disposition', $disposition);
+
     return $response;
   }
 }
