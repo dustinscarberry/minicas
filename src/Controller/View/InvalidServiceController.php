@@ -9,7 +9,7 @@ use App\Entity\InvalidService;
 
 class InvalidServiceController extends AbstractController
 {
-  /**s
+  /**
    * @Route("/dashboard/invalidservices", name="viewInvalidServices")
    */
   public function viewAll()
