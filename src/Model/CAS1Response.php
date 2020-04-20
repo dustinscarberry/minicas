@@ -28,6 +28,24 @@ class CAS1Response
 
   private function getUserXML()
   {
-    return '<cas:user>' . $this->user . '</cas:user>';
+    return '<cas:user>' . $this->sanitizeXMLTag($this->user) . '</cas:user>';
+  }
+
+  private function sanitizeXMLTag($value)
+  {
+    $value = str_replace('<', '&lt;', $value);
+    $value = str_replace('>', '&gt;', $value);
+    $value = str_replace('&', '&amp;', $value);
+    return $value;
+  }
+
+  private function sanitizeXMLAttribute($value)
+  {
+    $value = str_replace('<', '&lt;', $value);
+    $value = str_replace('>', '&gt;', $value);
+    $value = str_replace('&', '&amp;', $value);
+    $value = str_replace('"', '&quot;', $value);
+    $value = str_replace("'", '&apos;', $value);
+    return $value;
   }
 }

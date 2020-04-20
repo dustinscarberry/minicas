@@ -36,7 +36,7 @@ class CAS2Response
 
   private function getUserXML()
   {
-    return '<cas:user>' . $this->user . '</cas:user>';
+    return '<cas:user>' . $this->sanitizeXMLTag($this->user) . '</cas:user>';
   }
 
   private function getCustomAttributesXML()
@@ -47,13 +47,37 @@ class CAS2Response
     {
       if (is_array($attr->value))
       {
-        foreach ($attr->value as $multiAttr)
-          $attributesXML .= '<cas:' . $attr->name . '>' . $multiAttr . '</cas:' . $attr->name . '>';
+        foreach ($attr->value as $multiAttr) {
+          $tagName = $this->sanitizeXMLTag($attr->name);
+          $attrValue = $this->sanitizeXMLTag($multiAttr);
+          $attributesXML .= '<cas:' . $tagName . '>' . $attrValue . '</cas:' . $tagName . '>';
+        }
       }
-      else
-        $attributesXML .= '<cas:' . $attr->name . '>' . $attr->value . '</cas:' . $attr->name . '>';
+      else {
+        $tagName = $this->sanitizeXMLTag($attr->name);
+        $attrValue = $this->sanitizeXMLTag($attr->value);
+        $attributesXML .= '<cas:' . $tagName . '>' . $attrValue . '</cas:' . $tagName . '>';
+      }
     }
 
     return $attributesXML;
+  }
+
+  private function sanitizeXMLTag($value)
+  {
+    $value = str_replace('<', '&lt;', $value);
+    $value = str_replace('>', '&gt;', $value);
+    $value = str_replace('&', '&amp;', $value);
+    return $value;
+  }
+
+  private function sanitizeXMLAttribute($value)
+  {
+    $value = str_replace('<', '&lt;', $value);
+    $value = str_replace('>', '&gt;', $value);
+    $value = str_replace('&', '&amp;', $value);
+    $value = str_replace('"', '&quot;', $value);
+    $value = str_replace("'", '&apos;', $value);
+    return $value;
   }
 }
