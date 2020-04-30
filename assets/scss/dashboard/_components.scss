@@ -639,3 +639,22 @@
   border: 1px solid rgba(0,0,0,.15);
   border-radius: .25rem;
 }
+
+
+
+// active sessions and services
+.active-session-toggledetails,
+.active-service-toggleresponse {
+  cursor: pointer;
+  font-size: 2rem;
+  padding-left: .5rem;
+
+  &.is-open::before {
+    content: "\f0d8"
+  }
+}
+
+.active-session-details {
+  margin-top: 1.5rem;
+  padding-left: 2rem;
+}

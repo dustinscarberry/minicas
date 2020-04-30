@@ -21,7 +21,7 @@
         <table id="active-session-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
           <thead>
             <tr>
-              <th>Username</th>
+              <th>Session Details</th>
               <th>Created</th>
               <th>Expires</th>
               <th></th>
@@ -32,11 +32,29 @@
             {% for session in sessions %}
             <tr data-id="{{ session.hashid }}">
               <td>
+
                 {% if session.user is empty %}
                   [Incomplete Session]
                 {% else %}
                   {{ session.user }}
+                  <i class="fas fa-caret-down active-session-toggledetails"></i>
+                  <div class="is-hidden active-session-details" style="margin-top: 1.5rem; padding-left: 2rem;">
+                    <h3>Authenticated Services</h3>
+
+                    {% for service in session.authenticatedServices %}
+
+                      <div class="active-session-service">
+                        <span>- {{ service.service.name }}</span>
+                        <i class="fas fa-caret-down active-service-toggleresponse"></i>
+                        <pre class="is-hidden active-service-response">{{ service.attributes|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                      </div>
+
+                    {% endfor %}
+
+                  </div>
+
                 {% endif %}
+
               </td>
               <td data-order="{{ session.created }}">{{ session.created|date("m/d/Y g:ia", config.siteTimezone) }}</td>
               <td data-order="{{ session.expiration }}">{{ session.expiration|date("m/d/Y g:ia", config.siteTimezone) }}</td>

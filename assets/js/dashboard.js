@@ -1,5 +1,5 @@
 import '@babel/polyfill';
-import '../css/dashboard.scss';
+import '../scss/dashboard.scss';
 import axios from 'axios';
 
 $(document).ready(function(){
@@ -56,7 +56,19 @@ $(document).ready(function(){
 
   $('.feedback-wrapper').addClass('visible');
 
-  //invalid form fields
+  // active session details toggle
+  $('.active-session-toggledetails').click(function(){
+    $(this).toggleClass('is-open');
+    $(this).next('.active-session-details').toggleClass('is-hidden');
+  });
+
+  // active session service details toggle
+  $('.active-service-toggleresponse').click(function(){
+    $(this).toggleClass('is-open');
+    $(this).next('.active-service-response').toggleClass('is-hidden');
+  });
+
+  // invalid form fields
   formValidate();
   function formValidate()
   {
@@ -155,16 +167,25 @@ $(document).ready(function(){
     paging: false,
     info: false,
     columnDefs: [{
+      targets: 1,
+      width: '200px'
+    },{
+      targets: 2,
+      width: '200px'
+    },{
       targets: 3,
-      orderable: false
-    }],
+      orderable: false,
+      width: '150px'
+    },
+  ],
     order: [[1, 'desc']],
     language: {
       emptyTable: 'No current active user sessions'
     },
     initComplete: function() {
       $(this).removeClass('is-hidden');
-    }
+    },
+    autoWidth: false
   });
 
   const invalidServiceViewDataTable = $('#invalid-service-view-table').DataTable({
