@@ -6,10 +6,16 @@ framework:
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
+
+    # gc_maxlifetime used to limit idle sessions to timeout
+    # gc_probability used to make garbage collector run more often to clean old sessions
     session:
-        handler_id: ~
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
         cookie_secure: auto
         cookie_samesite: lax
+        gc_probability: 75
+        gc_maxlifetime: 900
 
     #esi: true
     #fragments: true
