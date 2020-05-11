@@ -16,14 +16,15 @@ class DashboardController extends AbstractController
     // get unexpired sessions
     $sessions = $authSessionManager->getSessionsNotExpired();
 
-
     // convert data for view
     foreach ($sessions as $session) {
       foreach ($session->getAuthenticatedServices() as $service) {
         $attributes = $service->getAttributes();
-        if ($service->getAttributes()->user == '') {
+
+        // get user if not overridden
+        if ($attributes->user == '')
           $attributes->user = $session->getUser();
-        }
+
         $service->setAttributes(json_encode($attributes));
       }
     }

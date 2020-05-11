@@ -45,6 +45,7 @@
 
                       <div class="active-session-service">
                         <span>- {{ service.service.name }}</span>
+                        <span>| {{ service.created|date("m/d/Y g:ia", config.siteTimezone) }}</span>
                         <i class="fas fa-caret-down active-service-toggleresponse"></i>
                         <pre class="is-hidden active-service-response">{{ service.attributes|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
                       </div>

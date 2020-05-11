@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthenticatedServiceRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class AuthenticatedService
 {
@@ -50,9 +51,32 @@ class AuthenticatedService
    */
   private $casTickets;
 
+  /**
+   * @ORM\Column(type="integer")
+   */
+  private $created;
+
+  /**
+   * @ORM\Column(type="integer")
+   */
+  private $updated;
+
   public function __construct()
   {
     $this->casTickets = new ArrayCollection();
+  }
+
+  /**
+   * @ORM\PrePersist
+   * @ORM\PreUpdate
+   */
+  public function updateTimestamps()
+  {
+    $currentTime = time();
+    $this->setUpdated($currentTime);
+
+    if ($this->getCreated() == null)
+      $this->setCreated($currentTime);
   }
 
   public function getId(): ?int
@@ -146,5 +170,29 @@ class AuthenticatedService
     }
 
     return $this;
+  }
+
+  public function getCreated(): ?int
+  {
+      return $this->created;
+  }
+
+  public function setCreated(int $created): self
+  {
+      $this->created = $created;
+
+      return $this;
+  }
+
+  public function getUpdated(): ?int
+  {
+      return $this->updated;
+  }
+
+  public function setUpdated(int $updated): self
+  {
+      $this->updated = $updated;
+
+      return $this;
   }
 }
