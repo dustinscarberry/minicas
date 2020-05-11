@@ -7,9 +7,23 @@ use App\Service\Resolver\LDAPAttributeResolver;
 
 class AuthGenerator
 {
+  // create a commonauth cookie
   public static function createCommonAuthCookie(string $token)
   {
-    return Cookie::create('commonauth', $token, 0, '/', $_ENV['APP_HOST'], true, true, false, 'strict');
+    $cookieDomain = str_replace('https://', '', $_ENV['APP_HOST']);
+    $cookieDomain = str_replace('http://', '', $cookieDomain);
+
+    return Cookie::create(
+      'commonauth',
+      $token,
+      0,
+      '/',
+      $cookieDomain,
+      true,
+      true,
+      false,
+      'strict'
+    );
   }
 
   public static function resolveAttributes(
