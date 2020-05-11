@@ -13,7 +13,7 @@ framework:
         handler_id: session.handler.native_file
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
         cookie_secure: auto
-        cookie_samesite: lax
+        cookie_samesite: strict
         gc_probability: 75
         gc_maxlifetime: 900
 

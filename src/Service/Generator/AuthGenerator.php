@@ -9,7 +9,7 @@ class AuthGenerator
 {
   public static function createCommonAuthCookie(string $token)
   {
-    return Cookie::create('commonauth', $token, 0, '/', 'minicas.dev', true, true, false, 'strict');
+    return Cookie::create('commonauth', $token, 0, '/', $_ENV['APP_HOST'], true, true, false, 'strict');
   }
 
   public static function resolveAttributes(
