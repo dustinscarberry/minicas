@@ -11,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Generator\CASGenerator;
 use App\Service\Generator\AuthGenerator;
 use App\Model\SAML2Response;
-use Symfony\Component\Form\Exception\NotValidException;
 use App\Service\Manager\AuthenticatedSessionManager;
 use App\Service\Manager\AuthenticatedServiceManager;
 use App\Service\Manager\CASManager;
@@ -39,7 +38,7 @@ class AppEndpointController extends AbstractController
       $samlResponseData = $req->request->get('SAMLResponse');
 
       if (!$samlResponseData)
-        throw new NotValidException('No valid IDP SAML Response');
+        throw new \Exception('No valid IDP SAML Response');
 
       //create saml object
       $samlResponse = new SAML2Response();
@@ -53,7 +52,7 @@ class AppEndpointController extends AbstractController
       $authenticatedService = $authServiceManager->getServiceByTrackingId($samlSessionId);
 
       if (!$authenticatedService)
-        throw new NotValidException('Invalid user session');
+        throw new \Exception('Invalid user session');
 
       //get signing cert
       $signingCert = $authenticatedService

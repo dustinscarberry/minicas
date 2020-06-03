@@ -10,6 +10,7 @@ use App\Entity\CasTicket;
 use App\Entity\AuthenticatedService;
 use App\Model\AppConfig;
 use App\Exception\InvalidTicketException;
+use App\Exception\InvalidServiceException;
 
 class CASManager
 {
