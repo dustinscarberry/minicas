@@ -120,11 +120,14 @@ class LDAPAttributeResolver
       || $transform == 'simplifiedexpandedgroups'
     )
     {
-      //expand groups
+      // expand groups
       $attrValue = $this->expandGroups($attrValue);
 
-      //filter out duplicates
+      // filter out duplicates
       $attrValue = array_unique($attrValue);
+
+      // reorganize array to fill in missing indexes above
+      $attrValue = array_values($attrValue);
 
       if ($transform == 'simplifiedexpandedgroups')
       {
@@ -182,31 +185,34 @@ class LDAPAttributeResolver
       return $attrValue;
   }
 
-  private function expandGroups($dns, $results = [])
+  private function expandGroups($groupDNs)
   {
-    foreach ($dns as $dn)
+    $results = [];
+
+    foreach ($groupDNs as $groupDN)
     {
-      //add dn to final results
-      $results[] = $dn;
+      // add group dn to final results
+      $results[] = $groupDN;
 
-      //lookup dn
-      $groups = $this->getFullyQualifiedLdapResult($dn, 'group');
+      // lookup group info
+      $groupInfo = $this->getFullyQualifiedLdapResult($groupDN, 'group');
 
-      //if found
-      if ($groups)
+      // if group info found
+      if ($groupInfo)
       {
-        //get memberOf for group
-        $groups = $groups->getAttribute('memberOf');
-
-        //if results recurse through them
-        if ($groups && count($groups) > 0)
-          $results = $this->expandGroups($groups, $results);
+        // get subgroups of group if any
+        if ($subGroups = $groupInfo->getAttribute('memberOf')) {
+          foreach ($subGroups as $group) {
+            $results[] = $group;
+          }
+        }
       }
     }
 
     return $results;
   }
 
+  // extract CN part of a DN
   private function extractCNs($dns)
   {
     $results = [];

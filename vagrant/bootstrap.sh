@@ -5,24 +5,24 @@
 #also export certificate and add to trusted certs on local machine
 
 
-#add repos for php7.3
+#add repos for php7.4
 add-apt-repository ppa:ondrej/php
 apt-get update
 
 #install needed packages
-apt-get install -y php7.3-fpm
-apt-get install -y nginx php7.3 php7.3-cli php7.3-mysql php7.3-ldap php7.3-gd php7.3-imagick php7.3-xml php7.3-curl php7.3-mbstring php7.3-zip php7.3-bcmath php7.3-gmp mariadb-server mariadb-client
+apt-get install -y php7.4-fpm
+apt-get install -y nginx php7.4 php7.4-cli php7.4-mysql php7.4-ldap php7.4-gd php7.4-imagick php7.4-xml php7.4-curl php7.4-mbstring php7.4-zip php7.4-bcmath php7.4-gmp mariadb-server mariadb-client
 apt-get upgrade -y
 
 #write out nginx config files
 >/etc/nginx/sites-enabled/default
 cat >> /etc/nginx/sites-enabled/sites.conf << 'EOF'
 upstream php-fpm {
-        server unix:/var/run/php/php7.3-fpm.sock;
+        server unix:/var/run/php/php7.4-fpm.sock;
 }
 
 server {
-	server_name minicas.dev;
+	server_name das.dev;
 	root /vagrant/public;
 	listen 443 ssl;
   ssl_certificate /etc/nginx/ssl/selfsigned.crt;
@@ -116,6 +116,39 @@ server {
         internal;
     }
 }
+
+server {
+	server_name caslinksaml.dev;
+	root /vagrant/vagrant/caslinksaml;
+  listen 443 ssl;
+  ssl_certificate /etc/nginx/ssl/selfsigned.crt;
+  ssl_certificate_key /etc/nginx/ssl/selfsigned.key;
+	index index.php;
+
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass php-fpm;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        internal;
+    }
+}
 EOF
 
 #create ssl certificates
@@ -143,13 +176,13 @@ mysql -e "CREATE DATABASE demo;"
 
 #change user accounts for web stack
 sed -i 's/www-data/vagrant/g' /etc/nginx/nginx.conf
-sed -i 's/www-data/vagrant/g' /etc/php/7.3/fpm/pool.d/www.conf
+sed -i 's/www-data/vagrant/g' /etc/php/7.4/fpm/pool.d/www.conf
 
 # fix ldap config for dev
 echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 
 #restart services
-systemctl restart php7.3-fpm
+systemctl restart php7.4-fpm
 systemctl restart nginx
 
 #last minute updates and upgrades

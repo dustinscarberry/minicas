@@ -22,7 +22,7 @@ class DashboardController extends AbstractController
         $attributes = $service->getAttributes();
 
         // get user if not overridden
-        if ($attributes->user == '')
+        if ($attributes && $attributes->user == '')
           $attributes->user = $session->getUser();
 
         $service->setAttributes(json_encode($attributes));

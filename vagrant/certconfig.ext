@@ -14,5 +14,6 @@ keyUsage = critical, digitalSignature, keyAgreement
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 [alt_names]
-DNS.1 = minicas.dev
+DNS.1 = das.dev
 DNS.2 = caslink.dev
+DNS.3 = caslinksaml.dev
