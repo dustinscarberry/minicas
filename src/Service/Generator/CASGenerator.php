@@ -55,13 +55,6 @@ class CASGenerator
         'An internal error has occured'
       );
 
-    //send cas response
-    $response = new Response(
-      $casResponse->getXML(),
-      Response::HTTP_OK,
-      ['Content-Type', 'text/xml']
-    );
-
-    return $response;
+    return $casResponse->getXML();
   }
 }

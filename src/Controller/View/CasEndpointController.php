@@ -138,7 +138,12 @@ class CasEndpointController extends AbstractController
     }
     catch (\Exception $e)
     {
-      return CASGenerator::getErrorResponse($e);
+      // send cas response
+      return new Response(
+        CASGenerator::getErrorResponse($e),
+        Response::HTTP_OK,
+        ['Content-Type', 'text/xml']
+      );
     }
   }
 
@@ -183,7 +188,12 @@ class CasEndpointController extends AbstractController
     }
     catch (\Exception $e)
     {
-      return CASGenerator::getErrorResponse($e);
+      // send cas response
+      return new Response(
+        CASGenerator::getErrorResponse($e),
+        Response::HTTP_OK,
+        ['Content-Type', 'text/xml']
+      );
     }
   }
 
@@ -229,7 +239,12 @@ class CasEndpointController extends AbstractController
     }
     catch (\Exception $e)
     {
-      return CASGenerator::getErrorResponse($e);
+      // send cas response
+      return new Response(
+        CASGenerator::getErrorResponse($e),
+        Response::HTTP_OK,
+        ['Content-Type', 'text/xml']
+      );
     }
   }
 

@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 
+# may need to reboot box after provisioning for ldap
+# also export certificate and add to trusted certs on local machine
 
-#may need to also set TLS_REQCERT never in /etc/ldap/ldap.conf and reboot box
-#also export certificate and add to trusted certs on local machine
-
-
-#add repos for php7.4
+# add repos
 add-apt-repository ppa:ondrej/php
 apt-get update
 
-#install needed packages
+# install needed packages
 apt-get install -y php7.4-fpm
 apt-get install -y nginx php7.4 php7.4-cli php7.4-mysql php7.4-ldap php7.4-gd php7.4-imagick php7.4-xml php7.4-curl php7.4-mbstring php7.4-zip php7.4-bcmath php7.4-gmp mariadb-server mariadb-client
 apt-get upgrade -y
 
-#write out nginx config files
+# write out nginx config files
 >/etc/nginx/sites-enabled/default
 cat >> /etc/nginx/sites-enabled/sites.conf << 'EOF'
 upstream php-fpm {
@@ -151,7 +149,7 @@ server {
 }
 EOF
 
-#create ssl certificates
+# create ssl certificates
 mkdir /etc/nginx/ssl
 openssl req -x509 -nodes -days 730 -newkey rsa:2048 \
   -keyout /etc/nginx/ssl/selfsigned.key  -out /etc/nginx/ssl/selfsigned.crt \
@@ -159,32 +157,37 @@ openssl req -x509 -nodes -days 730 -newkey rsa:2048 \
 
 systemctl reload nginx
 
-#install composer
+# install composer
 cd /home/vagrant
 curl -sS https://getcomposer.org/installer -o composer-setup.php
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 rm -rf composer-setup.php
 
-#setup mariadb user account
+# setup mariadb user account
 mysql -e "USE mysql;"
-mysql -e "CREATE USER 'vagrant'@'localhost' IDENTIFIED BY 'vagrant';"
-mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'localhost';"
+mysql -e "CREATE USER 'vagrant'@'%' IDENTIFIED BY 'vagrant';"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'%';"
 mysql -e "FLUSH PRIVILEGES;"
 
-#setup database
+# setup databases
 mysql -e "CREATE DATABASE demo;"
+mysql -e "CREATE DATABASE demo_test;"
 
-#change user accounts for web stack
+# change user accounts for web stack
 sed -i 's/www-data/vagrant/g' /etc/nginx/nginx.conf
 sed -i 's/www-data/vagrant/g' /etc/php/7.4/fpm/pool.d/www.conf
+
+# change mysql to listen externally for testing
+sed -s 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # fix ldap config for dev
 echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 
-#restart services
+# restart services
 systemctl restart php7.4-fpm
 systemctl restart nginx
+systemctl restart mysqld
 
-#last minute updates and upgrades
+# last minute updates and upgrades
 apt-get update
 apt-get upgrade -y
