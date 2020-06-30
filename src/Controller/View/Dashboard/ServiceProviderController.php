@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\View;
+namespace App\Controller\View\Dashboard;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -82,7 +82,7 @@ class ServiceProviderController extends AbstractController
     {
       // update service provider
       $spManager->updateServiceProvider($serviceProvider, $originalAttributes);
-      
+
       $this->addFlash('success', 'Service Provider updated');
       return $this->redirectToRoute('viewServiceProviders');
     }

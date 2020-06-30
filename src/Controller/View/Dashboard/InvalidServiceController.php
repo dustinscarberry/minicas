@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\View;
+namespace App\Controller\View\Dashboard;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

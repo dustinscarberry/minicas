@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\View;
+namespace App\Controller\View\Dashboard;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +15,7 @@ class LoginController extends AbstractController
   {
     //get login error
     $error = $authenticationUtils->getLastAuthenticationError();
-    
+
     //get last username entered by user
     $lastUsername = $authenticationUtils->getLastUsername();
 
