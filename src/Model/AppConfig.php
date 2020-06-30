@@ -7,16 +7,29 @@ use App\Entity\Setting;
 
 class AppConfig
 {
-  private $locale;
-  private $language;
-  private $siteName;
-  private $siteTimezone;
-  private $sessionTimeout;
-  private $casTicketTimeout;
-  private $autoDeleteExpiredSessions;
+  private $locale = 'en';
+  private $language = 'en';
+  private $siteName = 'DAS';
+  private $siteTimezone = 'America/New_York';
+  private $sessionTimeout = 60;
+  private $casTicketTimeout = 1;
+  private $autoDeleteExpiredSessions = 0;
+  private $isProvisioned = false;
 
   private $em;
-  private $loadedSettings;
+
+  // settings to monitor, all setting keys must be present
+  // in array to load and save correctly
+  private $settingList = [
+    'locale',
+    'language',
+    'siteName',
+    'siteTimezone',
+    'sessionTimeout',
+    'casTicketTimeout',
+    'autoDeleteExpiredSessions',
+    'isProvisioned'
+  ];
 
   public function __construct(EntityManagerInterface $em)
   {
@@ -101,43 +114,50 @@ class AppConfig
     return $this;
   }
 
-  //load settings from database
+  public function getIsProvisioned(): bool
+  {
+    return $this->isProvisioned;
+  }
+
+  public function setIsProvisioned(bool $isProvisioned): self
+  {
+    $this->isProvisioned = $isProvisioned;
+    return $this;
+  }
+
+  // load settings from database
   private function load(): self
   {
     $allSettings = $this->em
       ->getRepository(Setting::class)
       ->findAll();
-    $this->loadedSettings = [];
 
-    foreach ($allSettings as $setting)
-      $this->loadedSettings[$setting->getName()] = $setting->getValue();
-
-    $this->assign();
+    foreach ($allSettings as $setting) {
+      $settingName = $setting->getName();
+      $this->$settingName = $setting->getValue();
+    }
 
     return $this;
   }
 
-  //save settings to database
+  // save settings to database
   public function save(): self
   {
     $repository = $this->em->getRepository(Setting::class);
 
-    foreach ($this->loadedSettings as $key => $value)
-    {
+    foreach ($this->settingList as $key) {
       $setting = $repository->findOneByName($key);
 
-      if ($setting)
-        $setting->setValue($this->$key);
+      if (!$setting) {
+        $setting = new Setting();
+        $setting->setName($key);
+        $this->em->persist($setting);
+      }
+
+      $setting->setValue($this->$key);
     }
 
     $this->em->flush();
-
     return $this;
-  }
-
-  private function assign()
-  {
-    foreach ($this->loadedSettings as $key => $value)
-      $this->$key = $value;
   }
 }
