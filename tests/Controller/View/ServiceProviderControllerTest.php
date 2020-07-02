@@ -60,8 +60,10 @@ class ServiceProviderControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());*/
   }
 
+  /*
   public function testEdit()
   {
 
   }
+  */
 }
