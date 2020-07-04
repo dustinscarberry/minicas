@@ -72,7 +72,8 @@ class IdentityProvider
    */
   public function createHashId()
   {
-    $this->hashId = HashIdGenerator::generate();
+    if (!$this->hashId)
+      $this->hashId = HashIdGenerator::generate();
   }
 
   public function getId(): ?int
