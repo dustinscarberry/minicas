@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\IdentityProvider;
 use App\Form\IdentityProviderType;
-use App\Service\Manager\IdentityProviderManager;
+use App\Service\Factory\IdentityProviderFactory;
 
 class IdentityProviderController extends AbstractController
 {
@@ -29,7 +29,7 @@ class IdentityProviderController extends AbstractController
   /**
    * @Route("/dashboard/identityproviders/add")
    */
-  public function add(Request $req, IdentityProviderManager $idpManager)
+  public function add(Request $req, IdentityProviderFactory $idpManager)
   {
     // create identity provider object
     $identityProvider = new IdentityProvider();
@@ -58,7 +58,7 @@ class IdentityProviderController extends AbstractController
   /**
    * @Route("/dashboard/identityproviders/{hashId}", name="editIdentityProvider")
    */
-  public function edit($hashId, Request $req, IdentityProviderManager $idpManager)
+  public function edit($hashId, Request $req, IdentityProviderFactory $idpManager)
   {
     // get identity provider
     $identityProvider = $this->getDoctrine()

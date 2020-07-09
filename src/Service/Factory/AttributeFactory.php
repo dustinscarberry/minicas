@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Attribute;
 
-class AttributeManager
+class AttributeFactory
 {
   private $em;
 

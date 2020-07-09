@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Service\Manager\IdentityProviderManager;
+use App\Service\Factory\IdentityProviderFactory;
 
 class IdentityProviderApiController extends ApiController
 {
@@ -15,18 +15,18 @@ class IdentityProviderApiController extends ApiController
    */
   public function deleteIdentityProvider(
     $hashId,
-    IdentityProviderManager $identityProviderManager
+    IdentityProviderFactory $identityProviderFactory
   )
   {
     // get identity provider
-    $identityProvider = $identityProviderManager->getIdentityProvider($hashId);
+    $identityProvider = $identityProviderFactory->getIdentityProvider($hashId);
 
     // check for valid identity provider
     if (!$identityProvider)
       return $this->respondWithErrors(['Invalid data']);
 
     // delete identity provider
-    $identityProviderManager->deleteIdentityProvider($identityProvider);
+    $identityProviderFactory->deleteIdentityProvider($identityProvider);
 
     return $this->respond($identityProvider);
   }

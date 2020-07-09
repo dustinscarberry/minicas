@@ -3,7 +3,7 @@
 namespace App\Service\Generator;
 
 use Symfony\Component\HttpFoundation\Cookie;
-use App\Service\Resolver\LDAPAttributeResolver;
+use App\Service\Provider\LDAPAttributeProvider;
 
 class AuthGenerator
 {
@@ -33,8 +33,8 @@ class AuthGenerator
     $userAttributeMapping
   )
   {
-    $ldapAttributeResolver = new LDAPAttributeResolver();
-    $ldapAttributeResolver->configure(
+    $ldapAttributeProvider = new LDAPAttributeProvider();
+    $ldapAttributeProvider->configure(
       $_ENV['LDAP_HOST'],
       $_ENV['LDAP_ENCRYPTION'],
       $_ENV['LDAP_PORT'],
@@ -45,7 +45,7 @@ class AuthGenerator
       $_ENV['LDAP_SEARCH_BASE']
     );
 
-    return $ldapAttributeResolver->getMappedAttributes(
+    return $ldapAttributeProvider->getMappedAttributes(
       $authenticatedUser,
       $userFilterAttributeMapping,
       $attributeMappings,

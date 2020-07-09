@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AuthenticatedSession;
@@ -9,7 +9,7 @@ use App\Entity\ServiceProvider;
 use App\Service\Generator\SAML2Generator;
 use App\Service\Generator\AuthGenerator;
 
-class AuthenticatedServiceManager
+class AuthenticatedServiceFactory
 {
   private $em;
 

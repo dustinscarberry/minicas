@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 
-class UserManager
+class UserFactory
 {
   private $em;
   private $security;

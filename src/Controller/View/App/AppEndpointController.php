@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Generator\CASGenerator;
 use App\Service\Generator\AuthGenerator;
 use App\Model\SAML2Response;
-use App\Service\Manager\AuthenticatedSessionManager;
-use App\Service\Manager\AuthenticatedServiceManager;
+use App\Service\Factory\AuthenticatedSessionFactory;
+use App\Service\Factory\AuthenticatedServiceFactory;
 use App\Service\Manager\CASManager;
 use App\Service\Manager\ToolboxManager;
 
@@ -23,8 +23,8 @@ class AppEndpointController extends AbstractController
    */
   public function idpSamlValidate(
     Request $req,
-    AuthenticatedSessionManager $authSessionManager,
-    AuthenticatedServiceManager $authServiceManager,
+    AuthenticatedSessionFactory $authSessionFactory,
+    AuthenticatedServiceFactory $authServiceFactory,
     CASManager $casManager,
     ToolboxManager $toolboxManager
   )
@@ -49,7 +49,7 @@ class AppEndpointController extends AbstractController
       $samlSessionId = $samlResponse->getSessionId();
 
       //load authenticated service from tracking id
-      $authenticatedService = $authServiceManager->getServiceByTrackingId($samlSessionId);
+      $authenticatedService = $authServiceFactory->getServiceByTrackingId($samlSessionId);
 
       if (!$authenticatedService)
         throw new \Exception('Invalid user session');
@@ -64,13 +64,13 @@ class AppEndpointController extends AbstractController
       $samlResponse->validate($signingCert);
 
       //update session with username
-      $authSessionManager->updateSessionUsername(
+      $authSessionFactory->updateSessionUsername(
         $authenticatedService->getSession(),
         $authenticatedUser
       );
 
       //map service attributes for authenticated service
-      $authenticatedService = $authServiceManager->mapServiceAttributes(
+      $authenticatedService = $authServiceFactory->mapServiceAttributes(
         $authenticatedService,
         $authenticatedUser
       );

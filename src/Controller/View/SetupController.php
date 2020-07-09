@@ -9,7 +9,7 @@ use App\Model\Setup;
 use App\Model\AppConfig;
 use App\Entity\User;
 use App\Form\SetupType;
-use App\Service\Manager\UserManager;
+use App\Service\Factory\UserFactory;
 
 class SetupController extends AbstractController
 {
@@ -19,7 +19,7 @@ class SetupController extends AbstractController
   public function setup(
     Request $req,
     AppConfig $appConfig,
-    UserManager $userManager
+    UserFactory $userFactory
   )
   {
     // bypass setup once complete
@@ -55,7 +55,7 @@ class SetupController extends AbstractController
       $user->setLastName($setup->getAdminLastName());
       $user->setEmail($setup->getAdminEmail());
       $user->setPassword($setup->getAdminPassword());
-      $userManager->createUser($user);
+      $userFactory->createUser($user);
 
       return $this->redirect('/dashboard');
     }

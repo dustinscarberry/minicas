@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Resolver;
+namespace App\Service\Provider;
 
 use Symfony\Component\Ldap\Ldap;
 use Exception;
 
-class LDAPAttributeResolver
+class LDAPAttributeProvider
 {
   private $ldapHandle;
   private $ldapSearchBase;

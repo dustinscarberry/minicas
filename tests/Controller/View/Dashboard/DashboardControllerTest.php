@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\Controller\View;
+namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Tests\UserAuthTrait;
 
-class AccountControllerTest extends WebTestCase
+class DashboardControllerTest extends WebTestCase
 {
   use UserAuthTrait;
 
@@ -17,13 +17,13 @@ class AccountControllerTest extends WebTestCase
     $this->client = self::createClient();
   }
 
-  public function testView()
+  public function testHome()
   {
     // log test user in
     $this->loginUser('demo');
 
     // make request
-    $this->client->request('GET', '/dashboard/account');
+    $this->client->request('GET', '/dashboard');
 
     // assert valid response
     $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());

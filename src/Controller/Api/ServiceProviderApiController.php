@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Service\Manager\ServiceProviderManager;
+use App\Service\Factory\ServiceProviderFactory;
 
 class ServiceProviderApiController extends ApiController
 {
@@ -15,18 +15,18 @@ class ServiceProviderApiController extends ApiController
    */
   public function deleteServiceProvider(
     $hashId,
-    ServiceProviderManager $serviceProviderManager
+    ServiceProviderFactory $serviceProviderFactory
   )
   {
     // get service provider
-    $serviceProvider = $serviceProviderManager->getServiceProvider($hashId);
+    $serviceProvider = $serviceProviderFactory->getServiceProvider($hashId);
 
     // check for valid service provider
     if (!$serviceProvider)
       return $this->respondWithErrors(['Invalid data']);
 
     // delete service provider
-    $serviceProviderManager->deleteServiceProvider($serviceProvider);
+    $serviceProviderFactory->deleteServiceProvider($serviceProvider);
 
     return $this->respond($serviceProvider);
   }

@@ -2,11 +2,11 @@
 
 namespace App\Tests\Service\Manager;
 
-use App\Service\Manager\AttributeManager;
+use App\Service\Factory\AttributeFactory;
 use App\Entity\Attribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class AttributeManagerTest extends KernelTestCase
+class AttributeFactoryTest extends KernelTestCase
 {
   public function setUp(): void
   {
@@ -20,11 +20,11 @@ class AttributeManagerTest extends KernelTestCase
     $attribute->setFriendlyName('Test Attribute');
     $attribute->setAdAttribute('test_attribute');
 
-    $attributeManager = self::$container->get(AttributeManager::class);
-    $attributeManager->createAttribute($attribute);
+    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory->createAttribute($attribute);
 
     // fetch attribute from db
-    $result = $attributeManager->getAttribute($attribute->getHashId());
+    $result = $attributeFactory->getAttribute($attribute->getHashId());
 
     // assert is attribute
     $this->assertInstanceOf(Attribute::class, $result);
@@ -38,11 +38,11 @@ class AttributeManagerTest extends KernelTestCase
   public function testDeleteAttribute()
   {
     // get attribute
-    $attributeManager = self::$container->get(AttributeManager::class);
-    $result = $attributeManager->getAttribute('nm7Od6M1jqPBY');
+    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $result = $attributeFactory->getAttribute('nm7Od6M1jqPBY');
 
     // delete attribute
-    $attributeManager->deleteAttribute($result);
+    $attributeFactory->deleteAttribute($result);
 
     // assert attribute is deleted
     $this->assertTrue($result->getDeleted());
@@ -51,8 +51,8 @@ class AttributeManagerTest extends KernelTestCase
   public function testGetAttribute()
   {
     // get attribute
-    $attributeManager = self::$container->get(AttributeManager::class);
-    $result = $attributeManager->getAttribute('nm7Od6M1jqPBY');
+    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $result = $attributeFactory->getAttribute('nm7Od6M1jqPBY');
 
     // assert is attribute
     $this->assertInstanceOf(Attribute::class, $result);
@@ -61,8 +61,8 @@ class AttributeManagerTest extends KernelTestCase
   public function testGetAttributes()
   {
     // get attributes
-    $attributeManager = self::$container->get(AttributeManager::class);
-    $result = $attributeManager->getAttributes();
+    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $result = $attributeFactory->getAttributes();
 
     // asert attributes returned
     $this->assertIsArray($result);

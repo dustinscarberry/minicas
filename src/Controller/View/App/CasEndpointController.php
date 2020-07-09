@@ -18,9 +18,9 @@ use App\Exception\InvalidTicketException;
 use App\Exception\InvalidServiceException;
 use App\Exception\InvalidRequestException;
 use App\Service\Manager\CASManager;
-use App\Service\Manager\AuthenticatedSessionManager;
-use App\Service\Manager\AuthenticatedServiceManager;
-use App\Service\Manager\InvalidServiceManager;
+use App\Service\Factory\AuthenticatedSessionFactory;
+use App\Service\Factory\AuthenticatedServiceFactory;
+use App\Service\Factory\InvalidServiceFactory;
 use App\Model\AppConfig;
 
 class CasEndpointController extends AbstractController
@@ -32,9 +32,9 @@ class CasEndpointController extends AbstractController
     Request $req,
     SAML2Generator $saml2Generator,
     CASManager $casManager,
-    AuthenticatedSessionManager $authSessionManager,
-    AuthenticatedServiceManager $authServiceManager,
-    InvalidServiceManager $invalidServiceManager,
+    AuthenticatedSessionFactory $authSessionFactory,
+    AuthenticatedServiceFactory $authServiceFactory,
+    InvalidServiceFactory $invalidServiceFactory,
     AppConfig $appConfig
   )
   {
@@ -55,17 +55,17 @@ class CasEndpointController extends AbstractController
 
       // check for valid registered service
       if (!$registeredService) {
-        $invalidServiceManager->createInvalidService($service, $remoteIp);
+        $invalidServiceFactory->createInvalidService($service, $remoteIp);
         throw new InvalidServiceException('CAS service not registered or enabled');
       }
 
       //get valid session
-      $validSession = $authSessionManager->getSessionNotExpired($commonAuthCookie);
+      $validSession = $authSessionFactory->getSessionNotExpired($commonAuthCookie);
 
       if ($validSession)
       {
         //get matching authenticated service from authenticated session
-        $authenticatedService = $authServiceManager->getSessionService(
+        $authenticatedService = $authServiceFactory->getSessionService(
           $validSession,
           $registeredService
         );
@@ -87,14 +87,14 @@ class CasEndpointController extends AbstractController
         else
         {
           //create authenticated service
-          $sessionService = $authServiceManager->createService(
+          $sessionService = $authServiceFactory->createService(
             $registeredService,
             $validSession,
             $service
           );
 
           //map service attributes for authenticated service
-          $sessionService = $authServiceManager->mapServiceAttributes(
+          $sessionService = $authServiceFactory->mapServiceAttributes(
             $sessionService,
             $validSession->getUser()
           );
@@ -115,10 +115,10 @@ class CasEndpointController extends AbstractController
       else
       {
         //create authenticated session
-        $session = $authSessionManager->createSession($remoteIp);
+        $session = $authSessionFactory->createSession($remoteIp);
 
         //create authenticated service
-        $service = $authServiceManager->createService($registeredService, $session, $service);
+        $service = $authServiceFactory->createService($registeredService, $session, $service);
 
         //redirect based on idp type
         if ($registeredService->getIdentityProvider()->getType() == 'saml2')
@@ -322,18 +322,18 @@ class CasEndpointController extends AbstractController
   /**
    * @Route("/cas/logout")
    */
-  public function logout(Request $req, AuthenticatedSessionManager $authSessionManager)
+  public function logout(Request $req, AuthenticatedSessionFactory $authSessionFactory)
   {
     //get service and ticket params
     $service = $req->query->get('service');
     $commonAuthCookie = $req->cookies->get('commonauth');
 
     //get valid session
-    $validSession = $authSessionManager->getSessionNotExpired($commonAuthCookie);
+    $validSession = $authSessionFactory->getSessionNotExpired($commonAuthCookie);
 
     //delete session
     if ($validSession)
-      $authSessionManager->deleteSession($validSession);
+      $authSessionFactory->deleteSession($validSession);
 
     //redirect to service if provided
     if ($service)

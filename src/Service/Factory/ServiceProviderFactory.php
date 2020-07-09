@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\ServiceProvider;
 
-class ServiceProviderManager
+class ServiceProviderFactory
 {
   private $em;
 

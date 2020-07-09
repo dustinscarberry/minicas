@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Service\Manager\AuthenticatedSessionManager;
+use App\Service\Factory\AuthenticatedSessionFactory;
 
 class SessionApiController extends ApiController
 {
@@ -15,7 +15,7 @@ class SessionApiController extends ApiController
    */
   public function deleteSession(
     $hashId,
-    AuthenticatedSessionManager $sessionManager
+    AuthenticatedSessionFactory $sessionManager
   )
   {
     // get session

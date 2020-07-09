@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\IdentityProvider;
 
-class IdentityProviderManager
+class IdentityProviderFactory
 {
   private $em;
 

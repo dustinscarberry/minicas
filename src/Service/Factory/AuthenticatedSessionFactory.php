@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AuthenticatedSession;
 use App\Service\Generator\SAML2Generator;
 use App\Model\AppConfig;
 
-class AuthenticatedSessionManager
+class AuthenticatedSessionFactory
 {
   private $em;
   private $appConfig;

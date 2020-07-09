@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\View;
+namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;

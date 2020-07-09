@@ -7,14 +7,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Attribute;
 use App\Form\AttributeType;
-use App\Service\Manager\AttributeManager;
+use App\Service\Factory\AttributeFactory;
 
 class AttributeController extends AbstractController
 {
   /**
    * @Route("/dashboard/attributes", name="viewAttributes")
    */
-  public function view(AttributeManager $attrManager)
+  public function view(AttributeFactory $attrManager)
   {
     // get attributes
     $attributes = $attrManager->getAttributes();
@@ -27,7 +27,7 @@ class AttributeController extends AbstractController
   /**
    * @Route("/dashboard/attributes/add", name="addAttribute")
    */
-  public function add(Request $req, AttributeManager $attrManager)
+  public function add(Request $req, AttributeFactory $attrManager)
   {
     $attribute = new Attribute();
 
@@ -54,7 +54,7 @@ class AttributeController extends AbstractController
   /**
    * @Route("/dashboard/attributes/{hashId}", name="editAttribute")
    */
-  public function edit($hashId, Request $req, AttributeManager $attrManager)
+  public function edit($hashId, Request $req, AttributeFactory $attrManager)
   {
     // get attribute
     $attribute = $attrManager->getAttribute($hashId);

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Controller\View;
+namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use App\Service\Manager\AttributeManager;
+use App\Service\Factory\AttributeFactory;
 use App\Tests\UserAuthTrait;
 
 class AttributeControllerTest extends WebTestCase
@@ -72,8 +72,8 @@ class AttributeControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
     // get attribute to validate changes
-    $attributeManager = self::$container->get(AttributeManager::class);
-    $attribute = $attributeManager->getAttribute('47Dg5J3K3o0Kj');
+    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attribute = $attributeFactory->getAttribute('47Dg5J3K3o0Kj');
 
     // assert changes
     $this->assertEquals($attribute->getFriendlyName(), 'Demo Attribute');

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\Controller\View;
+namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Tests\UserAuthTrait;
 
-class InvalidServiceControllerTest extends WebTestCase
+class AccountControllerTest extends WebTestCase
 {
   use UserAuthTrait;
 
@@ -17,13 +17,13 @@ class InvalidServiceControllerTest extends WebTestCase
     $this->client = self::createClient();
   }
 
-  public function testViewAll()
+  public function testView()
   {
     // log test user in
     $this->loginUser('demo');
 
     // make request
-    $this->client->request('GET', '/dashboard/invalidservices');
+    $this->client->request('GET', '/dashboard/account');
 
     // assert valid response
     $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());

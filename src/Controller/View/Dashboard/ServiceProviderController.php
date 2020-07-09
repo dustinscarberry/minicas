@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\ServiceProvider;
 use App\Form\ServiceProviderType;
-use App\Service\Manager\ServiceProviderManager;
+use App\Service\Factory\ServiceProviderFactory;
 
 class ServiceProviderController extends AbstractController
 {
@@ -30,7 +30,7 @@ class ServiceProviderController extends AbstractController
   /**
    * @Route("/dashboard/serviceproviders/add", name="addServiceProvider")
    */
-  public function add(Request $req, ServiceProviderManager $spManager)
+  public function add(Request $req, ServiceProviderFactory $spManager)
   {
     // create service provider object
     $serviceProvider = new ServiceProvider();
@@ -59,7 +59,7 @@ class ServiceProviderController extends AbstractController
   /**
    * @Route("/dashboard/serviceproviders/{hashId}", name="editServiceProvider")
    */
-  public function edit($hashId, Request $req, ServiceProviderManager $spManager)
+  public function edit($hashId, Request $req, ServiceProviderFactory $spManager)
   {
     // get service provider
     $serviceProvider = $this->getDoctrine()

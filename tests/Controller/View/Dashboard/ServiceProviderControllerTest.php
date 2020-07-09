@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Controller\View;
+namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use App\Service\Manager\ServiceProviderManager;
+use App\Service\Factory\ServiceProviderFactory;
 use App\Tests\UserAuthTrait;
 
 class ServiceProviderControllerTest extends WebTestCase
@@ -90,8 +90,8 @@ class ServiceProviderControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
     // get service provider to validate changes
-    $serviceProviderManager = self::$container->get(ServiceProviderManager::class);
-    $serviceProvider = $serviceProviderManager->getServiceProvider('w2PwYJXRW4nqZ');
+    $serviceProviderFactory = self::$container->get(ServiceProviderFactory::class);
+    $serviceProvider = $serviceProviderFactory->getServiceProvider('w2PwYJXRW4nqZ');
 
     // assert changes
     $this->assertEquals($serviceProvider->getName(), 'Demo Service Provider Updated');
