@@ -14,7 +14,6 @@ use App\Model\SAML2Response;
 use App\Service\Factory\AuthenticatedSessionFactory;
 use App\Service\Factory\AuthenticatedServiceFactory;
 use App\Service\Manager\CASManager;
-use App\Service\Manager\ToolboxManager;
 
 class AppEndpointController extends AbstractController
 {
@@ -25,14 +24,13 @@ class AppEndpointController extends AbstractController
     Request $req,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
-    CASManager $casManager,
-    ToolboxManager $toolboxManager
+    CASManager $casManager
   )
   {
     try
     {
       //run cron session cleanup if needed
-      $toolboxManager->cleanupExpiredSessions();
+      $authSessionFactory->cleanupExpiredSessions();
 
       //start processing saml response
       $samlResponseData = $req->request->get('SAMLResponse');

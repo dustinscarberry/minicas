@@ -20,6 +20,7 @@ use App\Exception\InvalidRequestException;
 use App\Service\Manager\CASManager;
 use App\Service\Factory\AuthenticatedSessionFactory;
 use App\Service\Factory\AuthenticatedServiceFactory;
+use App\Service\Factory\ServiceProviderFactory;
 use App\Service\Factory\InvalidServiceFactory;
 use App\Model\AppConfig;
 
@@ -34,6 +35,7 @@ class CasEndpointController extends AbstractController
     CASManager $casManager,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
+    ServiceProviderFactory $serviceProviderFactory,
     InvalidServiceFactory $invalidServiceFactory,
     AppConfig $appConfig
   )
@@ -51,7 +53,7 @@ class CasEndpointController extends AbstractController
         $remoteIp = $req->server->get('REMOTE_ADDR');
 
       // get registered service
-      $registeredService = $casManager->getServiceIfRegistered($service);
+      $registeredService = $serviceProviderFactory->getServiceIfRegistered($service);
 
       // check for valid registered service
       if (!$registeredService) {

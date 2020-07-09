@@ -4,6 +4,7 @@ namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Service\Generator\UtilityGenerator;
 use App\Entity\ServiceProvider;
 
 class ServiceProviderFactory
@@ -54,5 +55,33 @@ class ServiceProviderFactory
     return $this->em
       ->getRepository(ServiceProvider::class)
       ->findAll();
+  }
+
+  public function getServiceIfRegistered(string $service)
+  {
+    // normalize service for lookup
+    $cleanedService = UtilityGenerator::cleanService($service);
+
+    // get all services to compare with
+    $registeredServices = $this->em
+      ->getRepository(ServiceProvider::class)
+      ->findAll();
+
+    // find matching service provider
+    foreach ($registeredServices as $registeredService)
+    {
+      $identifier = UtilityGenerator::cleanService($registeredService->getIdentifier());
+
+      if (
+        $cleanedService == $identifier
+          && $registeredService->getEnabled()
+        || $registeredService->getDomainIdentifier()
+          && strpos($cleanedService, strtok($identifier, '/')) === 0
+          && $registeredService->getEnabled()
+      )
+        return $registeredService;
+    }
+
+    return null;
   }
 }

@@ -49,6 +49,30 @@ class AuthenticatedSessionFactory
     $this->em->flush();
   }
 
+  public function cleanupExpiredSessions()
+  {
+    $currentTime = time();
+    $startTime = strtotime('23:00:00');
+    $endTime = $startTime + 3600;
+
+    if ($currentTime < $startTime || $currentTime > $endTime)
+      return;
+
+    if ($this->appConfig->getAutoDeleteExpiredSessions() == 0)
+      return;
+
+    $deleteBefore = $currentTime - ($this->appConfig->getAutoDeleteExpiredSessions() * 86400);
+
+    $sessions = $this->em
+      ->getRepository(AuthenticatedSession::class)
+      ->findAllOldSessions($deleteBefore);
+
+    foreach ($sessions as $session)
+      $this->em->remove($session);
+
+    $this->em->flush();
+  }
+
   //returns a valid authenticated session if found or null if not
   public function getSession(string $hashId)
   {
