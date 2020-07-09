@@ -17,7 +17,7 @@ use App\Model\CAS2Response;
 use App\Exception\InvalidTicketException;
 use App\Exception\InvalidServiceException;
 use App\Exception\InvalidRequestException;
-use App\Service\Manager\CASManager;
+use App\Service\Factory\CasTicketFactory;
 use App\Service\Factory\AuthenticatedSessionFactory;
 use App\Service\Factory\AuthenticatedServiceFactory;
 use App\Service\Factory\ServiceProviderFactory;
@@ -32,7 +32,7 @@ class CasEndpointController extends AbstractController
   public function casLogin(
     Request $req,
     SAML2Generator $saml2Generator,
-    CASManager $casManager,
+    CasTicketFactory $casTicketFactory,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
     ServiceProviderFactory $serviceProviderFactory,
@@ -75,7 +75,7 @@ class CasEndpointController extends AbstractController
         if ($authenticatedService)
         {
           //create new cas ticket
-          $casTicket = $casManager->createTicket($authenticatedService);
+          $casTicket = $casTicketFactory->createTicket($authenticatedService);
 
           //get cas redirect url
           $redirectURL = CASGenerator::getTicketRedirectUrl(
@@ -102,7 +102,7 @@ class CasEndpointController extends AbstractController
           );
 
           //create new cas ticket
-          $casTicket = $casManager->createTicket($sessionService);
+          $casTicket = $casTicketFactory->createTicket($sessionService);
 
           //get cas redirect url
           $redirectURL = CASGenerator::getTicketRedirectUrl(
@@ -165,7 +165,7 @@ class CasEndpointController extends AbstractController
         throw new InvalidRequestException("'service' and 'ticket' parameters are both required");
 
       //validate cas ticket and service
-      $validCasTicket = $casManager->validateTicket($ticket, $service);
+      $validCasTicket = $casTicketFactory->validateTicket($ticket, $service);
 
       //get authenticated user, service override or session default
       if ($validCasTicket->getService()->getAttributes()['user'])
@@ -202,7 +202,7 @@ class CasEndpointController extends AbstractController
   /**
    * @Route("/cas/p3/serviceValidate")
    */
-  public function serviceValidateP3(Request $req, CASManager $casManager)
+  public function serviceValidateP3(Request $req, CasTicketFactory $casTicketFactory)
   {
     try
     {
@@ -215,7 +215,7 @@ class CasEndpointController extends AbstractController
         throw new InvalidRequestException("'service' and 'ticket' parameters are both required");
 
       //validate cas ticket and service
-      $validCasTicket = $casManager->validateTicket($ticket, $service);
+      $validCasTicket = $casTicketFactory->validateTicket($ticket, $service);
 
       //get authenticated user, service override or session default
       if ($validCasTicket->getService()->getAttributes()->user)
@@ -253,7 +253,7 @@ class CasEndpointController extends AbstractController
   /**
    * @Route("/cas/samlValidate", methods={"POST"})
    */
-  public function samlValidate(Request $req, CASManager $casManager)
+  public function samlValidate(Request $req, CasTicketFactory $casTicketFactory)
   {
     try
     {
@@ -275,7 +275,7 @@ class CasEndpointController extends AbstractController
         throw new InvalidRequestException("'TARGET' and SAMLRequest parameters are both required");
 
       //validate cas ticket and service
-      $validCasTicket = $casManager->validateTicket($ticket, $service);
+      $validCasTicket = $casTicketFactory->validateTicket($ticket, $service);
 
       //get authenticated user, service override or session default
       if ($validCasTicket->getService()->getAttributes()->user)

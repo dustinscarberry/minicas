@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Manager;
+namespace App\Service\Factory;
 
 use App\Service\Generator\CASGenerator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,7 +10,7 @@ use App\Model\AppConfig;
 use App\Exception\InvalidTicketException;
 use App\Exception\InvalidServiceException;
 
-class CASManager
+class CasTicketFactory
 {
   private $em;
   private $appConfig;

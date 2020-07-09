@@ -13,7 +13,7 @@ use App\Service\Generator\AuthGenerator;
 use App\Model\SAML2Response;
 use App\Service\Factory\AuthenticatedSessionFactory;
 use App\Service\Factory\AuthenticatedServiceFactory;
-use App\Service\Manager\CASManager;
+use App\Service\Factory\CasTicketFactory;
 
 class AppEndpointController extends AbstractController
 {
@@ -24,7 +24,7 @@ class AppEndpointController extends AbstractController
     Request $req,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
-    CASManager $casManager
+    CasTicketFactory $casTicketFactory
   )
   {
     try
@@ -79,7 +79,7 @@ class AppEndpointController extends AbstractController
       if ($serviceType == 'cas')
       {
         //create new cas ticket
-        $casTicket = $casManager->createTicket($authenticatedService);
+        $casTicket = $casTicketFactory->createTicket($authenticatedService);
 
         //get cas redirect url
         $redirectURL = CASGenerator::getTicketRedirectUrl(
