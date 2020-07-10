@@ -5,9 +5,20 @@ namespace App\Service\Generator;
 use Symfony\Component\HttpFoundation\Cookie;
 use App\Service\Provider\LDAPAttributeProvider;
 
+/**
+ * Authentication helper
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class AuthGenerator
 {
-  // create a commonauth cookie
+  /**
+   * Return commonauth cookie
+   *
+   * @param string $token
+   * @return Cookie
+   */
   public static function createCommonAuthCookie(string $token)
   {
     $cookieDomain = str_replace('https://', '', $_ENV['APP_HOST']);
