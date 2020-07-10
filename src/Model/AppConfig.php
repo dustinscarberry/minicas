@@ -5,30 +5,25 @@ namespace App\Model;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Setting;
 
+/**
+ * Application settings model
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class AppConfig
 {
-  private $locale = 'en';
-  private $language = 'en';
-  private $siteName = 'DAS';
-  private $siteTimezone = 'America/New_York';
-  private $sessionTimeout = 60;
-  private $casTicketTimeout = 1;
-  private $autoDeleteExpiredSessions = 0;
-  private $isProvisioned = false;
-
   private $em;
 
-  // settings to monitor, all setting keys must be present
-  // in array to load and save correctly
   private $settingList = [
-    'locale',
-    'language',
-    'siteName',
-    'siteTimezone',
-    'sessionTimeout',
-    'casTicketTimeout',
-    'autoDeleteExpiredSessions',
-    'isProvisioned'
+    'locale' => 'en',
+    'language' => 'en',
+    'siteName' => 'DAS',
+    'siteTimezone' => 'America/New_York',
+    'sessionTimeout' => 60,
+    'casTicketTimeout' => 1,
+    'autoDeleteExpiredSessions' => 0,
+    'isProvisioned' => false
   ];
 
   public function __construct(EntityManagerInterface $em)
@@ -39,89 +34,89 @@ class AppConfig
 
   public function getLanguage(): string
   {
-    return $this->language;
+    return $this->settingList['language'];
   }
 
   public function setLanguage(string $language): self
   {
-    $this->language = $language;
+    $this->settingList['language'] = $language;
     return $this;
   }
 
   public function getLocale(): string
   {
-    return $this->locale;
+    return $this->settingList['locale'];
   }
 
   public function setLocale(string $locale): self
   {
-    $this->locale = $locale;
+    $this->settingList['locale'] = $locale;
     return $this;
   }
 
   public function getSiteName(): ?string
   {
-    return $this->siteName;
+    return $this->settingList['siteName'];
   }
 
   public function setSiteName(?string $siteName): self
   {
-    $this->siteName = $siteName;
+    $this->settingList['siteName'] = $siteName;
     return $this;
   }
 
   public function getSiteTimezone(): string
   {
-    return $this->siteTimezone;
+    return $this->settingList['siteTimezone'];
   }
 
   public function setSiteTimezone(string $siteTimezone): self
   {
-    $this->siteTimezone = $siteTimezone;
+    $this->settingList['siteTimezone'] = $siteTimezone;
     return $this;
   }
 
   public function getSessionTimeout(): int
   {
-    return $this->sessionTimeout;
+    return $this->settingList['sessionTimeout'];
   }
 
   public function setSessionTimeout(int $sessionTimeout): self
   {
-    $this->sessionTimeout = $sessionTimeout;
+    $this->settingList['sessionTimeout'] = $sessionTimeout;
     return $this;
   }
 
   public function getCasTicketTimeout(): int
   {
-    return $this->casTicketTimeout;
+    return $this->settingList['casTicketTimeout'];
   }
 
   public function setCasTicketTimeout(int $casTicketTimeout): self
   {
-    $this->casTicketTimeout = $casTicketTimeout;
+    $this->settingList['casTicketTimeout'] = $casTicketTimeout;
     return $this;
   }
 
   public function getAutoDeleteExpiredSessions(): int
   {
-    return $this->autoDeleteExpiredSessions;
+    return $this->settingList['autoDeleteExpiredSessions'];
   }
 
   public function setAutoDeleteExpiredSessions(int $autoDelete): self
   {
-    $this->autoDeleteExpiredSessions = $autoDelete;
+    $this->settingList['autoDeleteExpiredSessions'] = $autoDelete;
     return $this;
   }
 
   public function getIsProvisioned(): bool
   {
-    return $this->isProvisioned;
+    return $this->settingList['isProvisioned'];
   }
 
   public function setIsProvisioned(bool $isProvisioned): self
   {
-    $this->isProvisioned = $isProvisioned;
+    $this->settingList['isProvisioned'] = $isProvisioned;
     return $this;
   }
 
@@ -134,7 +129,7 @@ class AppConfig
 
     foreach ($allSettings as $setting) {
       $settingName = $setting->getName();
-      $this->$settingName = $setting->getValue();
+      $this->settingList[$settingName] = $setting->getValue();
     }
 
     return $this;
@@ -145,7 +140,7 @@ class AppConfig
   {
     $repository = $this->em->getRepository(Setting::class);
 
-    foreach ($this->settingList as $key) {
+    foreach ($this->settingList as $key => $value) {
       $setting = $repository->findOneByName($key);
 
       if (!$setting) {
@@ -154,7 +149,7 @@ class AppConfig
         $this->em->persist($setting);
       }
 
-      $setting->setValue($this->$key);
+      $setting->setValue($value);
     }
 
     $this->em->flush();
