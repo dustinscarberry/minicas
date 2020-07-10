@@ -2,6 +2,12 @@
 
 namespace App\Model;
 
+/**
+ * CAS Error xml response model
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class CASError
 {
   private $type;

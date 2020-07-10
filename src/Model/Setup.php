@@ -2,6 +2,12 @@
 
 namespace App\Model;
 
+/**
+ * Setup page model
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class Setup
 {
   private $adminUsername;
