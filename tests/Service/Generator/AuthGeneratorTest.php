@@ -18,11 +18,4 @@ class AuthGeneratorTest extends TestCase
     $this->assertEquals('commonauth', $result->getName());
     $this->assertEquals('xxx', $result->getValue());
   }
-
-  //public function testResolveAttributes()
-  //{
-    //$result = AuthGenerator::resolveAttributes(
-    //
-    //);
-  //}
 }
