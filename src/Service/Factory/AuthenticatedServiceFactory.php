@@ -9,6 +9,12 @@ use App\Entity\ServiceProvider;
 use App\Service\Generator\SAML2Generator;
 use App\Service\Generator\AuthGenerator;
 
+/**
+ * Factory class to work with Authenticated Services
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class AuthenticatedServiceFactory
 {
   private $em;
@@ -18,7 +24,13 @@ class AuthenticatedServiceFactory
     $this->em = $em;
   }
 
-  //create new authenticated service
+  /** Create new AuthenticatedService
+   *
+   * @param ServiceProvider $serviceProvider
+   * @param AuthenticatedSession $authenticatedSession
+   * @param string $replyTo
+   * @return AuthenticatedService
+   */
   public function createService(
     ServiceProvider $serviceProvider,
     AuthenticatedSession $authenticatedSession,
@@ -39,7 +51,12 @@ class AuthenticatedServiceFactory
     return $service;
   }
 
-  //get authenticated service by tracking id
+  /**
+   * Get AuthenticatedService by tracking id
+   *
+   * @param string $trackingId
+   * @return AuthenticatedService|null
+   */
   public function getServiceByTrackingId($trackingId)
   {
     return $this->em
@@ -47,29 +64,34 @@ class AuthenticatedServiceFactory
       ->findByTrackingId($trackingId);
   }
 
-  //update authenticated service with attribute mappings for username
+  /**
+   * Update AuthenticatedService with attribute mappings from LDAP
+   * @param AuthenticatedService $authenticatedService
+   * @param string $username
+   * @return AuthenticatedService
+   */
   public function mapServiceAttributes(
     AuthenticatedService $authenticatedService,
     string $username
   )
   {
-    //get service provider ref
+    // get service provider ref
     $serviceProvider = $authenticatedService->getService();
 
-    //get attribute mappings of service provider
+    // get attribute mappings of service provider
     $attributeMappings = $serviceProvider->getAttributeMappings();
-    //get identity provider user filter
+    // get identity provider user filter
     $userFilterAttributeMapping = $serviceProvider->getIdentityProvider()
       ->getUserAttributeMapping()
       ->getAdAttribute();
 
-    //get user attribute override mapping for service provider if specified
+    // get user attribute override mapping for service provider if specified
     if ($serviceProvider->getUserAttribute())
       $userAttributeMapping = $registeredService->getUserAttribute()->getAdAttribute();
     else
       $userAttributeMapping = null;
 
-    //get mapped attributes for authenticated user
+    // get mapped attributes for authenticated user
     $mappedAttributes = AuthGenerator::resolveAttributes(
       $username,
       $userFilterAttributeMapping,
@@ -77,16 +99,21 @@ class AuthenticatedServiceFactory
       $userAttributeMapping
     );
 
-    //update user session
+    // update user session
     $authenticatedService->setAttributes($mappedAttributes);
     $this->em->flush();
 
-    //return updated authenticated service
+    // return updated authenticated service
     return $authenticatedService;
   }
 
-
-  //returns a valid authenticated service from a session if found or null if not
+  /**
+   * Return a valid AuthenticatedService from a session if found
+   *
+   * @param AuthenticatedSession $authenticatedSession
+   * @param ServiceProvider $serviceProvider
+   * @return AuthenticatedService|null
+   */
   public function getSessionService(
     AuthenticatedSession $authenticatedSession,
     ServiceProvider $serviceProvider

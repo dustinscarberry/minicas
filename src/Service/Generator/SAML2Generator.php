@@ -8,14 +8,29 @@ use LightSaml\Model\Assertion\Issuer;
 use LightSaml\SamlConstants;
 use DateTime;
 
+/**
+ * Generate information related to SAML2
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class SAML2Generator
 {
+  /**
+   * Return SAML2 login request URL
+   *
+   * @param string $id
+   * @param string $loginUrl
+   * @param string $issuer
+   * @param string $consumerUrl
+   * @return string
+   */
   public static function getRequestURL(
-    $id = '',
-    $loginUrl = 'https://example.com/saml2',
-    $issuer = 'urn:example.com',
-    $consumerUrl = 'https://example.com'
-  )
+    string $id = '',
+    string $loginUrl = 'https://example.com/saml2',
+    string $issuer = 'urn:example.com',
+    string $consumerUrl = 'https://example.com'
+  ): string
   {
     $request = new AuthnRequest();
     $request
@@ -35,7 +50,12 @@ class SAML2Generator
     return $loginUrl . '?SAMLRequest=' . $samlEncoded;
   }
 
-  public static function generateID()
+  /**
+   * Return SAML2 ID token
+   *
+   * @return string
+   */
+  public static function generateID(): string
   {
     return 'id_' . bin2hex(openssl_random_pseudo_bytes(24));
   }

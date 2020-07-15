@@ -9,14 +9,32 @@ use App\Exception\InvalidServiceException;
 use App\Exception\InvalidRequestException;
 use Exception;
 
+/**
+ * Generate information for CAS
+ *
+ * @package DAS
+ * @author Dustin Scarberry <dustin@codeclouds.net>
+ */
 class CASGenerator
 {
-  public static function generateTicket()
+  /**
+   * Return new CAS Ticket token
+   *
+   * @return string
+   */
+  public static function generateTicket(): string
   {
     return 'ST-' . bin2hex(openssl_random_pseudo_bytes(12));
   }
 
-  public static function getTicketRedirectUrl(string $replyToUrl, string $ticket)
+  /**
+   * Return CAS Ticket reply URL
+   *
+   * @param string $replyToUrl
+   * @param string $ticket
+   * @return string
+   */
+  public static function getTicketRedirectUrl(string $replyToUrl, string $ticket): string
   {
     $urlParts = parse_url($replyToUrl);
 
@@ -30,7 +48,13 @@ class CASGenerator
     return $url;
   }
 
-  public static function getErrorResponse(Exception $e)
+  /**
+   * Return CAS error xml response
+   *
+   * @param Exception $e
+   * @return string
+   */
+  public static function getErrorResponse(Exception $e): string
   {
     $type = get_class($e);
 
