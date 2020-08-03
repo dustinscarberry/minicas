@@ -33,7 +33,7 @@ class AuthGenerator
       true,
       true,
       false,
-      'strict'
+      'lax'
     );
   }
 
