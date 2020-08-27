@@ -31,23 +31,21 @@
 
             {% for session in sessions %}
             <tr data-id="{{ session.hashid }}">
-              <td>
+              <td class="active-session-toggledetails">
 
                 {% if session.user is empty %}
                   [Incomplete Session]
                 {% else %}
                   {{ session.user }}
-                  <i class="fas fa-caret-down active-session-toggledetails"></i>
+                  <i class="fas fa-caret-down active-session-toggledetails-caret"></i>
                   <div class="is-hidden active-session-details" style="margin-top: 1.5rem; padding-left: 2rem;">
-                    <h3>Authenticated Services</h3>
-
                     {% for service in session.authenticatedServices %}
 
-                      <div class="active-session-service">
+                      <div class="active-session-service active-service-toggleresponse">
                         <span>- {{ service.service.name }}</span>
                         <span>| {{ service.created|date("m/d/Y g:ia", config.siteTimezone) }}</span>
-                        <i class="fas fa-caret-down active-service-toggleresponse"></i>
-                        <pre class="is-hidden active-service-response">{{ service.attributes|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                        <i class="fas fa-caret-down active-service-toggleresponse-caret"></i>
+                        <pre class="active-service-response">{{ service.attributes|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
                       </div>
 
                     {% endfor %}

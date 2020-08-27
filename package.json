@@ -1,9 +1,9 @@
 {
     "devDependencies": {
-        "@babel/polyfill": "^7.4.4",
-        "@symfony/webpack-encore": "^0.22.0",
-        "core-js": "^2.6.9",
-        "webpack-notifier": "^1.6.0"
+        "@babel/polyfill": "^7.10.4",
+        "@symfony/webpack-encore": "^0.22.4",
+        "core-js": "^2.6.11",
+        "webpack-notifier": "^1.8.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -12,10 +12,10 @@
         "prod": "encore production --progress"
     },
     "dependencies": {
-        "axios": "^0.18.0",
+        "axios": "^0.18.1",
         "classnames": "^2.2.6",
-        "immutability-helper": "^3.0.0",
-        "node-sass": "^4.11.0",
-        "sass-loader": "^7.1.0"
+        "immutability-helper": "^3.1.1",
+        "node-sass": "^4.14.1",
+        "sass-loader": "^7.3.1"
     }
 }

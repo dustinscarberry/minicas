@@ -59,13 +59,12 @@ $(document).ready(function(){
   // active session details toggle
   $('.active-session-toggledetails').click(function(){
     $(this).toggleClass('is-open');
-    $(this).next('.active-session-details').toggleClass('is-hidden');
   });
 
   // active session service details toggle
-  $('.active-service-toggleresponse').click(function(){
+  $('.active-session-service').click(function(){
+    event.stopPropagation();
     $(this).toggleClass('is-open');
-    $(this).next('.active-service-response').toggleClass('is-hidden');
   });
 
   // invalid form fields

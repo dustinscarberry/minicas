@@ -382,7 +382,7 @@
   font-size: 2rem;
 }
 
-//header profile menu
+// header profile menu
 .dashboard-profile{
   float: right;
   padding-right: 3rem;
@@ -404,6 +404,12 @@
     vertical-align: middle;
     cursor: pointer;
     box-sizing: border-box;
+  }
+
+  .profile-avatar-caret {
+    font-size: 2rem;
+    padding-left: .3rem;
+    color: #eee;
   }
 
   .profile-menu{
@@ -448,13 +454,17 @@
       border-color: #eee;
     }
 
+    .profile-avatar-caret::before {
+      content: "\f0d8"
+    }
+
     .profile-menu{
       display: block;
     }
   }
 }
 
-//modals
+// modals
 .modal{
   position: fixed;
   top: 0;
@@ -640,21 +650,51 @@
   border-radius: .25rem;
 }
 
-
-
 // active sessions and services
-.active-session-toggledetails,
-.active-service-toggleresponse {
+.active-session-toggledetails {
   cursor: pointer;
-  font-size: 2rem;
-  padding-left: .5rem;
 
-  &.is-open::before {
-    content: "\f0d8"
+  .active-session-toggledetails-caret {
+    font-size: 2rem;
+    padding-left: .5rem;
+  }
+
+  .active-session-details {
+    margin-top: 1.5rem;
+    padding-left: 2rem;
+    display: none;
+  }
+
+  &.is-open {
+    .active-session-toggledetails-caret::before {
+      content: "\f0d8";
+    }
+
+    .active-session-details {
+      display: block;
+    }
   }
 }
 
-.active-session-details {
-  margin-top: 1.5rem;
-  padding-left: 2rem;
+.active-service-toggleresponse {
+  cursor: pointer;
+
+  .active-service-toggleresponse-caret {
+    font-size: 2rem;
+    padding-left: .5rem;
+  }
+
+  .active-service-response {
+    display: none;
+  }
+
+  &.is-open {
+    .active-service-toggleresponse-caret::before {
+      content: "\f0d8";
+    }
+
+    .active-service-response {
+      display: block;
+    }
+  }
 }
