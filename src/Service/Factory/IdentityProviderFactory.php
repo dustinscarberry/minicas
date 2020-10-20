@@ -28,7 +28,7 @@ class IdentityProviderFactory
 
   public function deleteIdentityProvider(IdentityProvider $identityProvider)
   {
-    $this->em->remove($identityProvider);
+    $identityProvider->setDeleted(true);
     $this->em->flush();
   }
 
@@ -43,6 +43,6 @@ class IdentityProviderFactory
   {
     return $this->em
       ->getRepository(IdentityProvider::class)
-      ->findAll();
+      ->findAllNotDeleted();
   }
 }

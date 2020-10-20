@@ -65,6 +65,11 @@ class ServiceProvider
   /**
    * @ORM\Column(type="boolean")
    */
+  private $deleted;
+
+  /**
+   * @ORM\Column(type="boolean")
+   */
   private $domainIdentifier;
 
   public function __construct()
@@ -80,6 +85,15 @@ class ServiceProvider
   {
     if (!$this->hashId)
       $this->hashId = HashIdGenerator::generate();
+  }
+
+  /**
+   * @ORM\PrePersist
+   */
+  public function setDefaults()
+  {
+    if (!$this->deleted)
+      $this->deleted = false;
   }
 
   public function getId(): ?int
@@ -191,6 +205,17 @@ class ServiceProvider
   public function setEnabled(bool $enabled): self
   {
     $this->enabled = $enabled;
+    return $this;
+  }
+
+  public function getDeleted(): ?bool
+  {
+    return $this->deleted;
+  }
+
+  public function setDeleted(bool $deleted): self
+  {
+    $this->deleted = $deleted;
     return $this;
   }
 

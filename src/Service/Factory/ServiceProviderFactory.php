@@ -39,7 +39,7 @@ class ServiceProviderFactory
 
   public function deleteServiceProvider($serviceProvider)
   {
-    $this->em->remove($serviceProvider);
+    $serviceProvider->setDeleted(true);
     $this->em->flush();
   }
 
@@ -54,7 +54,7 @@ class ServiceProviderFactory
   {
     return $this->em
       ->getRepository(ServiceProvider::class)
-      ->findAll();
+      ->findAllNotDeleted();
   }
 
   public function getServiceIfRegistered(string $service)

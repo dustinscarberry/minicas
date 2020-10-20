@@ -19,7 +19,7 @@ class IdentityProviderController extends AbstractController
     // get identity providers
     $identityProviders = $this->getDoctrine()
       ->getRepository(IdentityProvider::class)
-      ->findAll();
+      ->findAllNotDeleted();
 
     return $this->render('dashboard/identityprovider/viewall.html.twig', [
       'identityProviders' => $identityProviders

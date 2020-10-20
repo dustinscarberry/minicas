@@ -52,6 +52,11 @@ class IdentityProvider
   private $certificate;
 
   /**
+   * @ORM\Column(type="boolean")
+   */
+  private $deleted;
+
+  /**
    * @ORM\OneToMany(targetEntity="App\Entity\ServiceProvider", mappedBy="identityProvider")
    */
   private $serviceProviders;
@@ -74,6 +79,15 @@ class IdentityProvider
   {
     if (!$this->hashId)
       $this->hashId = HashIdGenerator::generate();
+  }
+
+  /**
+   * @ORM\PrePersist
+   */
+  public function setDefaults()
+  {
+    if (!$this->deleted)
+      $this->deleted = false;
   }
 
   public function getId(): ?int
@@ -141,9 +155,9 @@ class IdentityProvider
     return $this->certificate;
   }
 
-  //remove cert base64 headers
   public function getCertificateData(): ?string
   {
+    // remove cert base64 headers
     $cert = str_replace("-----BEGIN CERTIFICATE-----", '', $this->certificate);
     $cert = str_replace("-----END CERTIFICATE-----", '', $cert);
     $cert = str_replace("\r\n", '', $cert);
@@ -153,6 +167,17 @@ class IdentityProvider
   public function setCertificate(?string $certificate): self
   {
     $this->certificate = $certificate;
+    return $this;
+  }
+
+  public function getDeleted(): ?bool
+  {
+    return $this->deleted;
+  }
+
+  public function setDeleted(bool $deleted): self
+  {
+    $this->deleted = $deleted;
     return $this;
   }
 

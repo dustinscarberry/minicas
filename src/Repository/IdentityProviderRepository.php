@@ -26,8 +26,22 @@ class IdentityProviderRepository extends ServiceEntityRepository
     {
       return $this->createQueryBuilder('i')
         ->andWhere('i.hashId = :hashId')
+        ->andWhere('i.deleted = :deleted')
         ->setParameter('hashId', $hashId)
+        ->setParameter('deleted', false)
         ->getQuery()
         ->getOneOrNullResult();
+    }
+
+    /**
+      * @return IdentityProvider[] Returns array of IdentityProvider objects not deleted
+    */
+    public function findAllNotDeleted()
+    {
+      return $this->createQueryBuilder('i')
+        ->andWhere('i.deleted = :deleted')
+        ->setParameter('deleted', false)
+        ->getQuery()
+        ->getResult();
     }
 }

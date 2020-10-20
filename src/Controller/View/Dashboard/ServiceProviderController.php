@@ -20,7 +20,7 @@ class ServiceProviderController extends AbstractController
     // get service providers
     $serviceProviders = $this->getDoctrine()
       ->getRepository(ServiceProvider::class)
-      ->findAll();
+      ->findAllNotDeleted();
 
     return $this->render('dashboard/serviceprovider/viewall.html.twig', [
       'serviceProviders' => $serviceProviders

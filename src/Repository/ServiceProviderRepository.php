@@ -26,9 +26,23 @@ class ServiceProviderRepository extends ServiceEntityRepository
     {
       return $this->createQueryBuilder('s')
         ->andWhere('s.hashId = :hashId')
+        ->andWhere('s.deleted = :deleted')
         ->setParameter('hashId', $hashId)
+        ->setParameter('deleted', false)
         ->getQuery()
         ->getOneOrNullResult();
+    }
+
+    /**
+      * @return ServiceProvider[] Returns array of ServiceProvider objects not deleted
+    */
+    public function findAllNotDeleted()
+    {
+      return $this->createQueryBuilder('s')
+        ->andWhere('s.deleted = :deleted')
+        ->setParameter('deleted', false)
+        ->getQuery()
+        ->getResult();
     }
 
     /**
@@ -38,7 +52,9 @@ class ServiceProviderRepository extends ServiceEntityRepository
     {
       return $this->createQueryBuilder('s')
         ->andWhere('s.identifier LIKE :identifier')
+        ->andWhere('s.deleted = :deleted')
         ->setParameter('identifier', '%' . $identifier . '%')
+        ->setParameter('deleted', false)
         ->getQuery()
         ->getOneOrNullResult();
     }
