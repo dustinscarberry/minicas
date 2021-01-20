@@ -152,7 +152,7 @@ class CasEndpointController extends AbstractController
   /**
    * @Route("/cas/serviceValidate")
    */
-  public function serviceValidate(Request $req)
+  public function serviceValidate(Request $req, CasTicketFactory $casTicketFactory)
   {
     try
     {
