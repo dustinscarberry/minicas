@@ -68,9 +68,9 @@ class ServiceProvider
   private $deleted;
 
   /**
-   * @ORM\Column(type="boolean")
+   * @ORM\Column(type="string", length=255)
    */
-  private $domainIdentifier;
+  private $matchMethod;
 
   public function __construct()
   {
@@ -219,14 +219,15 @@ class ServiceProvider
     return $this;
   }
 
-  public function getDomainIdentifier(): ?bool
+  public function getMatchMethod(): ?string
   {
-    return $this->domainIdentifier;
+      return $this->matchMethod;
   }
 
-  public function setDomainIdentifier(bool $domainIdentifier): self
+  public function setMatchMethod(string $matchMethod): self
   {
-    $this->domainIdentifier = $domainIdentifier;
-    return $this;
+      $this->matchMethod = $matchMethod;
+
+      return $this;
   }
 }

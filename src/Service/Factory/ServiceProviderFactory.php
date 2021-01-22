@@ -71,12 +71,20 @@ class ServiceProviderFactory
     foreach ($registeredServices as $registeredService)
     {
       $identifier = UtilityGenerator::cleanService($registeredService->getIdentifier());
+      $matchMethod = $registeredService->getMatchMethod();
+
+      if (!$matchMethod)
+        $matchMethod = 'exact';
 
       if (
-        $cleanedService == $identifier
+        $matchMethod == 'exact'
+          && $cleanedService == $identifier
           && $registeredService->getEnabled()
-        || $registeredService->getDomainIdentifier()
+        || $matchMethod == 'domain'
           && strpos($cleanedService, strtok($identifier, '/')) === 0
+          && $registeredService->getEnabled()
+        || $matchMethod == 'path'
+          && strpos($cleanedService, $identifier) !== false
           && $registeredService->getEnabled()
       )
         return $registeredService;

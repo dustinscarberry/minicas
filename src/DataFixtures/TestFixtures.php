@@ -66,7 +66,7 @@ class TestFixtures extends Fixture
     $spAttributeMapping->setAdAttribute($userAttribute);
     $sp->addAttributeMapping($spAttributeMapping);
 
-    $sp->setDomainIdentifier(false);
+    $sp->setMatchMethod('exact');
 
     $manager->persist($sp);
 
