@@ -7,9 +7,9 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="breadcrumb-container">
-          <span class="breadcrumb">Service Providers</span>
+          <span class="breadcrumb">Service Categories</span>
         </div>
-        <a class="action-btn btn btn-primary pull-right" href="/dashboard/serviceproviders/add">Add Service Provider</a>
+        <a class="action-btn btn btn-primary pull-right" href="/dashboard/servicecategories/add">Add Category</a>
       </div>
     </div>
   </div>
@@ -18,27 +18,21 @@
   <div class="container-fluid container-fixed-lg">
     <div class="row">
       <div class="col-lg-12">
-        <table id="service-provider-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
+        <table id="servicecategories-view-table" class="uk-table uk-table-hover uk-table-striped is-hidden">
           <thead>
             <tr>
-              <th>Name</th>
               <th>Category</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
 
-            {% for sp in serviceProviders %}
-            <tr data-id="{{ sp.hashid }}">
-              <td>{{ sp.name }}</td>
-              <td>
-                {% if sp.category is not null %}
-                  {{ sp.category.title }}
-                {% endif %}
-              </td>
+            {% for category in serviceProviderCategories %}
+            <tr data-id="{{ category.hashid }}">
+              <td>{{ category.title }}</td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
-                <a href="/dashboard/serviceproviders/{{ sp.hashid }}" class="btn btn-primary pull-right">Edit</a>
+                <a href="/dashboard/servicecategories/{{ category.hashid }}" class="btn btn-primary pull-right">Edit</a>
               </td>
             </tr>
             {% endfor %}

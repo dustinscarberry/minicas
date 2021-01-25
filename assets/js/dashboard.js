@@ -118,7 +118,7 @@ $(document).ready(function(){
     paging: false,
     info: false,
     columnDefs: [{
-      targets: 1,
+      targets: 2,
       orderable: false
     }],
     order: [],
@@ -156,6 +156,22 @@ $(document).ready(function(){
     order: [[0, 'asc']],
     language: {
       emptyTable: 'No attributes available'
+    },
+    initComplete: function() {
+      $(this).removeClass('is-hidden');
+    }
+  });
+
+  const serviceCategoriesViewDataTable = $('#servicecategories-view-table').DataTable({
+    paging: false,
+    info: false,
+    columnDefs: [{
+      targets: 1,
+      orderable: false
+    }],
+    order: [[0, 'asc']],
+    language: {
+      emptyTable: 'No categories available'
     },
     initComplete: function() {
       $(this).removeClass('is-hidden');
@@ -295,8 +311,24 @@ $(document).ready(function(){
     );
   });
 
+  $('#servicecategories-view-table').on('click', '.btn-delete', function(){
+    confirmDelete(
+      async () => {
+        let parent = $(this).closest('tr');
+        let dataID = parent.data('id');
 
+        let rsp = await axios.delete('/api/v1/servicecategories/' + dataID);
 
+        if (rsp.status == 200 && !rsp.data.error)
+        {
+          parent.addClass('is-deleting');
+          setTimeout(function(){
+            serviceCategoriesViewDataTable.row(parent).remove().draw();
+          }, 200);
+        }
+      }
+    );
+  });
 
   //create collections
   let serviceAttributeMappingsCollection = new ServiceCollection('#service-attribute-mappings-group', 3);

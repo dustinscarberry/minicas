@@ -15,9 +15,18 @@ use App\Form\AttributeMappingType;
 use App\Entity\ServiceProvider;
 use App\Entity\IdentityProvider;
 use App\Entity\Attribute;
+use App\Entity\ServiceCategory;
+use App\Service\Factory\ServiceCategoryFactory;
 
 class ServiceProviderType extends AbstractType
 {
+  private $serviceCategoryFactory;
+
+  public function __construct(ServiceCategoryFactory $serviceCategoryFactory)
+  {
+    $this->serviceCategoryFactory = $serviceCategoryFactory;
+  }
+
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
@@ -25,6 +34,16 @@ class ServiceProviderType extends AbstractType
         'required' => false
       ])
       ->add('name', TextType::class)
+      ->add('category', EntityType::class, [
+        'class' => ServiceCategory::class,
+        'choices' => $this->serviceCategoryFactory->getServiceCategories(),
+        'choice_label' => 'title',
+        'choice_value' => function($entity) {
+          return $entity ? $entity->getHashId() : '';
+        },
+        'placeholder' => '',
+        'required' => false
+      ])
       ->add('type', ChoiceType::class, [
         'choices' => [
           'CAS' => 'cas'

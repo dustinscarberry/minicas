@@ -72,6 +72,12 @@ class ServiceProvider
    */
   private $matchMethod;
 
+  /**
+   * @ORM\ManyToOne(targetEntity=ServiceCategory::class, inversedBy="serviceProviders")
+   * @ORM\JoinColumn(nullable=true)
+   */
+  private $category;
+
   public function __construct()
   {
     $this->attributeMappings = new ArrayCollection();
@@ -227,6 +233,18 @@ class ServiceProvider
   public function setMatchMethod(string $matchMethod): self
   {
       $this->matchMethod = $matchMethod;
+
+      return $this;
+  }
+
+  public function getCategory(): ?ServiceCategory
+  {
+      return $this->category;
+  }
+
+  public function setCategory(?ServiceCategory $category): self
+  {
+      $this->category = $category;
 
       return $this;
   }
