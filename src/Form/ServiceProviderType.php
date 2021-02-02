@@ -58,6 +58,12 @@ class ServiceProviderType extends AbstractType
           'Domain' => 'domain'
         ]
       ])
+      ->add('contact', TextType::class, [
+        'required' => false
+      ])
+      ->add('notes', TextareaType::class, [
+        'required' => false
+      ])
       ->add('identityProvider', EntityType::class, [
         'class' => IdentityProvider::class,
         'choice_label' => 'name',
