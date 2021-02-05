@@ -116,12 +116,11 @@ class AuthenticatedServiceFactory
    */
   public function getSessionService(
     AuthenticatedSession $authenticatedSession,
-    ServiceProvider $serviceProvider
+    string $service
   )
   {
-    foreach ($authenticatedSession->getAuthenticatedServices() as $authService)
-    {
-      if ($authService->getService() == $serviceProvider)
+    foreach ($authenticatedSession->getAuthenticatedServices() as $authService) {
+      if ($authService->getReplyTo() == $service)
         return $authService;
     }
 
