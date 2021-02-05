@@ -69,7 +69,7 @@ class CasEndpointController extends AbstractController
         //get matching authenticated service from authenticated session
         $authenticatedService = $authServiceFactory->getSessionService(
           $validSession,
-          $registeredService
+          $service
         );
 
         if ($authenticatedService)
