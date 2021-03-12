@@ -168,8 +168,8 @@ class CasEndpointController extends AbstractController
       $validCasTicket = $casTicketFactory->validateTicket($ticket, $service);
 
       //get authenticated user, service override or session default
-      if ($validCasTicket->getService()->getAttributes()['user'])
-        $authUser = $validCasTicket->getService()->getAttributes()['user'];
+      if ($validCasTicket->getService()->getAttributes()->user)
+        $authUser = $validCasTicket->getService()->getAttributes()->user;
       else
         $authUser = $validCasTicket->getService()->getSession()->getUser();
 

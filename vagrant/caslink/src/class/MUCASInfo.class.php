@@ -10,7 +10,7 @@ class MUCASInfo
 		phpCAS::setDebug('debug.log');
 
 		//create cas client
-		phpCAS::client(CAS_VERSION_3_0, $casHost, $casPort, $casContextPath);
+		phpCAS::client(CAS_VERSION_2_0, $casHost, $casPort, $casContextPath);
 
 		//eis cert path - must be .pem
 		$cert = dirname(__FILE__) . '/../..' . $casCertPath;
