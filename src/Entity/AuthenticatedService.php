@@ -42,7 +42,7 @@ class AuthenticatedService
   private $trackingId;
 
   /**
-   * @ORM\Column(type="string", length=255)
+   * @ORM\Column(type="string", length=2048)
    */
   private $replyTo;
 
