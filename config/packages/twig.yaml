@@ -5,3 +5,4 @@ twig:
     globals:
       config: '@App\Model\AppConfig'
       base_url: '%base_url%'
+    exception_controller: null
