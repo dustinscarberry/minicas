@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\InvalidService;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method InvalidService|null find($id, $lockMode = null, $lockVersion = null)
