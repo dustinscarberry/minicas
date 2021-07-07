@@ -11,7 +11,7 @@ DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only 
 
 ## Requirements
 
-* [PHP 7.2 or higher](https://www.php.net/)
+* [PHP 7.4 or higher](https://www.php.net/)
 * [MariaDB 10.0+](https://mariadb.org/)
 * [Composer](https://getcomposer.org/)
 * [NPM](https://nodejs.org/)
@@ -40,8 +40,8 @@ Install dependencies.
 
 ```sh
 $ cd das
-$ composer install
-$ npm i
+$ composer i --no-scripts
+$ npm ci
 ```
 
 Create and configure .env.local at root of project directory.
@@ -125,9 +125,12 @@ git pull
 php bin/console doctrine:migrations:migrate
 ```
 
-> WARNING: Do not install fixtures unless needed. Failure to do so will result in total loss of data!
+3. Update dependencies
 
-3. Install new fixtures (if needed) - None currently
+```sh
+composer i --no-scripts
+npm ci
+```
 
 4. Clear cache.
 
