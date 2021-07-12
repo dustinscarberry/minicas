@@ -1,8 +1,10 @@
 {
+    "name": "dustinscarberry/das",
+    "description": "Replacement CAS server",
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "1.11.99.2",
@@ -26,7 +28,7 @@
         "symfony/process": "5.3.*",
         "symfony/proxy-manager-bridge": "5.3.*",
         "symfony/security-bundle": "5.3.*",
-        "symfony/serializer-pack": "*",
+        "symfony/serializer-pack": "^1.0.4",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/templating": "5.3.*",
         "symfony/translation": "5.3.*",
