@@ -44,7 +44,8 @@ class Attribute
    */
   public function createHashId()
   {
-    $this->hashId = HashIdGenerator::generate();
+    if (!$this->hashId)
+      $this->hashId = HashIdGenerator::generate();
   }
 
   /**

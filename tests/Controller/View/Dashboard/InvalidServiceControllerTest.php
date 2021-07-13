@@ -20,7 +20,7 @@ class InvalidServiceControllerTest extends WebTestCase
   public function testViewAll()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/invalidservices');

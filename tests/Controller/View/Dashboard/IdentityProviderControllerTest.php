@@ -21,7 +21,7 @@ class IdentityProviderControllerTest extends WebTestCase
   public function testViewAll()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/identityproviders');
@@ -33,7 +33,7 @@ class IdentityProviderControllerTest extends WebTestCase
   public function testAdd()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $crawler = $this->client->request('GET', '/dashboard/identityproviders/add');
@@ -58,7 +58,7 @@ class IdentityProviderControllerTest extends WebTestCase
   public function testEdit()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $crawler = $this->client->request('GET', '/dashboard/identityproviders/bJbj6kzj1vMEn');
@@ -72,7 +72,7 @@ class IdentityProviderControllerTest extends WebTestCase
       'identity_provider[type]' => 'saml2',
       'identity_provider[identifier]' => 'urn:google.com',
       'identity_provider[loginURL]' => 'https://login.google.com/saml2',
-      'identity_provider[userAttributeMapping]' => 'RL9oWrjxM2q3',
+      'identity_provider[userAttributeMapping]' => 'VVEZmx44GBqmG',
       'identity_provider[certificate]' => 'RAs_JObaf90jlmzwhlHc7hXtMQztVfbc6zO5EcSsg2gxxxxxxx'
     ]);
 
@@ -87,7 +87,7 @@ class IdentityProviderControllerTest extends WebTestCase
     $this->assertEquals($idp->getName(), 'Demo IDP 2');
     $this->assertEquals($idp->getIdentifier(), 'urn:google.com');
     $this->assertEquals($idp->getLoginURL(), 'https://login.google.com/saml2');
-    $this->assertEquals($idp->getUserAttributeMapping()->getHashId(), 'RL9oWrjxM2q3');
+    $this->assertEquals($idp->getUserAttributeMapping()->getHashId(), 'VVEZmx44GBqmG');
     $this->assertEquals($idp->getCertificate(), 'RAs_JObaf90jlmzwhlHc7hXtMQztVfbc6zO5EcSsg2gxxxxxxx');
   }
 }

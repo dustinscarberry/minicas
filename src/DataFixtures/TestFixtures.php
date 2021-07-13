@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\User;
 use App\Entity\IdentityProvider;
 use App\Entity\ServiceProvider;
+use App\Entity\Attribute;
 use App\Entity\AttributeMapping;
 use App\Service\Factory\AttributeFactory;
 
@@ -38,6 +39,14 @@ class TestFixtures extends Fixture
     $user->setLastName('Demo');
     $user->setRoles(['ROLE_ADMIN']);
     $manager->persist($user);
+
+    // create test attribute
+    $attribute = new Attribute();
+    $attribute->setHashId('VVEZmx44GBqmG');
+    $attribute->setFriendlyName('sAMAccountName');
+    $attribute->setAdAttribute('sAMAccountName');
+    $manager->persist($attribute);
+    $manager->flush();
 
     // create identity provider
     $idp = new IdentityProvider();

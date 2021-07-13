@@ -21,7 +21,7 @@ class AttributeControllerTest extends WebTestCase
   public function testView()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/attributes');
@@ -33,7 +33,7 @@ class AttributeControllerTest extends WebTestCase
   public function testAdd()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/attributes/add');
@@ -54,10 +54,10 @@ class AttributeControllerTest extends WebTestCase
   public function testEdit()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
-    $this->client->request('GET', '/dashboard/attributes/47Dg5J3K3o0Kj');
+    $this->client->request('GET', '/dashboard/attributes/VVEZmx44GBqmG');
 
     // assert page loads
     $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
@@ -73,7 +73,7 @@ class AttributeControllerTest extends WebTestCase
 
     // get attribute to validate changes
     $attributeFactory = self::$container->get(AttributeFactory::class);
-    $attribute = $attributeFactory->getAttribute('47Dg5J3K3o0Kj');
+    $attribute = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // assert changes
     $this->assertEquals($attribute->getFriendlyName(), 'Demo Attribute');

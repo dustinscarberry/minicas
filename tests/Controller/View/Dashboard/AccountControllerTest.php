@@ -20,7 +20,7 @@ class AccountControllerTest extends WebTestCase
   public function testView()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/account');

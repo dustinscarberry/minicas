@@ -30,16 +30,11 @@ class AttributeFactoryTest extends KernelTestCase
     $this->assertInstanceOf(Attribute::class, $result);
   }
 
-  public function testUpdateAttribute()
-  {
-    $this->markTestSkipped('Simply flushes entities');
-  }
-
   public function testDeleteAttribute()
   {
     // get attribute
     $attributeFactory = self::$container->get(AttributeFactory::class);
-    $result = $attributeFactory->getAttribute('nm7Od6M1jqPBY');
+    $result = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // delete attribute
     $attributeFactory->deleteAttribute($result);
@@ -52,7 +47,7 @@ class AttributeFactoryTest extends KernelTestCase
   {
     // get attribute
     $attributeFactory = self::$container->get(AttributeFactory::class);
-    $result = $attributeFactory->getAttribute('nm7Od6M1jqPBY');
+    $result = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // assert is attribute
     $this->assertInstanceOf(Attribute::class, $result);

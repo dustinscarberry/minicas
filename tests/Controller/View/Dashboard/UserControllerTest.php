@@ -20,7 +20,7 @@ class UserControllerTest extends WebTestCase
   public function testViewall()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/users');
@@ -32,7 +32,7 @@ class UserControllerTest extends WebTestCase
   public function testAdd()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/users/add');

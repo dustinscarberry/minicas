@@ -4,12 +4,9 @@ namespace App\Tests\Controller\View\Dashboard;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use App\Tests\UserAuthTrait;
 
 class LoginControllerTest extends WebTestCase
 {
-  use UserAuthTrait;
-
   private $client;
 
   public function setUp(): void

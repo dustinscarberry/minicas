@@ -21,7 +21,7 @@ class ServiceProviderControllerTest extends WebTestCase
   public function testView()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/serviceproviders');
@@ -33,7 +33,7 @@ class ServiceProviderControllerTest extends WebTestCase
   public function testAdd()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $crawler = $this->client->request('GET', '/dashboard/serviceproviders/add');
@@ -49,7 +49,7 @@ class ServiceProviderControllerTest extends WebTestCase
     $formValues['service_provider']['name'] = 'Demo Service Provider';
     $formValues['service_provider']['type'] = 'cas';
     $formValues['service_provider']['identifier'] = 'demoprovider';
-    //$formValues['service_provider']['domainIdentifier'] = 1; default boolean
+    $formValues['service_provider']['matchMethod'] = 'exact';
     $formValues['service_provider']['identityProvider'] = 'bJbj6kzj1vMEn';
     $formValues['service_provider']['attributeMappings'][0]['name'] = 'name';
     $formValues['service_provider']['attributeMappings'][0]['adAttribute'] = '47Dg5J3K3o0Kj';
@@ -58,13 +58,13 @@ class ServiceProviderControllerTest extends WebTestCase
     $this->client->request($form->getMethod(), $form->getUri(), $formValues, $form->getPhpFiles());
 
     // assert valid response to form submit
-    $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
+    $this->assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
   }
 
   public function testEdit()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $crawler = $this->client->request('GET', '/dashboard/serviceproviders/w2PwYJXRW4nqZ');
@@ -80,7 +80,7 @@ class ServiceProviderControllerTest extends WebTestCase
     $formValues['service_provider']['name'] = 'Demo Service Provider Updated';
     $formValues['service_provider']['type'] = 'cas';
     $formValues['service_provider']['identifier'] = 'demoprovidermod';
-    $formValues['service_provider']['domainIdentifier'] = 1;
+    $formValues['service_provider']['matchMethod'] = 'exact';
     $formValues['service_provider']['identityProvider'] = 'bJbj6kzj1vMEn';
     unset($formValues['service_provider']['attributeMappings']);
 
@@ -97,7 +97,7 @@ class ServiceProviderControllerTest extends WebTestCase
     $this->assertEquals($serviceProvider->getName(), 'Demo Service Provider Updated');
     $this->assertNotTrue($serviceProvider->getEnabled());
     $this->assertEquals($serviceProvider->getIdentifier(), 'demoprovidermod');
-    $this->assertTrue($serviceProvider->getDomainIdentifier());
+    $this->assertEquals($serviceProvider->getMatchMethod(), 'exact');
     $this->assertEmpty($serviceProvider->getAttributeMappings());
   }
 }

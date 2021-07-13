@@ -20,7 +20,7 @@ class SettingsControllerTest extends WebTestCase
   public function testUpdate()
   {
     // log test user in
-    $this->loginUser('demo');
+    $this->loginUser('demo', $this->client);
 
     // make request
     $this->client->request('GET', '/dashboard/settings');
