@@ -76,7 +76,7 @@ jobs:
         run: php bin/console doctrine:migrations:migrate
 
       - name: Load Doctrine fixtures
-        run: php bin/console doctrine:fixtures:load
+        run: php bin/console doctrine:fixtures:load -n
 
       - name: Run functional and unit tests
         run: ./vendor/bin/phpunit --testsuite='main'
