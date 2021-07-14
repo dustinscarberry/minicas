@@ -7,13 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(indexes={@ORM\Index(name="user_hashid_idx", columns={"hash_id"})})
  * @ORM\HasLifecycleCallbacks
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
   /**
    * @ORM\Id()
@@ -142,7 +143,7 @@ class User implements UserInterface
   /**
    * @see UserInterface
    */
-  public function getPassword(): string
+  public function getPassword(): ?string
   {
     return (string) $this->password;
   }
@@ -234,5 +235,10 @@ class User implements UserInterface
   public function getFullName()
   {
     return $this->getFirstName() . ' ' . $this->getLastName();
+  }
+
+  public function getUserIdentifier()
+  {
+    return $this->username;
   }
 }

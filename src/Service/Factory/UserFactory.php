@@ -3,7 +3,7 @@
 namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\User;
 
 /**
@@ -20,7 +20,7 @@ class UserFactory
 
   public function __construct(
     EntityManagerInterface $em,
-    UserPasswordEncoderInterface $passwordEncoder
+    UserPasswordHasherInterface $passwordEncoder
   )
   {
     $this->em = $em;
@@ -35,7 +35,7 @@ class UserFactory
    */
   public function createUser(User $user): User
   {
-    $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPassword());
+    $encodedPassword = $this->passwordEncoder->hashPassword($user, $user->getPassword());
     $user->setPassword($encodedPassword);
     $user->setRoles(['ROLE_ADMIN']);
     $this->em->persist($user);
