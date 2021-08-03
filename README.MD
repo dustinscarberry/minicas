@@ -40,7 +40,7 @@ Install dependencies.
 
 ```sh
 $ cd das
-$ composer i --no-scripts
+$ composer i --no-scripts --no-dev
 $ npm ci
 ```
 
@@ -128,7 +128,7 @@ php bin/console doctrine:migrations:migrate
 3. Update dependencies
 
 ```sh
-composer i --no-scripts
+composer i --no-scripts --no-dev
 npm ci
 ```
 
