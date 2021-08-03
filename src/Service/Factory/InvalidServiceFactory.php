@@ -30,10 +30,11 @@ class InvalidServiceFactory
     $this->em->flush();
   }
 
+  // get invalid services limited to top 500
   public function getInvalidServices()
   {
     return $this->em
       ->getRepository(InvalidService::class)
-      ->findAll();
+      ->findBy([], ['created' => 'DESC'], 500);
   }
 }
