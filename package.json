@@ -1,8 +1,8 @@
 {
     "devDependencies": {
         "@babel/polyfill": "^7.10.4",
-        "@symfony/webpack-encore": "^0.22.4",
-        "core-js": "^2.6.11",
+        "@symfony/webpack-encore": "^1.6.1",
+        "core-js": "^3.18.3",
         "webpack-notifier": "^1.8.0"
     },
     "license": "UNLICENSED",
@@ -12,10 +12,10 @@
         "prod": "encore production --progress"
     },
     "dependencies": {
-        "axios": "^0.18.1",
+        "axios": "^0.23.0",
         "classnames": "^2.2.6",
         "immutability-helper": "^3.1.1",
-        "node-sass": "^4.14.1",
-        "sass-loader": "^7.3.1"
+        "sass": "^1.43.2",
+        "sass-loader": "^12.2.0"
     }
 }
