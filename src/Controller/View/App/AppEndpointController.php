@@ -102,4 +102,13 @@ class AppEndpointController extends AbstractController
       throw $e;
     }
   }
+
+  /**
+   * @Route("/idpsamlvalidate", methods={"GET"})
+   */
+  public function idpSamlValidateFake()
+  {
+    // fake endpoint to avoid bot errors for invalid endpoint [GET]
+    return $this->redirect($_ENV['APP_ESCAPE_URL']);
+  }
 }
