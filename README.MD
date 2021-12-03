@@ -4,14 +4,14 @@ DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only 
 
 ## Tech
 
-* [Symfony 5.3] - PHP MVC Framework
+* [Symfony 5.4] - PHP MVC Framework
 * [composer] - PHP Dependency Manager
 * [npm] - JS Dependency Manager
 * [jQuery] - More JS stuff
 
 ## Requirements
 
-* [PHP 7.4 or higher](https://www.php.net/)
+* [PHP 8.0 or higher](https://www.php.net/)
 * [MariaDB 10.0+](https://mariadb.org/)
 * [Composer](https://getcomposer.org/)
 * [NPM](https://nodejs.org/)
@@ -97,7 +97,7 @@ server {
     }
 
     location ~ ^/index\.php(/|$) {
-        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;

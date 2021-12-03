@@ -5,7 +5,7 @@ class MUCASInfo
 {
 	public static function preloadCAS($casHost, $casPort, $casContextPath, $casCertPath)
   {
-		require(dirname(__FILE__) . '/../cas-1.3.5/CAS.php');
+		require(dirname(__FILE__) . '/../cas-1.4.0/CAS.php');
 
 		phpCAS::setDebug('debug.log');
 
@@ -25,12 +25,12 @@ class MUCASInfo
 		phpCAS::forceAuthentication();
 	}
 
-	public function fetchUser()
+	public static function fetchUser()
   {
 		return phpCAS::getUser();
 	}
 
-	public function fetchAttributes()
+	public static function fetchAttributes()
   {
 		return phpCAS::getAttributes();
 	}

@@ -8,15 +8,15 @@ add-apt-repository ppa:ondrej/php
 apt-get update
 
 # install needed packages
-apt-get install -y php7.4-fpm
-apt-get install -y nginx php7.4 php7.4-cli php7.4-mysql php7.4-ldap php7.4-gd php7.4-imagick php7.4-xml php7.4-curl php7.4-mbstring php7.4-zip php7.4-bcmath php7.4-gmp mariadb-server mariadb-client
+apt-get install -y php8.1-fpm
+apt-get install -y nginx php8.1 php8.1-cli php8.1-mysql php8.1-ldap php8.1-gd php8.1-imagick php8.1-xml php8.1-curl php8.1-mbstring php8.1-zip php8.1-bcmath php8.1-gmp mariadb-server mariadb-client
 apt-get upgrade -y
 
 # write out nginx config files
 >/etc/nginx/sites-enabled/default
 cat >> /etc/nginx/sites-enabled/sites.conf << 'EOF'
 upstream php-fpm {
-        server unix:/var/run/php/php7.4-fpm.sock;
+        server unix:/var/run/php/php8.1-fpm.sock;
 }
 
 server {
@@ -175,7 +175,7 @@ mysql -e "CREATE DATABASE demo_test;"
 
 # change user accounts for web stack
 sed -i 's/www-data/vagrant/g' /etc/nginx/nginx.conf
-sed -i 's/www-data/vagrant/g' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's/www-data/vagrant/g' /etc/php/8.1/fpm/pool.d/www.conf
 
 # change mysql to listen externally for testing
 sed -s 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -184,7 +184,7 @@ sed -s 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 echo 'TLS_REQCERT never' >> /etc/ldap/ldap.conf
 
 # restart services
-systemctl restart php7.4-fpm
+systemctl restart php8.1-fpm
 systemctl restart nginx
 systemctl restart mysqld
 
