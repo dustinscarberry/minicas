@@ -8,7 +8,7 @@ use App\Entity\ServiceCategory;
 /**
  * Factory class to create, edit, update, and fetch service categories
  *
- * @package DAS
+ * @package MiniCAS
  * @author Dustin Scarberry
  */
 class ServiceCategoryFactory

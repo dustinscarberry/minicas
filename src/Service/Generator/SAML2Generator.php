@@ -11,8 +11,8 @@ use DateTime;
 /**
  * Generate information related to SAML2
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class SAML2Generator
 {

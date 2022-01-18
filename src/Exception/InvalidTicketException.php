@@ -5,7 +5,7 @@ namespace App\Exception;
 /**
  * CAS response exception type
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class InvalidTicketException extends \Exception {}

@@ -9,8 +9,8 @@ use App\Entity\User;
 /**
  * Create, update, delete and fetch users
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class UserFactory
 {

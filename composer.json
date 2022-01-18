@@ -59,6 +59,10 @@
         "sort-packages": true,
         "platform": {
             "php": "8.0.0"
+        },
+        "allow-plugins": {
+            "composer/package-versions-deprecated": false,
+            "symfony/flex": true
         }
     },
     "autoload": {

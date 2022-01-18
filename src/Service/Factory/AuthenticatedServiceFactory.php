@@ -12,8 +12,8 @@ use App\Service\Generator\AuthGenerator;
 /**
  * Factory class to work with Authenticated Services
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class AuthenticatedServiceFactory
 {

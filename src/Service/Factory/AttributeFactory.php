@@ -8,8 +8,8 @@ use App\Entity\Attribute;
 /**
  * Factory class to create, edit, update, and fetch attributes
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class AttributeFactory
 {

@@ -5,8 +5,8 @@ namespace App\Model;
 /**
  * CAS Error xml response model
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class CASError
 {

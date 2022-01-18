@@ -5,8 +5,8 @@ namespace App\Model;
 /**
  * Setup page model
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class Setup
 {
@@ -16,7 +16,7 @@ class Setup
   private $adminEmail;
   private $adminPassword;
 
-  private $siteName = 'DAS';
+  private $siteName = 'MiniCAS';
   private $locale = 'en';
   private $language = 'en';
   private $siteTimezone = 'America/New_York';

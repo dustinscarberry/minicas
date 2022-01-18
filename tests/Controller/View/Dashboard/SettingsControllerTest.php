@@ -30,7 +30,7 @@ class SettingsControllerTest extends WebTestCase
 
     // submit form to save settings
     $this->client->submitForm('Save Changes', [
-      'setting[siteName]' => 'DAS Demo',
+      'setting[siteName]' => 'MiniCAS Demo',
       'setting[sessionTimeout]' => 600,
       'setting[casTicketTimeout]' => 10,
       'setting[autoDeleteExpiredSessions]' => 0,

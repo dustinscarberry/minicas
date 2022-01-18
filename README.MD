@@ -1,6 +1,6 @@
-# DAS
+# MiniCAS
 
-DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only services CAS services but has the ability to be extended to other protocols.
+MiniCAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only services CAS services but has the ability to be extended to other protocols.
 
 ## Tech
 
@@ -18,7 +18,7 @@ DAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only 
 
 ## Supported Protocols
 
-DAS support the following CAS protocols.
+MiniCAS support the following CAS protocols.
 
 CAS 2.0
 CAS 3.0
@@ -140,7 +140,7 @@ rm -rf var/cache/*
 
 ## Documentation
 
-Each service must be a registered service provider in order to use the DAS server. Identity Providers are required (you will only need one for sso) to delegate authentication to for each registered service.
+Each service must be a registered service provider in order to use the MiniCAS server. Identity Providers are required (you will only need one for sso) to delegate authentication to for each registered service.
 
 Attributes are managed under the attributes panel. Custom attribute mappings to AD can be added as needed.
 

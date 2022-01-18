@@ -8,8 +8,8 @@ use App\Entity\Setting;
 /**
  * Application settings model
  *
- * @package DAS
- * @author Dustin Scarberry <dustin@codeclouds.net>
+ * @package MiniCAS
+ * @author Dustin Scarberry <bitnsbytes1001@gmail.com>
  */
 class AppConfig
 {
@@ -18,7 +18,7 @@ class AppConfig
   private $settingList = [
     'locale' => 'en',
     'language' => 'en',
-    'siteName' => 'DAS',
+    'siteName' => 'MiniCAS',
     'siteTimezone' => 'America/New_York',
     'sessionTimeout' => 60,
     'casTicketTimeout' => 1,
