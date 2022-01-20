@@ -20,11 +20,52 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="dashboard-panel-block">
+
           {{ form_start(form) }}
-          {{ form_widget(form) }}
+          {{ form_row(form.name) }}
+          {{ form_row(form.type) }}
+          {{ form_row(form.identifier) }}
+          {{ form_row(form.loginURL) }}
+          {{ form_row(form.userAttributeMapping) }}
+          {{ form_row(form.certificate) }}
+
+          {% if certificateDetails %}
+
+          <div class="certificate-details-box {% if certificateDetails.validTo_time_t >= 'now'|date('U') %}certificate-valid{% else %}certificate-invalid{% endif %}">
+            <div class="details-meta">
+              <i class="certificate-meta-icon"></i>
+            </div>
+            <div class="details-certificate">
+              <div class="certificate-line">
+                <span class="certificate-line-header">Common Name:</span>
+                <span class="certificate-line-value">{{ certificateDetails.name }}</span>
+              </div>
+              <div class="certificate-line">
+                <span class="certificate-line-header">Serial #:</span>
+                <span class="certificate-line-value">{{ certificateDetails.serialNumber }}</span>
+              </div>
+              <div class="certificate-line">
+                <span class="certificate-line-header">Issuing CA:</span>
+                <span class="certificate-line-value">{{ certificateDetails.issuer.CN }}</span>
+              </div>
+              <div class="certificate-line">
+                <span class="certificate-line-header">Valid:</span>
+                <span class="certificate-line-value">{{ certificateDetails.validFrom_time_t|date('F j, Y') ~ ' to ' ~ certificateDetails.validTo_time_t|date('F j, o') }}</span>
+              </div>
+              <div class="certificate-line">
+                <span class="certificate-line-header">Key Size:</span>
+                <span class="certificate-line-value">{{ publicKeyDetails.bits }} bits</span>
+              </div>
+            </div>
+          </div>
+
+          {% endif %}
+
           <button class="btn btn-primary" type="submit">Save</button>
           <a class="btn btn-error" href="/dashboard/identityproviders">Back</a>
+          {{ form_widget(form._token) }}
           {{ form_end(form) }}
+
         </div>
       </div>
     </div>

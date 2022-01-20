@@ -164,6 +164,12 @@ class IdentityProvider
     return str_replace("\r", '', $cert);
   }
 
+  public function getCertificateFormatted(): ?string
+  {
+    // return valid formatted base64 pem cert
+    return "-----BEGIN CERTIFICATE-----\r\n" . chunk_split($this->getCertificateData(), 64) . "-----END CERTIFICATE-----";
+  }
+
   public function setCertificate(?string $certificate): self
   {
     $this->certificate = $certificate;

@@ -65,15 +65,17 @@ class IdentityProviderController extends AbstractController
       ->getRepository(IdentityProvider::class)
       ->findByHashId($hashId);
 
-    // create form
-    $form = $this->createForm(IdentityProviderType::class, $identityProvider);
+    // get certificate details
+    $certificateDetails = openssl_x509_parse($identityProvider->getCertificateFormatted());
+    $publicKey = openssl_pkey_get_public($identityProvider->getCertificateFormatted());
+    $publicKeyDetails = openssl_pkey_get_details($publicKey);
 
     // handle form request
+    $form = $this->createForm(IdentityProviderType::class, $identityProvider);
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // update identity provider
       $idpManager->updateIdentityProvider();
 
@@ -82,7 +84,9 @@ class IdentityProviderController extends AbstractController
     }
 
     return $this->render('dashboard/identityprovider/edit.html.twig', [
-      'form' => $form->createView()
+      'form' => $form->createView(),
+      'certificateDetails' => $certificateDetails,
+      'publicKeyDetails' => $publicKeyDetails
     ]);
   }
 }
