@@ -48,7 +48,7 @@ class IdentityProviderControllerTest extends WebTestCase
       'identity_provider[identifier]' => 'urn:google.com',
       'identity_provider[loginURL]' => 'https://login.google.com/saml2',
       'identity_provider[userAttributeMapping]' => 'VVEZmx44GBqmG',
-      'identity_provider[certificate]' => 'RAs_JObaf90jlmzwhlHc7hXtMQztVfbc6zO5EcSsg2gxxxxxxx'
+      'identity_provider[certificate]' => 'MIIC1TCCAb2gAwIBAgIJALaciWBDG1UvMA0GCSqGSIb3DQEBBQUAMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTAeFw0yMjAxMjAxNDUwMzVaFw0zMjAxMTgxNDUwMzVaMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALBmSuUmYXvpcb/HZGtTQFN9c0uPXcdHRetdruE1QlML+3/xCodZIc3w3bCGSFk82JAvRq6vkRxUuh0JelM18LKsf6QaIz8njvdenau67H/BgoOiLd4BOZPN/Ux5SoE+f5uyt20R6L0w2pq/PE6rh9Wh9BPPPEK4OCOHZ7/ZrYjALIYYU78Hi2WDn5vD5xog60zgs9QdmK9dDGRJDh3vKIjcDFuPnuF/mKPfsi9DiaFk0RL4ba7z43r/Utgo4QPF6EuQph22VAWeCZX5YjDnAXreiAOwjxCBYPdQDSpSbcjEKJWqmgpNBSfh9zbvautTi1BQSWCsdpFFfeCiNmlO3iECAwEAAaMeMBwwGgYDVR0RBBMwEYIPd3d3LmV4YW1wbGUuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQBKuP6lEt/ez0YVWEPdlEIXa/smxFJ39JXH9JsowCfPy1jGO/U1132FHV2gIkD4QCR5eQB2K9MTIGdDLOsVz1tpTw/PbMfWJGyONHZyHo/XpBpnepHEbqIohIDErQcxutfg4n+xiXcYmXmOvBY8ksrGXO0rV33JJVjmhEWb6NJ5TVaezNzLUZnie7CB6xZRWCjqos4Joj3bmhJFqayI1Tg6J+BIWSf0roKmdlhO8ZUKcEqF45tzjzT7UXYVRFtKbFilrCnXrmkidlKJOHeQmTB06atz3v4wAhHta2Sl3geZf80/4JAPGCp3hpbw1DqCLI9phXrqiiI5NDk3CSgIXbbX'
     ]);
 
     // assert valid response to form submit
@@ -73,7 +73,7 @@ class IdentityProviderControllerTest extends WebTestCase
       'identity_provider[identifier]' => 'urn:google.com',
       'identity_provider[loginURL]' => 'https://login.google.com/saml2',
       'identity_provider[userAttributeMapping]' => 'VVEZmx44GBqmG',
-      'identity_provider[certificate]' => 'RAs_JObaf90jlmzwhlHc7hXtMQztVfbc6zO5EcSsg2gxxxxxxx'
+      'identity_provider[certificate]' => 'MIIC1TCCAb2gAwIBAgIJALaciWBDG1UvMA0GCSqGSIb3DQEBBQUAMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTAeFw0yMjAxMjAxNDUwMzVaFw0zMjAxMTgxNDUwMzVaMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALBmSuUmYXvpcb/HZGtTQFN9c0uPXcdHRetdruE1QlML+3/xCodZIc3w3bCGSFk82JAvRq6vkRxUuh0JelM18LKsf6QaIz8njvdenau67H/BgoOiLd4BOZPN/Ux5SoE+f5uyt20R6L0w2pq/PE6rh9Wh9BPPPEK4OCOHZ7/ZrYjALIYYU78Hi2WDn5vD5xog60zgs9QdmK9dDGRJDh3vKIjcDFuPnuF/mKPfsi9DiaFk0RL4ba7z43r/Utgo4QPF6EuQph22VAWeCZX5YjDnAXreiAOwjxCBYPdQDSpSbcjEKJWqmgpNBSfh9zbvautTi1BQSWCsdpFFfeCiNmlO3iECAwEAAaMeMBwwGgYDVR0RBBMwEYIPd3d3LmV4YW1wbGUuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQBKuP6lEt/ez0YVWEPdlEIXa/smxFJ39JXH9JsowCfPy1jGO/U1132FHV2gIkD4QCR5eQB2K9MTIGdDLOsVz1tpTw/PbMfWJGyONHZyHo/XpBpnepHEbqIohIDErQcxutfg4n+xiXcYmXmOvBY8ksrGXO0rV33JJVjmhEWb6NJ5TVaezNzLUZnie7CB6xZRWCjqos4Joj3bmhJFqayI1Tg6J+BIWSf0roKmdlhO8ZUKcEqF45tzjzT7UXYVRFtKbFilrCnXrmkidlKJOHeQmTB06atz3v4wAhHta2Sl3geZf80/4JAPGCp3hpbw1DqCLI9phXrqiiI5NDk3CSgIXbbX'
     ]);
 
     // assert valid response to form submit
@@ -88,6 +88,6 @@ class IdentityProviderControllerTest extends WebTestCase
     $this->assertEquals($idp->getIdentifier(), 'urn:google.com');
     $this->assertEquals($idp->getLoginURL(), 'https://login.google.com/saml2');
     $this->assertEquals($idp->getUserAttributeMapping()->getHashId(), 'VVEZmx44GBqmG');
-    $this->assertEquals($idp->getCertificate(), 'RAs_JObaf90jlmzwhlHc7hXtMQztVfbc6zO5EcSsg2gxxxxxxx');
+    $this->assertEquals($idp->getCertificate(), 'MIIC1TCCAb2gAwIBAgIJALaciWBDG1UvMA0GCSqGSIb3DQEBBQUAMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTAeFw0yMjAxMjAxNDUwMzVaFw0zMjAxMTgxNDUwMzVaMBoxGDAWBgNVBAMTD3d3dy5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALBmSuUmYXvpcb/HZGtTQFN9c0uPXcdHRetdruE1QlML+3/xCodZIc3w3bCGSFk82JAvRq6vkRxUuh0JelM18LKsf6QaIz8njvdenau67H/BgoOiLd4BOZPN/Ux5SoE+f5uyt20R6L0w2pq/PE6rh9Wh9BPPPEK4OCOHZ7/ZrYjALIYYU78Hi2WDn5vD5xog60zgs9QdmK9dDGRJDh3vKIjcDFuPnuF/mKPfsi9DiaFk0RL4ba7z43r/Utgo4QPF6EuQph22VAWeCZX5YjDnAXreiAOwjxCBYPdQDSpSbcjEKJWqmgpNBSfh9zbvautTi1BQSWCsdpFFfeCiNmlO3iECAwEAAaMeMBwwGgYDVR0RBBMwEYIPd3d3LmV4YW1wbGUuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQBKuP6lEt/ez0YVWEPdlEIXa/smxFJ39JXH9JsowCfPy1jGO/U1132FHV2gIkD4QCR5eQB2K9MTIGdDLOsVz1tpTw/PbMfWJGyONHZyHo/XpBpnepHEbqIohIDErQcxutfg4n+xiXcYmXmOvBY8ksrGXO0rV33JJVjmhEWb6NJ5TVaezNzLUZnie7CB6xZRWCjqos4Joj3bmhJFqayI1Tg6J+BIWSf0roKmdlhO8ZUKcEqF45tzjzT7UXYVRFtKbFilrCnXrmkidlKJOHeQmTB06atz3v4wAhHta2Sl3geZf80/4JAPGCp3hpbw1DqCLI9phXrqiiI5NDk3CSgIXbbX');
   }
 }
