@@ -68,7 +68,10 @@ class IdentityProviderController extends AbstractController
     // get certificate details
     $certificateDetails = openssl_x509_parse($identityProvider->getCertificateFormatted());
     $publicKey = openssl_pkey_get_public($identityProvider->getCertificateFormatted());
-    $publicKeyDetails = openssl_pkey_get_details($publicKey);
+    if ($publicKey)
+      $publicKeyDetails = openssl_pkey_get_details($publicKey);
+    else
+      $publicKeyDetails = false;
 
     // handle form request
     $form = $this->createForm(IdentityProviderType::class, $identityProvider);
