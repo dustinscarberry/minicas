@@ -23,6 +23,7 @@
             <tr>
               <th>Name</th>
               <th>Category</th>
+              <th>Environment</th>
               <th></th>
             </tr>
           </thead>
@@ -37,6 +38,19 @@
                 {% endif %}
               </td>
               <td>
+                {% if sp.environment is not null %}
+                  {% if sp.environment == 'prod' %}
+                    <span class="chip chip-ok">Production</span>
+                  {% elseif sp.environment == 'test' %}
+                    <span class="chip chip-purple">Test</span>
+                  {% elseif sp.environment == 'stage' %}
+                    <span class="chip chip-warning">Stage</span>
+                  {% elseif sp.environment == 'dev' %}
+                    <span class="chip chip-blue">Dev</span>
+                  {% endif %}
+                {% endif %}
+              </td>
+              <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
                 <a href="/dashboard/serviceproviders/{{ sp.hashid }}" class="btn btn-primary pull-right">Edit</a>
               </td>
@@ -46,7 +60,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </div>

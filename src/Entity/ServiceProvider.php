@@ -88,6 +88,11 @@ class ServiceProvider
    */
   private $notes;
 
+  /**
+   * @ORM\Column(type="string", length=255, nullable=true)
+   */
+  private $environment;
+
   public function __construct()
   {
     $this->attributeMappings = new ArrayCollection();
@@ -279,6 +284,18 @@ class ServiceProvider
   public function setNotes(?string $notes): self
   {
       $this->notes = $notes;
+
+      return $this;
+  }
+
+  public function getEnvironment(): ?string
+  {
+      return $this->environment;
+  }
+
+  public function setEnvironment(?string $environment): self
+  {
+      $this->environment = $environment;
 
       return $this;
   }

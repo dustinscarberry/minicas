@@ -118,7 +118,7 @@ $(document).ready(function(){
     paging: false,
     info: false,
     columnDefs: [{
-      targets: 2,
+      targets: 3,
       orderable: false
     }],
     order: [],

@@ -44,6 +44,16 @@ class ServiceProviderType extends AbstractType
         'placeholder' => '',
         'required' => false
       ])
+      ->add('environment', ChoiceType::class, [
+        'choices' => [
+          'Production' => 'prod',
+          'Stage' => 'stage',
+          'Test' => 'test',
+          'Dev' => 'dev'
+        ],
+        'placeholder' => '',
+        'required' => false
+      ])
       ->add('type', ChoiceType::class, [
         'choices' => [
           'CAS' => 'cas'

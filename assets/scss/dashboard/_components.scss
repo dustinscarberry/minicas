@@ -768,3 +768,26 @@
     display: inline-block;
   }
 }
+
+// chips
+.chip {
+  color: #fff;
+  padding: .8rem 1.2rem;
+  border-radius: 3.3rem;
+
+  &.chip-ok {
+    background: green;
+  }
+
+  &.chip-blue {
+    background: #3e7df7;
+  }
+
+  &.chip-warning {
+    background: orange;
+  }
+
+  &.chip-purple {
+    background: #970097;
+  }
+}
