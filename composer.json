@@ -58,7 +58,7 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "8.0.0"
+            "php": "7.4"
         },
         "allow-plugins": {
             "composer/package-versions-deprecated": false,
