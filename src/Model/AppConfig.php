@@ -19,6 +19,7 @@ class AppConfig
     'locale' => 'en',
     'language' => 'en',
     'siteName' => 'MiniCAS',
+    'hideIncompleteSessions' => true,
     'siteTimezone' => 'America/New_York',
     'sessionTimeout' => 60,
     'casTicketTimeout' => 1,
@@ -62,6 +63,17 @@ class AppConfig
   public function setSiteName(?string $siteName): self
   {
     $this->settingList['siteName'] = $siteName;
+    return $this;
+  }
+
+  public function getHideIncompleteSessions(): bool
+  {
+    return $this->settingList['hideIncompleteSessions'];
+  }
+
+  public function setHideIncompleteSessions(bool $hideIncompleteSessions): self
+  {
+    $this->settingList['hideIncompleteSessions'] = $hideIncompleteSessions;
     return $this;
   }
 

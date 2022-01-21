@@ -5,16 +5,19 @@ namespace App\Controller\View\Dashboard;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Factory\AuthenticatedSessionFactory;
+use App\Model\AppConfig;
 
 class DashboardController extends AbstractController
 {
   /**
    * @Route("/dashboard", name="dashboardHome")
    */
-  public function home(AuthenticatedSessionFactory $authSessionFactory)
+  public function home(AuthenticatedSessionFactory $authSessionFactory, AppConfig $appConfig)
   {
     // get unexpired sessions
-    $sessions = $authSessionFactory->getSessionsNotExpired();
+    $sessions = $authSessionFactory->getSessionsNotExpired(
+      $appConfig->getHideIncompleteSessions()
+    );
 
     // convert data for view
     foreach ($sessions as $session) {

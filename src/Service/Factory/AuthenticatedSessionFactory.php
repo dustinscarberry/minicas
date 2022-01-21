@@ -90,10 +90,10 @@ class AuthenticatedSessionFactory
   }
 
   //get sessions that are still valid or null
-  public function getSessionsNotExpired()
+  public function getSessionsNotExpired($hideIncompleteSessions = false)
   {
     return $this->em
       ->getRepository(AuthenticatedSession::class)
-      ->findAllNotExpired();
+      ->findAllNotExpired(500, $hideIncompleteSessions);
   }
 }

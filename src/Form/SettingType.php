@@ -23,6 +23,9 @@ class SettingType extends AbstractType
   {
     $builder
       ->add('siteName', TextType::class)
+      ->add('hideIncompleteSessions', CheckboxType::class, [
+        'required' => false
+      ])
       ->add('siteTimezone', TimezoneType::class)
       ->add('locale', LocaleType::class)
       ->add('language', LanguageType::class)
