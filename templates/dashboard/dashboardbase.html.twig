@@ -13,7 +13,7 @@
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.uikit.min.css" rel="stylesheet">
     {{ encore_entry_link_tags('dashboard') }}
   </head>
-  <body class="preload dashboard theme-purple {% if app.request.cookies.get('navPin') == 'true' %}nav-pin{% endif %}">
+  <body class="preload dashboard {% if app.request.cookies.get('navPin') == 'true' %}nav-pin{% endif %}">
     {{ include('dashboard/_feedback.html.twig') }}
 
     <div class="dashboard-wrapper">
