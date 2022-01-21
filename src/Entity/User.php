@@ -229,7 +229,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   public function getGravatar()
   {
     $hash = md5(strtolower(trim($this->getEmail())));
-    return 'https://www.gravatar.com/avatar/' . $hash . '.jpg';
+    return 'https://www.gravatar.com/avatar/' . $hash . '.jpg?d=retro';
   }
 
   public function getFullName()
