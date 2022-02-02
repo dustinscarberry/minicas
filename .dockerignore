@@ -1,0 +1,17 @@
+.vagrant
+vagrant
+.git
+docs
+.gitignore
+README.MD
+Vagrantfile
+.phpunit.result.cache
+phpunit.xml.dist
+.DS_Store
+tests
+public/build
+node_modules
+vendor
+var/cache/*
+var/log/*
+.env.local

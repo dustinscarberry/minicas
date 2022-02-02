@@ -27,24 +27,24 @@ CAS 3.0
 
 SAML Validation is supported (currently in alpha)
 
-## Installation
+## Installation (Standard)
 
-Clone repository.
+1. Clone repository
 
 ```sh
 $ cd /var/www
-$ git clone https:\\github.com\dustinscarberry\das.git
+$ git clone git@github.com:dustinscarberry/minicas.git
 ```
 
-Install dependencies.
+2. Install dependencies
 
 ```sh
-$ cd das
+$ cd minicas
 $ composer i --no-scripts --no-dev
 $ npm ci
 ```
 
-Create and configure .env.local at root of project directory.
+3. Create and configure .env.local at root of project directory
 
 ```php
 #required properties
@@ -61,26 +61,13 @@ LDAP_ADMIN_PASSWORD="xxxxxxx"
 LDAP_SEARCH_BASE="dc=sample,dc=com"
 ```
 
-Clear cache.
-
-> This will need to be ran before / after any upgrades to clear the production app cache.
-
-```sh
-$ rm -rf /var/www/das/var/cache/*
-```
-
-Run migrations.
+4. Run migrations
 
 ```sh
 $ php bin/console doctrine:migrations:migrate
 ```
 
-Load basic data.
-```sh
-$ php bin/console doctrine:fixtures:load
-```
-
-Run server (if needed)
+5. Run server (if needed)
 
 Nginx Basic Config
 
@@ -90,7 +77,7 @@ server {
     ssl_certificate /etc/nginx/ssl/cert.cer;
     ssl_certificate_key /etc/nginx/ssl/cert.key;
     server_name __;
-    root /var/www/das/public;
+    root /var/www/minicas/public;
 
     location / {
         try_files $uri /index.php$is_args$args;
@@ -111,15 +98,66 @@ server {
 }
 ```
 
-## Upgrades
+6. Run setup (Visit http://localhost/setup)
 
-1. Get updates from repo.
+## Installation (Docker)
+
+1. Clone repository
+
+```sh
+$ cd /var/www/docker
+$ git clone git@github.com:dustinscarberry/minicas.git
+```
+
+2. Create docker-compose.override.yml and modify ports and env vars for your environment
+```sh
+$ cd minicas/docker
+$ cp docker-compose.override.example.yml docker-compose.override.yml
+```
+
+3. Run docker container
+
+```sh
+$ cd minicas/docker
+# test
+$ docker-compose -p test up -d --build
+# production
+$ docker-compose -p prod up -d --build
+```
+
+4. Start server (nginx, if needed)
+
+Nginx Basic Proxy Config
+
+```nginx
+server {
+    listen 443 ssl http2;
+    ssl_certificate /etc/nginx/ssl/cert.cer;
+    ssl_certificate_key /etc/nginx/ssl/cert.key;
+    server_name __;
+
+    location / {
+        proxy_pass http://127.0.0.1:8001;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+    }
+}
+```
+
+5. Run setup (Visit http://localhost/setup)
+
+## Upgrades (Standard)
+
+1. Get updates from repo
 
 ```sh
 git pull
 ```
 
-2. Run database migrations.
+2. Run database migrations
 
 ```sh
 php bin/console doctrine:migrations:migrate
@@ -132,7 +170,7 @@ composer i --no-scripts --no-dev
 npm ci
 ```
 
-4. Clear cache.
+4. Clear cache
 
 ```sh
 rm -rf var/cache/*

@@ -1,0 +1,27 @@
+services:
+  minicas_app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    environment:
+      - APP_ENV=prod
+      - APP_SECRET=xxxxxxxxxxx
+      - APP_HOST=http://localhost
+      - APP_ESCAPE_URL=https://example.com
+      - DATABASE_URL=mysql://vagrant:vagrant@127.0.0.1:3306/demo
+      - LDAP_HOST=example.com
+      - LDAP_ENCRYPTION=ssl
+      - LDAP_PORT=636
+      - LDAP_REFERRALS=false
+      - LDAP_VERSION=3
+      - LDAP_ADMIN_USER=cn=Account,ou=Groups,dc=sample,dc=com
+      - LDAP_ADMIN_PASSWORD=xxxxxxxxxxx
+      - LDAP_SEARCH_BASE=dc=example,dc=com
+    volumes:
+      - ./logs/server:/var/log/nginx/
+      - ./logs/app:/var/www/html/var/log/
+networks:
+  default:
+    external: true
+    name: docker_default
