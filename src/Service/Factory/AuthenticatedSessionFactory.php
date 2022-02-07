@@ -52,7 +52,11 @@ class AuthenticatedSessionFactory
   public function cleanupExpiredSessions()
   {
     $currentTime = time();
-    $startTime = strtotime('23:00:00');
+
+    // get start time relative to timezone settings (11pm)
+    $currentDate = new \DateTime('23:00:00', new \DateTimeZone($this->appConfig->getSiteTimezone()));
+    $startTime = $currentDate->format('U');
+
     $endTime = $startTime + 3600;
 
     if ($currentTime < $startTime || $currentTime > $endTime)
@@ -63,14 +67,9 @@ class AuthenticatedSessionFactory
 
     $deleteBefore = $currentTime - ($this->appConfig->getAutoDeleteExpiredSessions() * 86400);
 
-    $sessions = $this->em
+    $sessionDeletion = $this->em
       ->getRepository(AuthenticatedSession::class)
-      ->findAllOldSessions($deleteBefore);
-
-    foreach ($sessions as $session)
-      $this->em->remove($session);
-
-    $this->em->flush();
+      ->deleteOldSessions($deleteBefore);
   }
 
   //returns a valid authenticated session if found or null if not

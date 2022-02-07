@@ -34,7 +34,7 @@ class CasTicket
 
   /**
    * @ORM\ManyToOne(targetEntity="App\Entity\AuthenticatedService", inversedBy="casTickets", fetch="EAGER")
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
   private $service;
 

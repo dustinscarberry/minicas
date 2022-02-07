@@ -27,7 +27,7 @@ class AuthenticatedService
 
   /**
    * @ORM\ManyToOne(targetEntity="App\Entity\AuthenticatedSession", inversedBy="authenticatedServices", fetch="EAGER")
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
    */
   private $session;
 

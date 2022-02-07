@@ -65,14 +65,17 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
   }
 
   /**
-    * @return AuthenticatedSession[] Returns array of AuthenticatedSession objects expired and older than specified time
+    * @return void Delete AuthenticatedSession objects expired and older than specified time
   */
-  public function findAllOldSessions($timeCutoff)
+  public function deleteOldSessions($timeCutoff)
   {
-    return $this->createQueryBuilder('a')
-      ->andWhere('a.expiration < :expiration')
-      ->setParameter('expiration', $timeCutoff)
-      ->getQuery()
-      ->getResult();
+    $em = $this->getEntityManager();
+    $query = $em->createQuery(
+      'DELETE
+      FROM App\Entity\AuthenticatedSession a
+      WHERE a.expiration < :expiration'
+    )->setParameter('expiration', $timeCutoff);
+
+    return $query->execute();
   }
 }
