@@ -1,6 +1,6 @@
 # MiniCAS
 
-MiniCAS is a replacement for CAS and WSO2 Carbon Identity Server. Currently it only services CAS services but has the ability to be extended to other protocols.
+MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it only services CAS services but has the ability to be extended to other protocols.
 
 ## Tech
 
