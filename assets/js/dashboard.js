@@ -3,6 +3,9 @@ import '../scss/dashboard.scss';
 import axios from 'axios';
 
 $(document).ready(function(){
+  // init micromodal
+  MicroModal.init();
+
   //nav pin button
   $('.dashboard-nav-pin-btn').click(function(){
     $('body').toggleClass('nav-pin');

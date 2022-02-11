@@ -26,12 +26,29 @@
       </div>
     </div>
 
+    <div class="modal micromodal-slide" id="modal-about" aria-hidden="true">
+      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-about-title">
+          <header class="modal__header">
+            <h2 class="modal__title" id="modal-about-title">
+              MiniCAS ({{ app_version }})
+            </h2>
+            <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+          </header>
+          <main class="modal__content" id="modal-about-content">
+            MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it only services CAS services but has the ability to be extended to other protocols.
+          </main>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js" integrity="sha512-qcwcAul7d7yUcoz3MmQABiaGDa+gVkaDWgZX6wEd/z3I6z62nQCDW3EqioQG+O+QlGCpxmJLdH5snh4IaDPiPA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/tippy.js@4"></script>
     {{ encore_entry_script_tags('dashboard') }}
 
