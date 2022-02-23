@@ -186,6 +186,6 @@ When adding an IDP you will need to set the username mapping to the correct AD a
 
 When adding an SP you can override the returned user attribute by specifying a user mapping.
 
-User's can be managed under the users panel. All user accounts are local, no SSO.
+Admin user's can be managed under the users panel.
 
 User sessions are kept with a commonauth cookie allowing future login requests after the first one to not require delegation with the IDP.
