@@ -55,7 +55,7 @@ class UserFactory
   {
     // change password if provided
     if ($newPassword)
-      $user->setPassword($this->passwordEncoder->encodePassword($user, $newPassword));
+      $user->setPassword($this->passwordEncoder->hashPassword($user, $newPassword));
 
     // flush user object
     $this->em->flush();
