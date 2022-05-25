@@ -1,4 +1,4 @@
-FROM dustinscarberry/symfony-base:php8.1
+FROM dustinscarberry/symfony-base:php8.1-extra
 
 # set workdir
 WORKDIR /var/www/html
