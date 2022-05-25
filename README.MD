@@ -178,14 +178,14 @@ rm -rf var/cache/*
 
 ## Documentation
 
-Each service must be a registered service provider in order to use the MiniCAS server. Identity Providers are required (you will only need one for sso) to delegate authentication to for each registered service.
+* Each service must be a registered service provider in order to use the MiniCAS server. Identity Providers are required (you will only need one for sso) to delegate authentication to for each registered service.
 
-Attributes are managed under the attributes panel. Custom attribute mappings to AD can be added as needed.
+* Attributes are managed under the attributes panel. Custom attribute mappings to AD can be added as needed.
 
-When adding an IDP you will need to set the username mapping to the correct AD attribute. This is used to map the returned IDP user to the AD search.
+* When adding an IDP you will need to set the username mapping to the correct AD attribute. This is used to map the returned IDP user to the AD search.
 
-When adding an SP you can override the returned user attribute by specifying a user mapping.
+* When adding an SP you can override the returned user attribute by specifying a user mapping.
 
-Admin user's can be managed under the users panel.
+* Admin user's can be managed under the users panel.
 
-User sessions are kept with a commonauth cookie allowing future login requests after the first one to not require delegation with the IDP.
+* User sessions are kept with a commonauth cookie allowing future login requests after the first one to not require delegation with the IDP.
