@@ -65,7 +65,8 @@ class ServiceProviderType extends AbstractType
         'choices' => [
           'Exact' => 'exact',
           'Path' => 'path',
-          'Domain' => 'domain'
+          'Domain' => 'domain',
+          'WildCard Domain' => 'wildcarddomain'
         ]
       ])
       ->add('contact', TextType::class, [

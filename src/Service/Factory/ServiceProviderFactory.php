@@ -83,6 +83,9 @@ class ServiceProviderFactory
         || $matchMethod == 'domain'
           && strpos($cleanedService, strtok($identifier, '/')) === 0
           && $registeredService->getEnabled()
+        || $matchMethod == 'wildcarddomain'
+          && strpos($cleanedService, strtok($identifier, '/')) >= 0
+          && $registeredService->getEnabled()
         || $matchMethod == 'path'
           && strpos($cleanedService, $identifier) !== false
           && $registeredService->getEnabled()
