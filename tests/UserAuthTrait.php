@@ -4,7 +4,6 @@ namespace App\Tests;
 
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-//use App\Entity\User;
 use App\Repository\UserRepository;
 
 trait UserAuthTrait
