@@ -11,7 +11,7 @@ use App\Service\Factory\AttributeFactory;
 
 class AttributeController extends AbstractController
 {
-  #[Route('/dashboard/attributes', methods: 'viewAttributes')]
+  #[Route('/dashboard/attributes', name: 'viewAttributes')]
   public function view(AttributeFactory $attrManager)
   {
     // get attributes
