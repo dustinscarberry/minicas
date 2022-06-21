@@ -9,9 +9,7 @@ use App\Model\AppConfig;
 
 class DashboardController extends AbstractController
 {
-  /**
-   * @Route("/dashboard", name="dashboardHome")
-   */
+  #[Route('/dashboard', name: 'dashboardHome')]
   public function home(AuthenticatedSessionFactory $authSessionFactory, AppConfig $appConfig)
   {
     // get unexpired sessions

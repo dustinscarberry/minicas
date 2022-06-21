@@ -9,10 +9,8 @@ use App\Service\Factory\UserFactory;
 
 class UserApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/users/{hashId}", name="deleteUser", methods={"DELETE"})
-   * @Security("is_granted('ROLE_APIUSER') or is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/users/{hashId}', name: 'deleteUser', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_APIUSER') or is_granted('ROLE_ADMIN')")]
   public function deleteUser($hashId, UserFactory $userFactory)
   {
     // get user

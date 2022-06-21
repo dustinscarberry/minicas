@@ -12,9 +12,7 @@ use App\Service\Factory\ServiceProviderFactory;
 
 class ServiceProviderController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/serviceproviders", name="viewServiceProviders")
-   */
+  #[Route('/dashboard/serviceproviders', name: 'viewServiceProviders')]
   public function view()
   {
     // get service providers
@@ -27,9 +25,7 @@ class ServiceProviderController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/serviceproviders/add", name="addServiceProvider")
-   */
+  #[Route('/dashboard/serviceproviders/add', name: 'addServiceProvider')]
   public function add(Request $req, ServiceProviderFactory $spManager)
   {
     // create service provider object
@@ -42,8 +38,7 @@ class ServiceProviderController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // create service provider
       $spManager->createServiceProvider($serviceProvider);
 
@@ -56,9 +51,7 @@ class ServiceProviderController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/serviceproviders/{hashId}", name="editServiceProvider")
-   */
+  #[Route('/dashboard/serviceproviders/{hashId}', name: 'editServiceProvider')]
   public function edit($hashId, Request $req, ServiceProviderFactory $spManager)
   {
     // get service provider
@@ -78,8 +71,7 @@ class ServiceProviderController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // update service provider
       $spManager->updateServiceProvider($serviceProvider, $originalAttributes);
 

@@ -9,15 +9,12 @@ use App\Service\Factory\IdentityProviderFactory;
 
 class IdentityProviderApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/identityproviders/{hashId}", name="deleteIdentityProvider", methods={"DELETE"})
-   * @Security("is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/identityproviders/{hashId}', name: 'deleteIdentityProvider', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_ADMIN')")]
   public function deleteIdentityProvider(
     $hashId,
     IdentityProviderFactory $identityProviderFactory
-  )
-  {
+  ) {
     // get identity provider
     $identityProvider = $identityProviderFactory->getIdentityProvider($hashId);
 

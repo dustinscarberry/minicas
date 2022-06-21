@@ -9,15 +9,12 @@ use App\Service\Factory\AuthenticatedSessionFactory;
 
 class SessionApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/sessions/{hashId}", name="deleteSession", methods={"DELETE"})
-   * @Security("is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/sessions/{hashId}', name: 'deleteSession', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_ADMIN')")]
   public function deleteSession(
     $hashId,
     AuthenticatedSessionFactory $sessionManager
-  )
-  {
+  ) {
     // get session
     $session = $sessionManager->getSession($hashId);
 

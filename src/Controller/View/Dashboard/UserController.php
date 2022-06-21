@@ -11,9 +11,7 @@ use App\Service\Factory\UserFactory;
 
 class UserController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/users", name="viewUsers")
-   */
+  #[Route('/dashboard/users', name: 'viewUsers')]
   public function viewall(UserFactory $userFactory)
   {
     $users = $userFactory->getUsers();
@@ -23,9 +21,7 @@ class UserController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/users/add")
-   */
+  #[Route('/dashboard/users/add', name: 'addUser')]
   public function add(Request $req, UserFactory $userFactory)
   {
     // create user object
@@ -38,8 +34,7 @@ class UserController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       $userFactory->createUser($user);
 
       $this->addFlash('success', 'User added');
@@ -51,9 +46,7 @@ class UserController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/users/{hashId}", name="editUser")
-   */
+  #[Route('/dashboard/users/{hashId}', name: 'editUser')]
   public function edit($hashId, Request $req, UserFactory $userFactory)
   {
     // get user from database
@@ -66,8 +59,7 @@ class UserController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // get new password field and update user
       $newPassword = $form->get('password')->getData();
       $userFactory->updateUser($user, $newPassword);

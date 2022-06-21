@@ -11,9 +11,7 @@ use App\Service\Factory\AttributeFactory;
 
 class AttributeController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/attributes", name="viewAttributes")
-   */
+  #[Route('/dashboard/attributes', methods: 'viewAttributes')]
   public function view(AttributeFactory $attrManager)
   {
     // get attributes
@@ -24,9 +22,7 @@ class AttributeController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/attributes/add", name="addAttribute")
-   */
+  #[Route('/dashboard/attributes/add', name: 'addAttribute')]
   public function add(Request $req, AttributeFactory $attrManager)
   {
     $attribute = new Attribute();
@@ -38,8 +34,7 @@ class AttributeController extends AbstractController
     $form->handleRequest($req);
 
     //save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       $attrManager->createAttribute($attribute);
 
       $this->addFlash('success', 'Attribute created');
@@ -51,9 +46,7 @@ class AttributeController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/attributes/{hashId}", name="editAttribute")
-   */
+  #[Route('/dashboard/attributes/{hashId}', name: 'editAttribute')]
   public function edit($hashId, Request $req, AttributeFactory $attrManager)
   {
     // get attribute
@@ -66,8 +59,7 @@ class AttributeController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       $attrManager->updateAttribute();
 
       $this->addFlash('success', 'Attribute updated');

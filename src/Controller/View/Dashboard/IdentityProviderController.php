@@ -11,9 +11,7 @@ use App\Service\Factory\IdentityProviderFactory;
 
 class IdentityProviderController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/identityproviders", name="viewIdentityProviders")
-   */
+  #[Route('/dashboard/identityproviders', name: 'viewIdentityProviders')]
   public function viewAll()
   {
     // get identity providers
@@ -26,9 +24,7 @@ class IdentityProviderController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/identityproviders/add")
-   */
+  #[Route('/dashboard/identityproviders/add', name: 'addIdentityProvider')]
   public function add(Request $req, IdentityProviderFactory $idpManager)
   {
     // create identity provider object
@@ -41,8 +37,7 @@ class IdentityProviderController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // create identity provider
       $idpManager->createIdentityProvider($identityProvider);
 
@@ -55,9 +50,7 @@ class IdentityProviderController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/identityproviders/{hashId}", name="editIdentityProvider")
-   */
+  #[Route('/dashboard/identityproviders/{hashId}', name: 'editIdentityProvider')]
   public function edit($hashId, Request $req, IdentityProviderFactory $idpManager)
   {
     // get identity provider

@@ -12,9 +12,7 @@ use App\Form\SettingType;
 
 class SettingsController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/settings")
-   */
+  #[Route('/dashboard/settings')]
   public function update(Request $request, AppConfig $appConfig)
   {
     // create form
@@ -24,8 +22,7 @@ class SettingsController extends AbstractController
     $form->handleRequest($request);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // save app config
       $appConfig->save();
       $this->addFlash('success', 'App settings updated');

@@ -9,10 +9,8 @@ use App\Service\Factory\AttributeFactory;
 
 class AttributeApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/attributes/{hashId}", name="deleteAttribute", methods={"DELETE"})
-   * @Security("is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/attributes/{hashId}', name: 'deleteAttribute', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_ADMIN')")]
   public function deleteAttribute($hashId, AttributeFactory $attributeFactory)
   {
     // get attribute

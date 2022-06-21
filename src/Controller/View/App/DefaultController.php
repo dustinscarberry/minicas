@@ -9,9 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultController extends AbstractController
 {
-  /**
-   * @Route("/")
-   */
+  #[Route('/')]
   public function siteRoot()
   {
     return $this->redirect($_ENV['APP_ESCAPE_URL']);

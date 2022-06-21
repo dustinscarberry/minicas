@@ -9,9 +9,7 @@ use App\Service\Factory\InvalidServiceFactory;
 
 class InvalidServiceController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/invalidservices", name="viewInvalidServices")
-   */
+  #[Route('/dashboard/invalidservices', name: 'viewInvalidServices')]
   public function viewAll(InvalidServiceFactory $invalidServiceFactory)
   {
     // get invalid services

@@ -10,9 +10,7 @@ use App\Service\Factory\UserFactory;
 
 class AccountController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/account", name="viewAccount")
-   */
+  #[Route('/dashboard/account', name: 'viewAccount')]
   public function view(Request $req, UserFactory $userFactory)
   {
     $user = $this->getUser();
@@ -24,8 +22,7 @@ class AccountController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       // get new password field and update user
       $newPassword = $form->get('password')->getData();
       $userFactory->updateUser($user, $newPassword);

@@ -13,15 +13,12 @@ use App\Service\Factory\UserFactory;
 
 class SetupController extends AbstractController
 {
-  /**
-   * @Route("/setup", name="setup")
-   */
+  #[Route('/setup', name: 'setup')]
   public function setup(
     Request $req,
     AppConfig $appConfig,
     UserFactory $userFactory
-  )
-  {
+  ) {
     // bypass setup once complete
     if ($appConfig->getIsProvisioned())
       return $this->redirect('/dashboard');

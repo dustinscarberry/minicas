@@ -9,15 +9,12 @@ use App\Service\Factory\ServiceProviderFactory;
 
 class ServiceProviderApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/serviceproviders/{hashId}", name="deleteServiceProvider", methods={"DELETE"})
-   * @Security("is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/serviceproviders/{hashId}', name: 'deleteServiceProvider', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_ADMIN')")]
   public function deleteServiceProvider(
     $hashId,
     ServiceProviderFactory $serviceProviderFactory
-  )
-  {
+  ) {
     // get service provider
     $serviceProvider = $serviceProviderFactory->getServiceProvider($hashId);
 

@@ -17,18 +17,14 @@ use App\Service\Factory\CasTicketFactory;
 
 class AppEndpointController extends AbstractController
 {
-  /**
-   * @Route("/idpsamlvalidate", methods={"POST"})
-   */
+  #[Route('/idpsamlvalidate', methods: ['POST'])]
   public function idpSamlValidate(
     Request $req,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
     CasTicketFactory $casTicketFactory
-  )
-  {
-    try
-    {
+  ) {
+    try {
       //run cron session cleanup if needed
       $authSessionFactory->cleanupExpiredSessions();
 
@@ -76,8 +72,7 @@ class AppEndpointController extends AbstractController
       //respond based on service provider type
       $serviceType = $authenticatedService->getService()->getType();
 
-      if ($serviceType == 'cas')
-      {
+      if ($serviceType == 'cas') {
         //create new cas ticket
         $casTicket = $casTicketFactory->createTicket($authenticatedService);
 
@@ -96,16 +91,12 @@ class AppEndpointController extends AbstractController
 
         return $response;
       }
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
       throw $e;
     }
   }
 
-  /**
-   * @Route("/idpsamlvalidate", methods={"GET"})
-   */
+  #[Route('/idpsamlvalidate', methods: 'GET')]
   public function idpSamlValidateFake()
   {
     // fake endpoint to avoid bot errors for invalid endpoint [GET]

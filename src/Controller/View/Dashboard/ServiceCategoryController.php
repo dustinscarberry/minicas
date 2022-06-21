@@ -11,9 +11,7 @@ use App\Service\Factory\ServiceCategoryFactory;
 
 class ServiceCategoryController extends AbstractController
 {
-  /**
-   * @Route("/dashboard/servicecategories", name="viewServiceCategories")
-   */
+  #[Route('/dashboard/servicecategories', name: 'viewServiceCategories')]
   public function view(ServiceCategoryFactory $serviceCategoryFactory)
   {
     // get service categories
@@ -24,9 +22,7 @@ class ServiceCategoryController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/servicecategories/add", name="addServiceCategory")
-   */
+  #[Route('/dashboard/servicecategories/add', name: 'addServiceCategory')]
   public function add(Request $req, ServiceCategoryFactory $serviceCategoryFactory)
   {
     // handle form request
@@ -34,8 +30,7 @@ class ServiceCategoryController extends AbstractController
     $form = $this->createForm(ServiceCategoryType::class, $serviceCategory);
     $form->handleRequest($req);
 
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       $serviceCategoryFactory->createServiceCategory($serviceCategory);
 
       $this->addFlash('success', 'Service Category created');
@@ -47,9 +42,7 @@ class ServiceCategoryController extends AbstractController
     ]);
   }
 
-  /**
-   * @Route("/dashboard/servicecategories/{hashId}", name="editServiceCategory")
-   */
+  #[Route('/dashboard/servicecategories/{hashId}', name: 'editServiceCategory')]
   public function edit($hashId, Request $req, ServiceCategoryFactory $serviceCategoryFactory)
   {
     // handle form request
@@ -58,8 +51,7 @@ class ServiceCategoryController extends AbstractController
     $form->handleRequest($req);
 
     // save form data to database if posted and validated
-    if ($form->isSubmitted() && $form->isValid())
-    {
+    if ($form->isSubmitted() && $form->isValid()) {
       $serviceCategoryFactory->updateServiceCategory();
 
       $this->addFlash('success', 'Service Category updated');

@@ -9,10 +9,8 @@ use App\Service\Factory\ServiceCategoryFactory;
 
 class ServiceCategoryApiController extends ApiController
 {
-  /**
-   * @Route("/api/v1/servicecategories/{hashId}", name="deleteServiceCategory", methods={"DELETE"})
-   * @Security("is_granted('ROLE_ADMIN')")
-   */
+  #[Route('/api/v1/servicecategories/{hashId}', name: 'deleteServiceCategory', methods: ['DELETE'])]
+  #[Security("is_granted('ROLE_ADMIN')")]
   public function deleteServiceCategory($hashId, ServiceCategoryFactory $serviceCategoryFactory)
   {
     // get service category

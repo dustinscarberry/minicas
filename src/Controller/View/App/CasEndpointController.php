@@ -26,9 +26,7 @@ use App\Model\AppConfig;
 
 class CasEndpointController extends AbstractController
 {
-  /**
-   * @Route("/cas/login")
-   */
+  #[Route('/cas/login')]
   public function casLogin(
     Request $req,
     SAML2Generator $saml2Generator,
@@ -38,10 +36,8 @@ class CasEndpointController extends AbstractController
     ServiceProviderFactory $serviceProviderFactory,
     InvalidServiceFactory $invalidServiceFactory,
     AppConfig $appConfig
-  )
-  {
-    try
-    {
+  ) {
+    try {
       // get params
       $service = $req->query->get('service');
       $commonAuthCookie = $req->cookies->get('commonauth');
@@ -64,16 +60,14 @@ class CasEndpointController extends AbstractController
       //get valid session
       $validSession = $authSessionFactory->getSessionNotExpired($commonAuthCookie);
 
-      if ($validSession)
-      {
+      if ($validSession) {
         //get matching authenticated service from authenticated session
         $authenticatedService = $authServiceFactory->getSessionService(
           $validSession,
           $service
         );
 
-        if ($authenticatedService)
-        {
+        if ($authenticatedService) {
           //create new cas ticket
           $casTicket = $casTicketFactory->createTicket($authenticatedService);
 
@@ -85,9 +79,7 @@ class CasEndpointController extends AbstractController
 
           //redirect to cas service
           return $this->redirect($redirectURL);
-        }
-        else
-        {
+        } else {
           //create authenticated service
           $sessionService = $authServiceFactory->createService(
             $registeredService,
@@ -113,9 +105,7 @@ class CasEndpointController extends AbstractController
           //redirect to cas service
           return $this->redirect($redirectURL);
         }
-      }
-      else
-      {
+      } else {
         //create authenticated session
         $session = $authSessionFactory->createSession($remoteIp);
 
@@ -137,9 +127,7 @@ class CasEndpointController extends AbstractController
           return $this->redirect($redirectURL);
         }
       }
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
       // send cas response
       return new Response(
         CASGenerator::getErrorResponse($e),
@@ -149,13 +137,10 @@ class CasEndpointController extends AbstractController
     }
   }
 
-  /**
-   * @Route("/cas/serviceValidate")
-   */
+  #[Route('/cas/serviceValidate')]
   public function serviceValidate(Request $req, CasTicketFactory $casTicketFactory)
   {
-    try
-    {
+    try {
       //get service and ticket params
       $service = $req->query->get('service');
       $ticket = $req->query->get('ticket');
@@ -187,9 +172,7 @@ class CasEndpointController extends AbstractController
       );
 
       return $response;
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
       // send cas response
       return new Response(
         CASGenerator::getErrorResponse($e),
@@ -199,13 +182,10 @@ class CasEndpointController extends AbstractController
     }
   }
 
-  /**
-   * @Route("/cas/p3/serviceValidate")
-   */
+  #[Route('/cas/p3/serviceValidate')]
   public function serviceValidateP3(Request $req, CasTicketFactory $casTicketFactory)
   {
-    try
-    {
+    try {
       //get service and ticket params
       $service = $req->query->get('service');
       $ticket = $req->query->get('ticket');
@@ -238,9 +218,7 @@ class CasEndpointController extends AbstractController
       );
 
       return $response;
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
       // send cas response
       return new Response(
         CASGenerator::getErrorResponse($e),
@@ -250,13 +228,10 @@ class CasEndpointController extends AbstractController
     }
   }
 
-  /**
-   * @Route("/cas/samlValidate", methods={"POST"})
-   */
+  #[Route('/cas/samlValidate', methods: ['POST'])]
   public function samlValidate(Request $req, CasTicketFactory $casTicketFactory)
   {
-    try
-    {
+    try {
       //get saml request string
       $body = $req->getContent();
 
@@ -314,16 +289,12 @@ class CasEndpointController extends AbstractController
       );
 
       return $response;
-    }
-    catch (\Exception $e)
-    {
+    } catch (\Exception $e) {
       throw $e;
     }
   }
 
-  /**
-   * @Route("/cas/logout")
-   */
+  #[Route('/cas/logout')]
   public function logout(Request $req, AuthenticatedSessionFactory $authSessionFactory)
   {
     //get service and ticket params
@@ -348,9 +319,7 @@ class CasEndpointController extends AbstractController
     return $response;
   }
 
-  /**
-   * @Route("/cas/certificate")
-   */
+  #[Route('/cas/certificate')]
   public function downloadCASCertificate()
   {
     $context = stream_context_create (['ssl' => ['capture_peer_cert' => true]]);
