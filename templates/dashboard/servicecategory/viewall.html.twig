@@ -29,7 +29,7 @@
 
             {% for category in serviceProviderCategories %}
             <tr data-id="{{ category.hashid }}">
-              <td>{{ category.title }}</td>
+              <td><a href="/dashboard/servicecategories/{{ category.hashid }}">{{ category.title }}</a></td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
                 <a href="/dashboard/servicecategories/{{ category.hashid }}" class="btn btn-primary pull-right">Edit</a>

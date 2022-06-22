@@ -29,7 +29,7 @@
 
             {% for idp in identityProviders %}
             <tr data-id="{{ idp.hashid }}">
-              <td>{{ idp.name }}</td>
+              <td><a href="/dashboard/identityproviders/{{ idp.hashid }}">{{ idp.name }}</a></td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
                 <a href="/dashboard/identityproviders/{{ idp.hashid }}" class="btn btn-primary pull-right">Edit</a>

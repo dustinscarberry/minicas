@@ -30,7 +30,7 @@
 
             {% for user in users %}
             <tr data-id="{{ user.hashid }}">
-              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td><a href="/dashboard/users/{{ user.hashid }}">{{ user.firstName }} {{ user.lastName }}</a></td>
               <td>{{ user.username }}</td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>

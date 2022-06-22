@@ -31,7 +31,7 @@
 
             {% for sp in serviceProviders %}
             <tr data-id="{{ sp.hashid }}">
-              <td>{{ sp.name }}</td>
+              <td><a href="/dashboard/serviceproviders/{{ sp.hashid }}">{{ sp.name }}</a></td>
               <td>
                 {% if sp.category is not null %}
                   {{ sp.category.title }}

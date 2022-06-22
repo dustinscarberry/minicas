@@ -388,6 +388,7 @@
   padding-right: 3rem;
   padding-right: 1.7rem;
   position: relative;
+  cursor: pointer;
 
   .profile-name{
     color: #eee;
@@ -402,7 +403,6 @@
     border: 2px solid transparent;
     border-radius: 50%;
     vertical-align: middle;
-    cursor: pointer;
     box-sizing: border-box;
   }
 

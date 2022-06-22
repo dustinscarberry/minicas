@@ -24,8 +24,8 @@ $(document).ready(function(){
   });
 
   //profile menu
-  $('.profile-avatar').click(function(){
-    $(this).parent().toggleClass('is-open');
+  $('.dashboard-profile').click(function(){
+    $(this).toggleClass('is-open');
     event.stopPropagation();
   });
 

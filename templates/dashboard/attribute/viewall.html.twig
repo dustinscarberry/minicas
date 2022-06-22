@@ -30,7 +30,7 @@
 
             {% for attribute in attributes %}
             <tr data-id="{{ attribute.hashid }}">
-              <td>{{ attribute.friendlyName }}</td>
+              <td><a href="/dashboard/attributes/{{ attribute.hashid }}">{{ attribute.friendlyName }}</a></td>
               <td>{{ attribute.adAttribute }}</td>
               <td>
                 <button class="btn btn-error pull-right btn-delete">Delete</button>
