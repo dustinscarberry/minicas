@@ -26,6 +26,9 @@ class SettingType extends AbstractType
       ->add('hideIncompleteSessions', CheckboxType::class, [
         'required' => false
       ])
+      ->add('ignoreSigningCertExpiration', CheckboxType::class, [
+        'required' => false
+      ])
       ->add('siteTimezone', TimezoneType::class)
       ->add('locale', LocaleType::class)
       ->add('language', LanguageType::class)

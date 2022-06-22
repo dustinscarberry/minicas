@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
+use App\Service\Formatter\SamlFormatter;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IdentityProviderRepository")
@@ -157,17 +158,13 @@ class IdentityProvider
 
   public function getCertificateData(): ?string
   {
-    // remove cert base64 headers
-    $cert = str_replace("-----BEGIN CERTIFICATE-----", '', $this->certificate);
-    $cert = str_replace("-----END CERTIFICATE-----", '', $cert);
-    $cert = str_replace("\r\n", '', $cert);
-    return str_replace("\r", '', $cert);
+    return SamlFormatter::extractCertificateData($this->certificate);
   }
 
+  // return valid formatted base64 pem cert
   public function getCertificateFormatted(): ?string
   {
-    // return valid formatted base64 pem cert
-    return "-----BEGIN CERTIFICATE-----\r\n" . chunk_split($this->getCertificateData(), 64) . "-----END CERTIFICATE-----";
+    return SamlFormatter::formatCertificateData($this->certificate);
   }
 
   public function setCertificate(?string $certificate): self

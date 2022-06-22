@@ -36,6 +36,10 @@
         {{ form_row(form.locale) }}
         {{ form_row(form.language) }}
       </div>
+      <div class="dashboard-panel-block">
+        <h3 class="dashboard-panel-header">Security</h3>
+        {{ form_row(form.ignoreSigningCertExpiration) }}
+      </div>
   </div>
 </div>
 {{ form_end(form) }}

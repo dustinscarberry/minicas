@@ -6,6 +6,7 @@ use LightSaml\Model\Context\DeserializationContext;
 use LightSaml\Credential\X509Certificate;
 use LightSaml\Model\Protocol\Response;
 use LightSaml\Credential\KeyHelper;
+use App\Service\Formatter\SamlFormatter;
 use Exception;
 
 class SAML2Response
@@ -28,13 +29,13 @@ class SAML2Response
     $this->assertion = $this->response->getFirstAssertion();
   }
 
-  public function validate(?string $signingCert)
+  public function validate(?string $signingCert = null, $ignoreSigningCertExpiration = false)
   {
     $this->validateSignature();
     $this->validateConditions();
 
     if ($signingCert)
-      $this->validateKnownPublicSigningCert($signingCert);
+      $this->validateKnownPublicSigningCert($signingCert, $ignoreSigningCertExpiration);
   }
 
   public function getSubject()
@@ -63,8 +64,7 @@ class SAML2Response
     $signingCerts = $this->assertion->getSignature()->getAllCertificates();
     $validSignature = false;
 
-    foreach ($signingCerts as $signingCert)
-    {
+    foreach ($signingCerts as $signingCert) {
       //create public key to verify signature
       $publicCert = new X509Certificate();
       $publicCert->setData($signingCert);
@@ -74,8 +74,7 @@ class SAML2Response
       $signatureReader = $this->assertion->getSignature();
 
       //validate signature
-      if ($signatureReader->validate($key))
-      {
+      if ($signatureReader->validate($key)) {
         $validSignature = true;
         break;
       }
@@ -96,21 +95,31 @@ class SAML2Response
       throw new Exception('SAML Response Error: Timestamp invalid');
   }
 
-  private function validateKnownPublicSigningCert($signingCert)
+  private function validateKnownPublicSigningCert($signingCert, $ignoreSigningCertExpiration)
   {
     $signingCerts = $this->assertion->getSignature()->getAllCertificates();
     $validHost = false;
 
-    foreach ($signingCerts as $cert)
-    {
-      if ($signingCert == $cert)
-      {
+    foreach ($signingCerts as $cert) {
+      // get certificate details
+      $certificateDetails = openssl_x509_parse(SamlFormatter::formatCertificateData($cert));
+
+      if (
+        (
+          $signingCert == $cert
+          && $certificateDetails['validTo_time_t'] >= time()
+          && $certificateDetails['validFrom_time_t'] <= time()
+        ) || (
+          $signingCert == $cert
+          && $ignoreSigningCertExpiration == true
+        )
+      ) {
         $validHost = true;
         break;
       }
     }
 
     if (!$validHost)
-      throw new Exception('SAML Response Error: Signature not trusted');
+      throw new Exception('SAML Response Error: No valid signing certificate');
   }
 }

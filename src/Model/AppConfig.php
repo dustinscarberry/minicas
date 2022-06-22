@@ -20,6 +20,7 @@ class AppConfig
     'language' => 'en',
     'siteName' => 'MiniCAS',
     'hideIncompleteSessions' => true,
+    'ignoreSigningCertExpiration' => false,
     'siteTimezone' => 'America/New_York',
     'sessionTimeout' => 60,
     'casTicketTimeout' => 1,
@@ -74,6 +75,17 @@ class AppConfig
   public function setHideIncompleteSessions(bool $hideIncompleteSessions): self
   {
     $this->settingList['hideIncompleteSessions'] = $hideIncompleteSessions;
+    return $this;
+  }
+
+  public function getIgnoreSigningCertExpiration(): bool
+  {
+    return $this->settingList['ignoreSigningCertExpiration'];
+  }
+
+  public function setIgnoreSigningCertExpiration(bool $ignoreSigningCertExpiration): self
+  {
+    $this->settingList['ignoreSigningCertExpiration'] = $ignoreSigningCertExpiration;
     return $this;
   }
 

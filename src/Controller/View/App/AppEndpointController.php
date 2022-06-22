@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\Generator\CASGenerator;
 use App\Service\Generator\AuthGenerator;
 use App\Model\SAML2Response;
+use App\Model\AppConfig;
 use App\Service\Factory\AuthenticatedSessionFactory;
 use App\Service\Factory\AuthenticatedServiceFactory;
 use App\Service\Factory\CasTicketFactory;
@@ -22,7 +23,8 @@ class AppEndpointController extends AbstractController
     Request $req,
     AuthenticatedSessionFactory $authSessionFactory,
     AuthenticatedServiceFactory $authServiceFactory,
-    CasTicketFactory $casTicketFactory
+    CasTicketFactory $casTicketFactory,
+    AppConfig $appConfig
   ) {
     try {
       //run cron session cleanup if needed
@@ -55,7 +57,7 @@ class AppEndpointController extends AbstractController
         ->getCertificateData();
 
       //validate saml object
-      $samlResponse->validate($signingCert);
+      $samlResponse->validate($signingCert, $appConfig->getIgnoreSigningCertExpiration());
 
       //update session with username
       $authSessionFactory->updateSessionUsername(
