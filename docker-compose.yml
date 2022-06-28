@@ -1,8 +1,8 @@
 services:
   minicas_app:
     build:
-      context: ../
-      dockerfile: docker/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     environment:
       - APP_ENV=prod

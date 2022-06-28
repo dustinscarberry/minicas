@@ -105,20 +105,19 @@ server {
 1. Clone repository
 
 ```sh
-$ cd /var/www/docker
+$ cd /var/docker
 $ git clone git@github.com:dustinscarberry/minicas.git
 ```
 
 2. Create docker-compose.override.yml and modify ports and env vars for your environment
 ```sh
-$ cd minicas/docker
+$ cd minicas
 $ cp docker-compose.override.example.yml docker-compose.override.yml
 ```
 
 3. Run docker container
 
 ```sh
-$ cd minicas/docker
 # test
 $ docker-compose -p test up -d --build
 # production
