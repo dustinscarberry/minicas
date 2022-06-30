@@ -10,8 +10,7 @@ framework:
     # gc_maxlifetime used to limit idle sessions to timeout
     # gc_probability used to make garbage collector run more often to clean old sessions
     session:
-        handler_id: session.handler.native_file
-        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
         cookie_secure: auto
         cookie_samesite: strict
         gc_probability: 75
