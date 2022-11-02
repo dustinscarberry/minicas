@@ -63,10 +63,10 @@ jobs:
         run: composer i --no-scripts
 
       - name: Install NPM dependencies
-        run: npm ci
+        run: yarn install --immutable
 
       - name: Build scripts
-        run: npm run prod --if-present
+        run: yarn prod
 
       ## —— Tests ✅ ———————————————————————————————————————————————————————————
       - name: Check MariaDB version

@@ -5,8 +5,8 @@ MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it o
 ## Tech
 
 * [Symfony 5.4] - PHP MVC Framework
-* [composer] - PHP Dependency Manager
-* [npm] - JS Dependency Manager
+* [composer] - PHP Package Manager
+* [Yarn] - JS Package Manager
 * [jQuery] - More JS stuff
 
 ## Requirements
@@ -14,7 +14,7 @@ MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it o
 * [PHP 8.0 or higher](https://www.php.net/)
 * [MariaDB 10.0+](https://mariadb.org/)
 * [Composer](https://getcomposer.org/)
-* [NPM](https://nodejs.org/)
+* [Yarn](https://yarnpkg.com/)
 
 ## Supported Protocols
 
@@ -41,7 +41,8 @@ $ git clone git@github.com:dustinscarberry/minicas.git
 ```sh
 $ cd minicas
 $ composer i --no-scripts --no-dev
-$ npm ci
+$ yarn install --immutable
+$ yarn prod
 ```
 
 3. Create and configure .env.local at root of project directory
@@ -166,7 +167,8 @@ php bin/console doctrine:migrations:migrate
 
 ```sh
 composer i --no-scripts --no-dev
-npm ci
+yarn install --immutable
+yarn prod
 ```
 
 4. Clear cache

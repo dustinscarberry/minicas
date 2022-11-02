@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import '../scss/dashboard.scss';
 import axios from 'axios';
 
