@@ -344,10 +344,6 @@ $(document).ready(function(){
   $('.collection-subform').on('click', '.collection-delete-btn', function(){
     $(this).parent().remove();
   });
-
-
-
-
 });
 
 function confirmDelete(success, cancel)
@@ -417,31 +413,7 @@ class ServiceCollection
     //add row deletion button
     formRow.append('<button class="collection-delete-btn"></button>');
 
-    //add extra custom  attributes if needed to subform row
-    formRow = this.addExtraAttributes(formRow);
-
     //append to collection list
     this.collectionSubForm.append(formRow);
-  }
-
-  addExtraAttributes(formRow)
-  {
-    const subformId = this.collectionSubForm.parent().attr('id');
-
-    //extra actions for updates
-    if (subformId == 'maintenance-updates-group'
-      || subformId == 'incident-updates-group'
-    )
-    {
-      const currentDatetime = moment().format('MM/DD/YYYY h:mm A');
-      const field = formRow.find('.editable-text');
-
-      //set datetimepicker because .on doesn't work for new ones, for some reason
-      field.datetimepicker();
-      //set starting value of field
-      field.val(currentDatetime);
-    }
-
-    return formRow;
   }
 }

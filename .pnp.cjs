@@ -33,7 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@symfony/webpack-encore", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.1"],\
             ["axios", "npm:1.1.3"],\
             ["classnames", "npm:2.3.2"],\
-            ["core-js", "npm:3.26.0"],\
+            ["core-js", "npm:3.26.1"],\
             ["immutability-helper", "npm:3.1.1"],\
             ["sass", "npm:1.56.1"],\
             ["sass-loader", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
@@ -4110,10 +4110,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["core-js", [\
-        ["npm:3.26.0", {\
-          "packageLocation": "./.yarn/unplugged/core-js-npm-3.26.0-bb48de0ef9/node_modules/core-js/",\
+        ["npm:3.26.1", {\
+          "packageLocation": "./.yarn/unplugged/core-js-npm-3.26.1-42575888f8/node_modules/core-js/",\
           "packageDependencies": [\
-            ["core-js", "npm:3.26.0"]\
+            ["core-js", "npm:3.26.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7863,7 +7863,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@symfony/webpack-encore", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.1.1"],\
             ["axios", "npm:1.1.3"],\
             ["classnames", "npm:2.3.2"],\
-            ["core-js", "npm:3.26.0"],\
+            ["core-js", "npm:3.26.1"],\
             ["immutability-helper", "npm:3.1.1"],\
             ["sass", "npm:1.56.1"],\
             ["sass-loader", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
