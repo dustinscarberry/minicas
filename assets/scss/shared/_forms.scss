@@ -900,6 +900,10 @@ form .btn{
 //select element
 .select-wrapper{
   position: relative;
+
+  select {
+    padding-right: 2.5rem;
+  }
 }
 
 .select-wrapper::after{
