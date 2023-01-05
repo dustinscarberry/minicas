@@ -14,7 +14,8 @@ class DashboardController extends AbstractController
   {
     // get unexpired sessions
     $sessions = $authSessionFactory->getSessionsNotExpired(
-      $appConfig->getHideIncompleteSessions()
+      $appConfig->getHideIncompleteSessions(),
+      500
     );
 
     // convert data for view

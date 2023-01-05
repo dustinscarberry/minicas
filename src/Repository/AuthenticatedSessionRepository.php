@@ -48,7 +48,7 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
   /**
     * @return AuthenticatedSession[] Returns array of AuthenticatedSession objects not expired
   */
-  public function findAllNotExpired($maxReturn = 5000, bool $hideIncompleteSessions = false)
+  public function findAllNotExpired($maxReturn = 1000, bool $hideIncompleteSessions = false)
   {
     $query = $this->createQueryBuilder('a');
 
