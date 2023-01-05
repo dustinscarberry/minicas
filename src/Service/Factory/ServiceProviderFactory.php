@@ -68,13 +68,9 @@ class ServiceProviderFactory
       ->findAll();
 
     // find matching service provider
-    foreach ($registeredServices as $registeredService)
-    {
+    foreach ($registeredServices as $registeredService) {
       $identifier = UtilityGenerator::cleanService($registeredService->getIdentifier());
-      $matchMethod = $registeredService->getMatchMethod();
-
-      if (!$matchMethod)
-        $matchMethod = 'exact';
+      $matchMethod = $registeredService->getMatchMethod() ?? 'exact';
 
       if (
         $matchMethod == 'exact'
@@ -84,7 +80,7 @@ class ServiceProviderFactory
           && strpos($cleanedService, strtok($identifier, '/')) === 0
           && $registeredService->getEnabled()
         || $matchMethod == 'wildcarddomain'
-          && strpos($cleanedService, strtok($identifier, '/')) >= 0
+          && strpos($cleanedService, strtok($identifier, '/')) !== false
           && $registeredService->getEnabled()
         || $matchMethod == 'path'
           && strpos($cleanedService, $identifier) !== false
