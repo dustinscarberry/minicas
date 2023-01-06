@@ -48,6 +48,7 @@
 
 .dashboard-menu ul a:hover{
   color: #fff;
+  transform: scale(1.05);
 }
 
 .dashboard-menu ul li > a.has-submenu:hover:before{
@@ -161,4 +162,8 @@
 
 .menu-icon-invalidservices::after {
   content: "\f259";
+}
+
+.menu-icon-analytics::after {
+  content: "\f201";
 }
