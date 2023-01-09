@@ -15,7 +15,7 @@ class AnalyticsController extends AbstractController
     // get unexpired sessions
     $sessions = $authSessionFactory->getSessionsNotExpired(
       $appConfig->getHideIncompleteSessions(),
-      500
+      1000
     );
 
     $authenticatedServiceStats = [];

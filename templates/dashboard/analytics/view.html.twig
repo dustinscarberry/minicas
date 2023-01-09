@@ -18,9 +18,11 @@
     <div class="columns-2">
       <div class="dashboard-panel-block">
         <h3 class="dashboard-panel-header">Current Authenticated Services</h3>
-
-        {{ dump(authenticatedServiceStats) }}
-
+        <ul>
+          {% for service in authenticatedServiceStats %}
+            <li>{{ service.name ~ ' - ' ~ service.activeSessions }}
+          {% endfor %}
+        </ul>
       </div>
   </div>
 </div>
