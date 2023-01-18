@@ -28,7 +28,8 @@ class DashboardController extends AbstractController
           $attributes->user = $session->getUser();
 
         // add to attributes
-        $attributes->serviceUrl = $service->getReplyTo();
+        // check if attributes is not null
+        //$attributes->serviceUrl = $service->getReplyTo();
         
         $service->setAttributes(json_encode($attributes));
       }
