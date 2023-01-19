@@ -80,7 +80,7 @@ class IdentityProviderControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
     // get identity provider to validate changes
-    $idpManager = self::$container->get(IdentityProviderFactory::class);
+    $idpManager = self::getContainer()->get(IdentityProviderFactory::class);
     $idp = $idpManager->getIdentityProvider('bJbj6kzj1vMEn');
 
     // assert changes

@@ -90,7 +90,7 @@ class ServiceProviderControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
     // get service provider to validate changes
-    $serviceProviderFactory = self::$container->get(ServiceProviderFactory::class);
+    $serviceProviderFactory = self::getContainer()->get(ServiceProviderFactory::class);
     $serviceProvider = $serviceProviderFactory->getServiceProvider('w2PwYJXRW4nqZ');
 
     // assert changes

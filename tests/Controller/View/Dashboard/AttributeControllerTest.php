@@ -72,7 +72,7 @@ class AttributeControllerTest extends WebTestCase
     $this->assertEquals(Response::HTTP_FOUND, $this->client->getResponse()->getStatusCode());
 
     // get attribute to validate changes
-    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory = self::getContainer()->get(AttributeFactory::class);
     $attribute = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // assert changes

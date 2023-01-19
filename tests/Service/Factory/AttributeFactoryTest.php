@@ -20,7 +20,7 @@ class AttributeFactoryTest extends KernelTestCase
     $attribute->setFriendlyName('Test Attribute');
     $attribute->setAdAttribute('test_attribute');
 
-    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory = self::getContainer()->get(AttributeFactory::class);
     $attributeFactory->createAttribute($attribute);
 
     // fetch attribute from db
@@ -33,7 +33,7 @@ class AttributeFactoryTest extends KernelTestCase
   public function testDeleteAttribute()
   {
     // get attribute
-    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory = self::getContainer()->get(AttributeFactory::class);
     $result = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // delete attribute
@@ -46,7 +46,7 @@ class AttributeFactoryTest extends KernelTestCase
   public function testGetAttribute()
   {
     // get attribute
-    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory = self::getContainer()->get(AttributeFactory::class);
     $result = $attributeFactory->getAttribute('VVEZmx44GBqmG');
 
     // assert is attribute
@@ -56,7 +56,7 @@ class AttributeFactoryTest extends KernelTestCase
   public function testGetAttributes()
   {
     // get attributes
-    $attributeFactory = self::$container->get(AttributeFactory::class);
+    $attributeFactory = self::getContainer()->get(AttributeFactory::class);
     $result = $attributeFactory->getAttributes();
 
     // asert attributes returned

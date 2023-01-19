@@ -11,7 +11,7 @@ trait UserAuthTrait
   private function loginUser(string $username, $client)
   {
     //$client = static::createClient();
-    $userRepository = static::$container->get(UserRepository::class);
+    $userRepository = static::getContainer()->get(UserRepository::class);
 
     // retrieve the test user
     $testUser = $userRepository->findOneBy(['username' => $username]);

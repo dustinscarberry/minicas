@@ -53,7 +53,7 @@ class IdentityProviderController extends AbstractController
   {
     // get identity provider
     $identityProvider = $idpManager->getIdentityProvider($hashId);
-  
+
     // get certificate details
     $certificateDetails = openssl_x509_parse($identityProvider->getCertificateFormatted());
     $publicKey = openssl_pkey_get_public($identityProvider->getCertificateFormatted());
