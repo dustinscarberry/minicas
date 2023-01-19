@@ -4,53 +4,38 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
+use App\Repository\AttributeRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AttributeRepository")
- * @ORM\Table(indexes={@ORM\Index(name="attribute_hashid_idx", columns={"hash_id"})})
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: AttributeRepository::class)]
+#[ORM\Index(name: 'attribute_hashid_idx', columns: ['hash_id'])]
+#[ORM\HasLifecycleCallbacks]
 class Attribute
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=25)
-   */
+  #[ORM\Column(type: 'string', length: 25)]
   private $hashId;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $friendlyName;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $adAttribute;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $deleted;
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function createHashId()
   {
     if (!$this->hashId)
       $this->hashId = HashIdGenerator::generate();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function setDefaults()
   {
     $this->deleted = false;

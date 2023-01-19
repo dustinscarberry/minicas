@@ -6,60 +6,41 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
+use App\Repository\AuthenticatedSessionRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AuthenticatedSessionRepository")
- * @ORM\Table(indexes={@ORM\Index(name="tracking_id_idx", columns={"tracking_id"})})
- * @ORM\Table(indexes={@ORM\Index(name="hash_id_idx", columns={"hash_id"})})
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: AuthenticatedSessionRepository::class)]
+#[ORM\Index(name: 'tracking_id_idx', columns: ['tracking_id'])]
+#[ORM\Index(name: 'hash_id_idx', columns: ['hash_id'])]
+#[ORM\HasLifecycleCallbacks]
 class AuthenticatedSession
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=25)
-   */
+  #[ORM\Column(type: 'string', length: 25)]
   private $hashId;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $trackingId;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $created;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $updated;
 
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   private $user;
 
-  /**
-   * @ORM\OneToMany(targetEntity="App\Entity\AuthenticatedService", mappedBy="session", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
-   */
+  #[ORM\OneToMany(targetEntity: AuthenticatedService::class, mappedBy: 'session', orphanRemoval: true, cascade: ['persist'], fetch: 'EAGER')]
   private $authenticatedServices;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $expiration;
 
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   private $remoteIp;
 
   public function __construct()
@@ -67,18 +48,14 @@ class AuthenticatedSession
     $this->authenticatedServices = new ArrayCollection();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function createHashId()
   {
     $this->hashId = HashIdGenerator::generate();
   }
 
-  /**
-   * @ORM\PrePersist
-   * @ORM\PreUpdate
-   */
+  #[ORM\PrePersist]
+  #[ORM\PreUpdate]
   public function updateTimestamps()
   {
     $currentTime = time();

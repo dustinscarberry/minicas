@@ -13,7 +13,6 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
@@ -54,7 +53,7 @@ class DashboardAuthenticator extends AbstractAuthenticator implements Authentica
    *
    * @throws AuthenticationException
    */
-  public function authenticate(Request $request): PassportInterface
+  public function authenticate(Request $request): Passport
   {
     $credentials = [
       'username' => $request->request->get('username'),

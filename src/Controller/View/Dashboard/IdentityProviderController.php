@@ -12,12 +12,10 @@ use App\Service\Factory\IdentityProviderFactory;
 class IdentityProviderController extends AbstractController
 {
   #[Route('/dashboard/identityproviders', name: 'viewIdentityProviders')]
-  public function viewAll()
+  public function viewAll(IdentityProviderFactory $idpFactory)
   {
     // get identity providers
-    $identityProviders = $this->getDoctrine()
-      ->getRepository(IdentityProvider::class)
-      ->findAllNotDeleted();
+    $identityProviders = $idpFactory->getIdentityProviders();
 
     return $this->render('dashboard/identityprovider/viewall.html.twig', [
       'identityProviders' => $identityProviders
@@ -54,10 +52,8 @@ class IdentityProviderController extends AbstractController
   public function edit($hashId, Request $req, IdentityProviderFactory $idpManager)
   {
     // get identity provider
-    $identityProvider = $this->getDoctrine()
-      ->getRepository(IdentityProvider::class)
-      ->findByHashId($hashId);
-
+    $identityProvider = $idpManager->getIdentityProvider($hashId);
+  
     // get certificate details
     $certificateDetails = openssl_x509_parse($identityProvider->getCertificateFormatted());
     $publicKey = openssl_pkey_get_public($identityProvider->getCertificateFormatted());

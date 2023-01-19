@@ -2,54 +2,38 @@
 
 namespace App\Entity;
 
-use App\Repository\ServiceCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
+use App\Repository\ServiceCategoryRepository;
 
-/**
- * @ORM\Entity(repositoryClass=ServiceCategoryRepository::class)
- * @ORM\Table(indexes={@ORM\Index(name="servicecategory_hashid_idx", columns={"hash_id"})})
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: ServiceCategoryRepository::class)]
+#[ORM\Index(name: 'servicecategory_hashid_idx', columns: ['hash_id'])]
+#[ORM\HasLifecycleCallbacks]
 class ServiceCategory
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=25)
-   */
+  #[ORM\Column(type: 'string', length: 25)]
   private $hashId;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $title;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $created;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $updated;
 
-  /**
-   * @ORM\OneToMany(targetEntity=ServiceProvider::class, mappedBy="category")
-   */
+  #[ORM\OneToMany(targetEntity: ServiceProvider::class, mappedBy: 'category')]
   private $serviceProviders;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $deleted;
 
   public function __construct()
@@ -57,9 +41,7 @@ class ServiceCategory
     $this->serviceProviders = new ArrayCollection();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function setDefaults()
   {
     if (!$this->hashId)
@@ -68,10 +50,8 @@ class ServiceCategory
     $this->deleted = false;
   }
 
-  /**
-   * @ORM\PrePersist
-   * @ORM\PreUpdate
-   */
+  #[ORM\PrePersist]
+  #[ORM\PreUpdate]
   public function updateTimestamps()
   {
     $currentTime = time();

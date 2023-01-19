@@ -4,8 +4,8 @@ MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it o
 
 ## Tech
 
-* [Symfony 5.4] - PHP MVC Framework
-* [composer] - PHP Package Manager
+* [Symfony 6.2] - PHP MVC Framework
+* [Composer] - PHP Package Manager
 * [Yarn] - JS Package Manager
 * [jQuery] - More JS stuff
 
@@ -119,10 +119,7 @@ $ cp docker-compose.override.example.yml docker-compose.override.yml
 3. Run docker container
 
 ```sh
-# test
-$ docker-compose -p test up -d --build
-# production
-$ docker-compose -p prod up -d --build
+$ docker-compose up -d --build
 ```
 
 4. Start server (nginx, if needed)

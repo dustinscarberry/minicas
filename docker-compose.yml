@@ -19,8 +19,8 @@ services:
       - LDAP_ADMIN_PASSWORD=xxxxxxxxxxx
       - LDAP_SEARCH_BASE=dc=example,dc=com
     volumes:
-      - ./logs/server:/var/log/nginx/
-      - ./logs/app:/var/www/html/var/log/
+      - ./docker/logs/server:/var/log/nginx/
+      - ./docker/logs/app:/var/www/html/var/log/
 networks:
   default:
     external: true

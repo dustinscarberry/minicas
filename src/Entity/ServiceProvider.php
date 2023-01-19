@@ -6,91 +6,60 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
+use App\Repository\ServiceProviderRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ServiceProviderRepository")
- * @ORM\Table(indexes={@ORM\Index(name="sp_hashid_idx", columns={"hash_id"})})
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: ServiceProviderRepository::class)]
+#[ORM\Index(name: 'sp_hashid_idx', columns: ['hash_id'])]
+#[ORM\HasLifecycleCallbacks]
 class ServiceProvider
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=25)
-   */
+  #[ORM\Column(type: 'string', length: 25)]
   private $hashId;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $name;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $type;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $identifier;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\IdentityProvider", inversedBy="serviceProviders")
-   * @ORM\JoinColumn(nullable=false)
-   */
+  #[ORM\ManyToOne(targetEntity: IdentityProvider::class, inversedBy: 'serviceProviders')]
+  #[ORM\JoinColumn(nullable: false)]
   private $identityProvider;
 
-  /**
-   * @ORM\OneToMany(targetEntity="App\Entity\AttributeMapping", mappedBy="service", cascade={"persist"}, orphanRemoval=true)
-   */
+  #[ORM\OneToMany(targetEntity: AttributeMapping::class, mappedBy: 'service', cascade: ['persist'], orphanRemoval: true)]
   private $attributeMappings;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
-   */
+  #[ORM\ManyToOne(targetEntity: Attribute::class)]
   private $userAttribute;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $enabled;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $deleted;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $matchMethod;
 
-  /**
-   * @ORM\ManyToOne(targetEntity=ServiceCategory::class, inversedBy="serviceProviders")
-   * @ORM\JoinColumn(nullable=true)
-   */
+  #[ORM\ManyToOne(targetEntity: ServiceCategory::class, inversedBy: 'serviceProviders')]
+  #[ORM\JoinColumn(nullable: true)]
   private $category;
 
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   private $contact;
 
-  /**
-   * @ORM\Column(type="text", nullable=true)
-   */
+  #[ORM\Column(type: 'text', nullable: true)]
   private $notes;
 
-  /**
-   * @ORM\Column(type="string", length=255, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 255, nullable: true)]
   private $environment;
 
   public function __construct()
@@ -99,18 +68,14 @@ class ServiceProvider
     $this->enabled = true;
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function createHashId()
   {
     if (!$this->hashId)
       $this->hashId = HashIdGenerator::generate();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function setDefaults()
   {
     if (!$this->deleted)
@@ -242,61 +207,56 @@ class ServiceProvider
 
   public function getMatchMethod(): ?string
   {
-      return $this->matchMethod;
+    return $this->matchMethod;
   }
 
   public function setMatchMethod(string $matchMethod): self
   {
-      $this->matchMethod = $matchMethod;
-
-      return $this;
+    $this->matchMethod = $matchMethod;
+    return $this;
   }
 
   public function getCategory(): ?ServiceCategory
   {
-      return $this->category;
+    return $this->category;
   }
 
   public function setCategory(?ServiceCategory $category): self
   {
-      $this->category = $category;
-
-      return $this;
+    $this->category = $category;
+    return $this;
   }
 
   public function getContact(): ?string
   {
-      return $this->contact;
+    return $this->contact;
   }
 
   public function setContact(?string $contact): self
   {
-      $this->contact = $contact;
-
-      return $this;
+    $this->contact = $contact;
+    return $this;
   }
 
   public function getNotes(): ?string
   {
-      return $this->notes;
+    return $this->notes;
   }
 
   public function setNotes(?string $notes): self
   {
-      $this->notes = $notes;
-
-      return $this;
+    $this->notes = $notes;
+    return $this;
   }
 
   public function getEnvironment(): ?string
   {
-      return $this->environment;
+    return $this->environment;
   }
 
   public function setEnvironment(?string $environment): self
   {
-      $this->environment = $environment;
-
-      return $this;
+    $this->environment = $environment;
+    return $this;
   }
 }

@@ -1,5 +1,4 @@
 security:
-  enable_authenticator_manager: true
   password_hashers:
     App\Entity\User:
       algorithm: auto
@@ -28,5 +27,3 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/dashboard(?!/login|/logout), roles: ROLE_ADMIN }
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }

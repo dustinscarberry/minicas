@@ -5,60 +5,41 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AuthenticatedServiceRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AuthenticatedServiceRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: AuthenticatedServiceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AuthenticatedService
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\ServiceProvider")
-   * @ORM\JoinColumn(nullable=false)
-   */
+  #[ORM\ManyToOne(targetEntity: ServiceProvider::class)]
+  #[ORM\JoinColumn(nullable: false)]
   private $service;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\AuthenticatedSession", inversedBy="authenticatedServices", fetch="EAGER")
-   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-   */
+  #[ORM\ManyToOne(targetEntity: AuthenticatedSession::class, inversedBy: 'authenticatedServices', fetch: 'EAGER')]
+  #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
   private $session;
 
-  /**
-   * @ORM\Column(type="text", nullable=true)
-   */
+  #[ORM\Column(type: 'text', nullable: true)]
   private $attributes;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $trackingId;
 
-  /**
-   * @ORM\Column(type="string", length=2048)
-   */
+  #[ORM\Column(type: 'string', length: 2048)]
   private $replyTo;
 
-  /**
-   * @ORM\OneToMany(targetEntity="App\Entity\CasTicket", mappedBy="service", orphanRemoval=true, cascade={"persist"}, fetch="EAGER")
-   */
+  #[ORM\OneToMany(targetEntity: CasTicket::class, mappedBy: 'service', orphanRemoval: true, cascade: ['persist'], fetch: 'EAGER')]
   private $casTickets;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $created;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $updated;
 
   public function __construct()
@@ -66,10 +47,8 @@ class AuthenticatedService
     $this->casTickets = new ArrayCollection();
   }
 
-  /**
-   * @ORM\PrePersist
-   * @ORM\PreUpdate
-   */
+  #[ORM\PrePersist]
+  #[ORM\PreUpdate]
   public function updateTimestamps()
   {
     $currentTime = time();

@@ -3,49 +3,34 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CasTicketRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CasTicketRepository")
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: CasTicketRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CasTicket
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $ticket;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $created;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $validated;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\AuthenticatedService", inversedBy="casTickets", fetch="EAGER")
-   * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-   */
+  #[ORM\ManyToOne(targetEntity: AuthenticatedService::class, inversedBy: 'casTickets', fetch: 'EAGER')]
+  #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
   private $service;
 
-  /**
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Column(type: 'integer')]
   private $expiration;
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function setDefaults()
   {
     if ($this->validated == null)

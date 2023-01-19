@@ -3,39 +3,28 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AttributeMappingRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AttributeMappingRepository")
- */
+#[ORM\Entity(repositoryClass: AttributeMappingRepository::class)]
 class AttributeMapping
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $name;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\ServiceProvider", inversedBy="attributeMappings")
-   * @ORM\JoinColumn(nullable=false)
-   */
+  #[ORM\ManyToOne(targetEntity: ServiceProvider::class, inversedBy: 'attributeMappings')]
+  #[ORM\JoinColumn(nullable: false)]
   private $service;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
-   * @ORM\JoinColumn(nullable=false)
-   */
+  #[ORM\ManyToOne(targetEntity: Attribute::class)]
+  #[ORM\JoinColumn(nullable: false)]
   private $adAttribute;
 
-  /**
-   * @ORM\Column(type="string", length=50, nullable=true)
-   */
+  #[ORM\Column(type: 'string', length: 50, nullable: true)]
   private $transformation;
 
   public function getId(): ?int
@@ -50,9 +39,8 @@ class AttributeMapping
 
   public function setName(string $name): self
   {
-      $this->name = $name;
-
-      return $this;
+    $this->name = $name;
+    return $this;
   }
 
   public function getService(): ?ServiceProvider

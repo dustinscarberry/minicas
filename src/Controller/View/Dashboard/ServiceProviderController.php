@@ -13,12 +13,10 @@ use App\Service\Factory\ServiceProviderFactory;
 class ServiceProviderController extends AbstractController
 {
   #[Route('/dashboard/serviceproviders', name: 'viewServiceProviders')]
-  public function view()
+  public function view(ServiceProviderFactory $spFactory)
   {
     // get service providers
-    $serviceProviders = $this->getDoctrine()
-      ->getRepository(ServiceProvider::class)
-      ->findAllNotDeleted();
+    $serviceProviders = $spFactory->getServiceProviders();
 
     return $this->render('dashboard/serviceprovider/viewall.html.twig', [
       'serviceProviders' => $serviceProviders
@@ -55,9 +53,7 @@ class ServiceProviderController extends AbstractController
   public function edit($hashId, Request $req, ServiceProviderFactory $spManager)
   {
     // get service provider
-    $serviceProvider = $this->getDoctrine()
-      ->getRepository(ServiceProvider::class)
-      ->findByHashId($hashId);
+    $serviceProvider = $spManager->getServiceProvider($hashId);
 
     // get original attributes to compare against
     $originalAttributes = new ArrayCollection();

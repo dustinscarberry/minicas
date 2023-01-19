@@ -7,65 +7,44 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
 use App\Service\Formatter\SamlFormatter;
+use App\Repository\IdentityProviderRepository;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IdentityProviderRepository")
- * @ORM\Table(indexes={@ORM\Index(name="idp_hashid_idx", columns={"hash_id"})})
- * @ORM\HasLifecycleCallbacks
- */
+#[ORM\Entity(repositoryClass: IdentityProviderRepository::class)]
+#[ORM\Index(name: 'idp_hashid_idx', columns: ['hash_id'])]
+#[ORM\HasLifecycleCallbacks]
 class IdentityProvider
 {
-  /**
-   * @ORM\Id()
-   * @ORM\GeneratedValue()
-   * @ORM\Column(type="integer")
-   */
+  #[ORM\Id]
+  #[ORM\GeneratedValue]
+  #[ORM\Column(type: 'integer')]
   private $id;
 
-  /**
-   * @ORM\Column(type="string", length=25)
-   */
+  #[ORM\Column(type: 'string', length: 25)]
   private $hashId;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $name;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $type;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $loginURL;
 
-  /**
-   * @ORM\Column(type="string", length=255)
-   */
+  #[ORM\Column(type: 'string', length: 255)]
   private $identifier;
 
-  /**
-   * @ORM\Column(type="text", nullable=true)
-   */
+  #[ORM\Column(type: 'text', nullable: true)]
   private $certificate;
 
-  /**
-   * @ORM\Column(type="boolean")
-   */
+  #[ORM\Column(type: 'boolean')]
   private $deleted;
 
-  /**
-   * @ORM\OneToMany(targetEntity="App\Entity\ServiceProvider", mappedBy="identityProvider")
-   */
+  #[ORM\OneToMany(targetEntity: ServiceProvider::class, mappedBy: 'identityProvider')]
   private $serviceProviders;
 
-  /**
-   * @ORM\ManyToOne(targetEntity="App\Entity\Attribute")
-   * @ORM\JoinColumn(nullable=false)
-   */
+  #[ORM\ManyToOne(targetEntity: Attribute::class)]
+  #[ORM\JoinColumn(nullable: false)]
   private $userAttributeMapping;
 
   public function __construct()
@@ -73,18 +52,14 @@ class IdentityProvider
     $this->serviceProviders = new ArrayCollection();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function createHashId()
   {
     if (!$this->hashId)
       $this->hashId = HashIdGenerator::generate();
   }
 
-  /**
-   * @ORM\PrePersist
-   */
+  #[ORM\PrePersist]
   public function setDefaults()
   {
     if (!$this->deleted)
