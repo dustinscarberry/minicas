@@ -23,6 +23,7 @@ use App\Service\Factory\AuthenticatedServiceFactory;
 use App\Service\Factory\ServiceProviderFactory;
 use App\Service\Factory\InvalidServiceFactory;
 use App\Model\AppConfig;
+use Exception;
 
 class CasEndpointController extends AbstractController
 {
@@ -41,6 +42,8 @@ class CasEndpointController extends AbstractController
       // get params
       $service = $req->query->get('service');
       $commonAuthCookie = $req->cookies->get('commonauth');
+
+      if (!$service) throw new Exception('Invalid params');
 
       // get remote ip address
       if ($req->server->get('HTTP_X_FORWARDED_FOR'))

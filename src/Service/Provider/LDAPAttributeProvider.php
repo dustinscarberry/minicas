@@ -51,8 +51,7 @@ class LDAPAttributeProvider
       'attributes' => []
     ];
 
-    foreach ($mappings as $mapping)
-    {
+    foreach ($mappings as $mapping) {
       //get attribute value
       $attrValue = $entry->getAttribute($mapping->getAdAttribute()->getAdAttribute());
 
