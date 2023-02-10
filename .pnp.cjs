@@ -31,10 +31,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.20.12"],\
             ["@babel/preset-env", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.20.2"],\
             ["@symfony/webpack-encore", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.2.0"],\
-            ["axios", "npm:1.2.3"],\
+            ["axios", "npm:1.3.2"],\
             ["classnames", "npm:2.3.2"],\
             ["core-js", "npm:3.27.2"],\
-            ["sass", "npm:1.57.1"],\
+            ["sass", "npm:1.58.0"],\
             ["sass-loader", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["webpack", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.75.0"],\
             ["webpack-cli", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.1"],\
@@ -2435,7 +2435,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["postcss-loader", null],\
             ["pretty-error", "npm:4.0.0"],\
             ["resolve-url-loader", "npm:5.0.0"],\
-            ["sass", "npm:1.57.1"],\
+            ["sass", "npm:1.58.0"],\
             ["sass-loader", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["semver", "npm:7.3.8"],\
             ["style-loader", "virtual:db782d65cb5231fc2a595952d2c7d6dcc2c1429722e4cf51591657b731be290411c5670f8e047af1ca9564a91e185b724cce00f449159790f49733ab4c953594#npm:3.3.1"],\
@@ -3411,11 +3411,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["axios", [\
-        ["npm:1.2.3", {\
-          "packageLocation": "./.yarn/cache/axios-npm-1.2.3-f755ac0cc4-52802a1e31.zip/node_modules/axios/",\
+        ["npm:1.3.2", {\
+          "packageLocation": "./.yarn/cache/axios-npm-1.3.2-e60543899f-9791af75a6.zip/node_modules/axios/",\
           "packageDependencies": [\
-            ["axios", "npm:1.2.3"],\
-            ["follow-redirects", "virtual:f755ac0cc4c70c35e076928f8aa6f0263fd636cc4e2099e4e273c13cc606b69b7a388f291c0c8619acb7408ff1b451b75383f6c8b49bc764e34ed80f23de3d43#npm:1.15.2"],\
+            ["axios", "npm:1.3.2"],\
+            ["follow-redirects", "virtual:e60543899fd705bd5f850d61bc1194b1bf7a80a922cb114420112d5561895397647171575ef119a8decf292183f1806d99bf972caa13adcdef0a1056caa42cb3#npm:1.15.2"],\
             ["form-data", "npm:4.0.0"],\
             ["proxy-from-env", "npm:1.1.0"]\
           ],\
@@ -4964,10 +4964,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:f755ac0cc4c70c35e076928f8aa6f0263fd636cc4e2099e4e273c13cc606b69b7a388f291c0c8619acb7408ff1b451b75383f6c8b49bc764e34ed80f23de3d43#npm:1.15.2", {\
-          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-648473d7d2/0/cache/follow-redirects-npm-1.15.2-1ec1dd82be-faa66059b6.zip/node_modules/follow-redirects/",\
+        ["virtual:e60543899fd705bd5f850d61bc1194b1bf7a80a922cb114420112d5561895397647171575ef119a8decf292183f1806d99bf972caa13adcdef0a1056caa42cb3#npm:1.15.2", {\
+          "packageLocation": "./.yarn/__virtual__/follow-redirects-virtual-7a7a9ff787/0/cache/follow-redirects-npm-1.15.2-1ec1dd82be-faa66059b6.zip/node_modules/follow-redirects/",\
           "packageDependencies": [\
-            ["follow-redirects", "virtual:f755ac0cc4c70c35e076928f8aa6f0263fd636cc4e2099e4e273c13cc606b69b7a388f291c0c8619acb7408ff1b451b75383f6c8b49bc764e34ed80f23de3d43#npm:1.15.2"],\
+            ["follow-redirects", "virtual:e60543899fd705bd5f850d61bc1194b1bf7a80a922cb114420112d5561895397647171575ef119a8decf292183f1806d99bf972caa13adcdef0a1056caa42cb3#npm:1.15.2"],\
             ["@types/debug", null],\
             ["debug", null]\
           ],\
@@ -5344,7 +5344,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["http-proxy", "npm:1.18.1"],\
             ["eventemitter3", "npm:4.0.7"],\
-            ["follow-redirects", "virtual:f755ac0cc4c70c35e076928f8aa6f0263fd636cc4e2099e4e273c13cc606b69b7a388f291c0c8619acb7408ff1b451b75383f6c8b49bc764e34ed80f23de3d43#npm:1.15.2"],\
+            ["follow-redirects", "virtual:e60543899fd705bd5f850d61bc1194b1bf7a80a922cb114420112d5561895397647171575ef119a8decf292183f1806d99bf972caa13adcdef0a1056caa42cb3#npm:1.15.2"],\
             ["requires-port", "npm:1.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -7827,10 +7827,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.20.12"],\
             ["@babel/preset-env", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:7.20.2"],\
             ["@symfony/webpack-encore", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:4.2.0"],\
-            ["axios", "npm:1.2.3"],\
+            ["axios", "npm:1.3.2"],\
             ["classnames", "npm:2.3.2"],\
             ["core-js", "npm:3.27.2"],\
-            ["sass", "npm:1.57.1"],\
+            ["sass", "npm:1.58.0"],\
             ["sass-loader", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:13.2.0"],\
             ["webpack", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.75.0"],\
             ["webpack-cli", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.0.1"],\
@@ -7865,10 +7865,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["sass", [\
-        ["npm:1.57.1", {\
-          "packageLocation": "./.yarn/cache/sass-npm-1.57.1-bafdba484f-734a08781b.zip/node_modules/sass/",\
+        ["npm:1.58.0", {\
+          "packageLocation": "./.yarn/cache/sass-npm-1.58.0-350bf3b1b6-a721963488.zip/node_modules/sass/",\
           "packageDependencies": [\
-            ["sass", "npm:1.57.1"],\
+            ["sass", "npm:1.58.0"],\
             ["chokidar", "npm:3.5.3"],\
             ["immutable", "npm:4.2.2"],\
             ["source-map-js", "npm:1.0.2"]\
@@ -7897,7 +7897,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["klona", "npm:2.0.6"],\
             ["neo-async", "npm:2.6.2"],\
             ["node-sass", null],\
-            ["sass", "npm:1.57.1"],\
+            ["sass", "npm:1.58.0"],\
             ["sass-embedded", null],\
             ["webpack", "virtual:dc3fc578bfa5e06182a4d2be39ede0bc5b74940b1ffe0d70c26892ab140a4699787750fba175dc306292e80b4aa2c8c5f68c2a821e69b2c37e360c0dff36ff66#npm:5.75.0"]\
           ],\
