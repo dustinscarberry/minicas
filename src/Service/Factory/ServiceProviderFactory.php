@@ -67,26 +67,66 @@ class ServiceProviderFactory
       ->getRepository(ServiceProvider::class)
       ->findAll();
 
-    // find matching service provider
+
+    // seperate services by match type
+    $exact = new ArrayCollection();
+    $path = new ArrayCollection();
+    $domain = new ArrayCollection();
+    $wildcardDomain = new ArrayCollection();
+
     foreach ($registeredServices as $registeredService) {
-      $identifier = UtilityGenerator::cleanService($registeredService->getIdentifier());
       $matchMethod = $registeredService->getMatchMethod() ?? 'exact';
+      if ($matchMethod == 'exact')
+        $exact[] = $registeredService;
+      else if ($matchMethod == 'path')
+        $path[] = $registeredService;
+      else if ($matchMethod == 'domain')
+        $domain[] = $registeredService;
+      else if ($matchMethod == 'wildcarddomain')
+        $wildcardDomain = $registeredService;
+    }
+
+    // find matching service provider
+
+    // exact
+    foreach ($exact as $service) {
+      $identifier = UtilityGenerator::cleanService($service->getIdentifier());
+      
+      if ($cleanedService == $identifier && $service->getEnabled())
+        return $service;
+    }
+
+    // path
+    foreach ($path as $service) {
+      $identifier = UtilityGenerator::cleanService($service->getIdentifier());
+      
+      if (
+        strpos($cleanedService, $identifier) !== false
+        && $service->getEnabled()
+      )
+        return $service;
+    }
+
+    // domain
+    foreach ($domain as $service) {
+      $identifier = UtilityGenerator::cleanService($service->getIdentifier());
 
       if (
-        $matchMethod == 'exact'
-          && $cleanedService == $identifier
-          && $registeredService->getEnabled()
-        || $matchMethod == 'domain'
-          && strpos($cleanedService, strtok($identifier, '/')) === 0
-          && $registeredService->getEnabled()
-        || $matchMethod == 'wildcarddomain'
-          && strpos($cleanedService, strtok($identifier, '/')) !== false
-          && $registeredService->getEnabled()
-        || $matchMethod == 'path'
-          && strpos($cleanedService, $identifier) !== false
-          && $registeredService->getEnabled()
+        strpos($cleanedService, strtok($identifier, '/')) === 0
+        && $service->getEnabled()
       )
-        return $registeredService;
+        return $service;
+    }
+
+    // wildcard domain
+    foreach ($wildcardDomain as $service) {
+      $identifier = UtilityGenerator::cleanService($service->getIdentifier());
+
+      if (
+        strpos($cleanedService, strtok($identifier, '/')) !== false
+        && $service->getEnabled() 
+      )
+        return $service;
     }
 
     return null;
