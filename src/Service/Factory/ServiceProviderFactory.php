@@ -83,7 +83,7 @@ class ServiceProviderFactory
       else if ($matchMethod == 'domain')
         $domain[] = $registeredService;
       else if ($matchMethod == 'wildcarddomain')
-        $wildcardDomain = $registeredService;
+        $wildcardDomain[] = $registeredService;
     }
 
     // find matching service provider
