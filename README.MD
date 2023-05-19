@@ -119,7 +119,7 @@ $ cp docker-compose.override.example.yml docker-compose.override.yml
 3. Run docker container
 
 ```sh
-$ docker-compose up -d --build
+$ docker compose up -d --build
 ```
 
 4. Start server (nginx, if needed)
