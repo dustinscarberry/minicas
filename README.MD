@@ -4,7 +4,7 @@ MiniCAS is a simplified CAS replacement server, built on Symfony. Currently it o
 
 ## Tech
 
-* [Symfony 6.2] - PHP MVC Framework
+* [Symfony 6.3] - PHP MVC Framework
 * [Composer] - PHP Package Manager
 * [Yarn] - JS Package Manager
 * [jQuery] - More JS stuff
