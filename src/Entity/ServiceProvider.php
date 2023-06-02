@@ -7,11 +7,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
 use App\Repository\ServiceProviderRepository;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: ServiceProviderRepository::class)]
 #[ORM\Index(name: 'sp_hashid_idx', columns: ['hash_id'])]
 #[ORM\HasLifecycleCallbacks]
-class ServiceProvider
+class ServiceProvider implements JsonSerializable
 {
   #[ORM\Id]
   #[ORM\GeneratedValue]
@@ -258,5 +259,17 @@ class ServiceProvider
   {
     $this->environment = $environment;
     return $this;
+  }
+
+  public function jsonSerialize()
+  {
+    return [
+      'id' => $this->hashId,
+      'name' => $this->name,
+      'type' => $this->type,
+      'identifier' => $this->identifier,
+      'enabled' => $this->enabled,
+      'matchMethod' => $this->matchMethod
+    ];
   }
 }

@@ -44,12 +44,13 @@ class ApiController extends AbstractController
    */
   public function respond($data, $headers = [])
   {
-    if ($data !== null)
-    {
+    if ($this->isJson($data))
+      $data = json_decode($data, true);
+
+    if ($data !== null) {
       $response = new \stdClass();
       $response->data = $data;
-    }
-    else
+    } else
       $response = null;
 
     return new JsonResponse($response, $this->getStatusCode(), $headers);
@@ -85,5 +86,13 @@ class ApiController extends AbstractController
   public function respondUnauthorized($message = 'Not authorized!')
   {
     return $this->setStatusCode(401)->respondWithErrors($message);
+  }
+  
+  private function isJson($string)
+  {
+    if (!is_string($string)) return false;
+
+    json_decode($string);
+    return json_last_error() === JSON_ERROR_NONE;
   }
 }

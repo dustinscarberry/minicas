@@ -80,6 +80,35 @@ class AuthenticatedSessionFactory
       ->findByHashId($hashId);
   }
 
+  public function getSessionsFiltered($serviceHashId, $timeInterval, $expired = false, $hideIncompleteSessions)
+  {
+    $startTimestamp = null;
+    $service = null;
+
+    if ($timeInterval) {
+      if ($timeInterval == '1hour')
+        $timeOffset = 3600;
+      else if ($timeInterval == '3hours')
+        $timeOffset = 10800;
+      else if ($timeInterval == '12hours')
+        $timeOffset = 43200;
+      else if ($timeInterval == '1day')
+        $timeOffset = 86400;
+      
+      if ($timeOffset)
+        $startTimestamp = time() - $timeOffset;
+    }
+
+    if ($serviceHashId) {
+      // get service to check
+      $service = null;
+    }
+
+    return $this->em
+      ->getRepository(AuthenticatedSession::class)
+      ->findAllFiltered($service, $startTimestamp, $expired, true);
+  }
+  
   //returns a valid authenticated session if found or null if not
   public function getSessionNotExpired(?string $cookie)
   {

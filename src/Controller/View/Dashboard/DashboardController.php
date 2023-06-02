@@ -39,4 +39,10 @@ class DashboardController extends AbstractController
       'sessions' => $sessions
     ]);
   }
+
+  #[Route('/dashboardx', name: 'dashboardX')]
+  public function dashboardX()
+  {
+    return $this->render('dashboard/homex.html.twig');
+  }
 }

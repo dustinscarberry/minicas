@@ -64,6 +64,29 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
       ->getResult();
   }
 
+  public function findAllFiltered($service, $timeOffset, bool $expired, bool $hideIncompleteSessions = false)
+  {
+    $query = $this->createQueryBuilder('a');
+
+    if (!$expired) {
+      $query->andWhere('a.expiration > :expiration');
+      $query->setParameter('expiration', time());
+    }
+    
+    if ($hideIncompleteSessions)
+      $query->andWhere('a.user is not null');
+
+    if ($timeOffset) {
+      $query->andWhere('a.created > :timeOffset');
+      $query->setParameter('timeOffset', $timeOffset);
+    }
+
+    return $query->orderBy('a.expiration', 'DESC')
+      ->setMaxResults(1000)
+      ->getQuery()
+      ->getResult();
+  }
+
   /**
     * @return void Delete AuthenticatedSession objects expired and older than specified time
   */

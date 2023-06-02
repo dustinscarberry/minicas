@@ -1,5 +1,19 @@
 import '../scss/dashboard.scss';
+
 import axios from 'axios';
+import { createRoot } from 'react-dom/client';
+
+import SessionViewer from './component/dashboard/SessionViewer';
+import SessionAnalytics from './component/dashboard/SessionAnalytics';
+
+// react dom mounts
+const sessionViewerRoot = document.getElementById('session-viewer-root');
+if (sessionViewerRoot)
+  createRoot(sessionViewerRoot).render(<SessionViewer/>);
+
+const sessionAnalyticsRoot = document.getElementById('session-analytics-root');
+if (sessionAnalyticsRoot)
+  createRoot(sessionAnalyticsRoot).render(<SessionAnalytics/>);
 
 $(document).ready(function(){
   // init micromodal

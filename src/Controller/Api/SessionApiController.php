@@ -5,10 +5,57 @@ namespace App\Controller\Api;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\SerializerInterface;
 use App\Service\Factory\AuthenticatedSessionFactory;
+use App\Model\AppConfig;
 
 class SessionApiController extends ApiController
 {
+  #[Route('/api/v1/sessions', name: 'getSessions', methods: ['GET'])]
+  #[IsGranted('ROLE_ADMIN')]
+  public function getSessions(
+    Request $req,
+    SerializerInterface $serializer,
+    AuthenticatedSessionFactory $authSessionFactory,
+    AppConfig $appConfig
+  ) {
+    $service = $req->query->get('service');
+    $timeInterval = $req->query->get('timeInterval');
+    $expired = $req->query->get('expired') || false;
+
+    // get sessions
+    $sessions = $authSessionFactory->getSessionsFiltered(
+      $service,
+      $timeInterval,
+      $expired,
+      $appConfig->getHideIncompleteSessions()
+    );
+
+    $json = $serializer->serialize($sessions, 'json', [
+      'groups' => ['session']
+    ]);
+
+    return $this->respond($json);
+  }
+
+  #[Route('/api/v1/sessions/{hashId}', name: 'getSession', methods: ['GET'])]
+  #[IsGranted('ROLE_ADMIN')]
+  public function getSession(
+    $hashId,
+    Request $req,
+    SerializerInterface $serializer,
+    AuthenticatedSessionFactory $authSessionFactory
+  ) {
+    // get session
+    $session = $authSessionFactory->getSession($hashId);
+
+    $json = $serializer->serialize($session, 'json', [
+      'groups' => ['sessionDetails']
+    ]);
+
+    return $this->respond($json);
+  }
+
   #[Route('/api/v1/sessions/{hashId}', name: 'deleteSession', methods: ['DELETE'])]
   #[IsGranted('ROLE_ADMIN')]
   public function deleteSession(

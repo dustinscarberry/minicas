@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Service\Generator\HashIdGenerator;
 use App\Repository\AuthenticatedSessionRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ORM\Entity(repositoryClass: AuthenticatedSessionRepository::class)]
 #[ORM\Index(name: 'tracking_id_idx', columns: ['tracking_id'])]
@@ -20,27 +22,36 @@ class AuthenticatedSession
   private $id;
 
   #[ORM\Column(type: 'string', length: 25)]
+  #[Groups(['session', 'sessionDetails'])]
+  #[SerializedName('id')]
   private $hashId;
 
   #[ORM\Column(type: 'string', length: 255)]
+  #[Groups(['session', 'sessionDetails'])]
   private $trackingId;
 
   #[ORM\Column(type: 'integer')]
+  #[Groups(['session', 'sessionDetails'])]
   private $created;
 
   #[ORM\Column(type: 'integer')]
+  #[Groups(['session', 'sessionDetails'])]
   private $updated;
 
   #[ORM\Column(type: 'string', length: 255, nullable: true)]
+  #[Groups(['session', 'sessionDetails'])]
   private $user;
 
   #[ORM\OneToMany(targetEntity: AuthenticatedService::class, mappedBy: 'session', orphanRemoval: true, cascade: ['persist'], fetch: 'EAGER')]
+  #[Groups(['sessionDetails'])]
   private $authenticatedServices;
 
   #[ORM\Column(type: 'integer')]
+  #[Groups(['session', 'sessionDetails'])]
   private $expiration;
 
   #[ORM\Column(type: 'string', length: 255, nullable: true)]
+  #[Groups(['session', 'sessionDetails'])]
   private $remoteIp;
 
   public function __construct()

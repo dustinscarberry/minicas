@@ -6,10 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AuthenticatedServiceRepository;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: AuthenticatedServiceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class AuthenticatedService
+class AuthenticatedService implements JsonSerializable
 {
   #[ORM\Id]
   #[ORM\GeneratedValue]
@@ -173,5 +174,16 @@ class AuthenticatedService
       $this->updated = $updated;
 
       return $this;
+  }
+
+  public function jsonSerialize()
+  {
+    return [
+      'service' => $this->getService(),
+      'attributes' => $this->attributes,
+      'replyTo' => $this->replyTo,
+      'created' => $this->created,
+      'updated' => $this->updated
+    ];
   }
 }
