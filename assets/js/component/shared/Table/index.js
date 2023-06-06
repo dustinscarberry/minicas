@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 
-const Table = ({headers, data, searchable, sortable}) => {
+const Table = ({headers, data, searchable, sortable, noDataMessage}) => {
   const [search, setSearch] = useState('');
   const [sortColumn, setSortColumn] = useState(undefined);
   const [sortDirection, setSortDirection] = useState('desc');
@@ -104,6 +104,9 @@ const Table = ({headers, data, searchable, sortable}) => {
             })}
           </tr>
         })}
+        {(filteredAndSortedData == undefined || filteredAndSortedData.length == 0) && noDataMessage &&
+          <tr><td colSpan={headers.length} className="no-data-message">{noDataMessage}</td></tr>
+        }
       </tbody>
     </table>
   </div>

@@ -1,10 +1,10 @@
 import SessionService from './SessionService';
-import Loader from '../../shared/Loader';
+import InlineLoader from '../../shared/InlineLoader';
 
 const SessionServices = ({isOpen, sessionDetails}) => {
   if (!isOpen) return null;
 
-  if (!sessionDetails) return <Loader/>
+  if (!sessionDetails) return <InlineLoader/>
 
   return <div className="session-services">
     {sessionDetails.authenticatedServices.map((service, i) => {

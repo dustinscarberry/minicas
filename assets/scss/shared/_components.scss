@@ -9,6 +9,16 @@
   animation: sk-scaleout 1.0s infinite ease-in-out;
 }
 
+.loader-inline {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  background: #999;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
 @-webkit-keyframes sk-scaleout {
   0% { -webkit-transform: scale(0) }
   100% {
@@ -27,3 +37,154 @@
     opacity: 0;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// react table
+.react-table {
+
+  .table-toolbar {
+    padding: 1rem 0;
+    display: flex;
+  }
+
+  .search-box {
+    flex: 1;
+    text-align: right;
+
+    label {
+      margin-right: .5rem;
+    }
+
+    input[type=text] {
+      padding: .5rem;
+      border: 1px solid #eee;
+    }
+  }
+
+  th {
+    position: relative;
+  }
+
+  .sort-handle {
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+    color: #eee;
+    margin: 0;
+    background: none;
+    border: 0;
+
+    &::after {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      line-height: 1;
+      text-rendering: auto;
+      content: "\f0dc";
+    }
+
+    &.is-active {
+      color: #fff;
+    }
+
+    &.sort-asc::after {
+      content: "\f0de";
+    }
+
+    &.sort-desc::after {
+      content: "\f0dd";
+    }
+  }
+}
+
+// simple table
+.table-simple {
+  border-collapse: collapse;
+  width: 100%;
+
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 16px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #fff;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #f8f8f8;
+  }
+
+  tr:hover {
+    background-color: #ffd;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: #fff;
+  }
+
+  tr {
+    border: 1px solid #e5e5e5;
+  }
+
+  td {
+    border: 0;
+    
+    input[type=text],
+    input[type=number] {
+      padding: 0;
+      border: 0;
+      margin: 0;
+      display: inline-block;
+      background: transparent;
+    }
+
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    &.empty-cell {
+      background: repeating-linear-gradient(
+        45deg,
+        #bbb,
+        #bbb 10px,
+        #ccc 10px,
+        #ccc 20px
+      );
+    }
+  }
+}
+

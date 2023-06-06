@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import { isOk, formatTimestampToShortDateTime } from '../../../logic/utils';
+import { isOk, formatTimestampToNumbericDateTime } from '../../../logic/utils';
 import { fetchSessions, deleteSession } from './logic';
 import Table from '../../shared/Table';
 import Loader from '../../shared/Loader';
@@ -51,20 +51,19 @@ const SessionViewer = (props) => {
             sortValue: line.user
           },
           {
-            value: line.created ? formatTimestampToShortDateTime(line.created) : '',
+            value: line.created ? formatTimestampToNumbericDateTime(line.created) : '',
             sortValue: line.created
           },
           {
-            value: line.expiration ? formatTimestampToShortDateTime(line.expiration) : '',
+            value: line.expiration ? formatTimestampToNumbericDateTime(line.expiration) : '',
             sortValue: line.expiration
           },
           {
             value: <button
-              className="btn btn-error pull-right btn-delete"
+              className="icon-btn icon-btn-delete fa-solid fa-trash-can"
               onClick={() => handleDeleteSession(line.id)}
-            >
-              Delete
-            </button>
+              title="Delete"
+            ></button>
           }
         ],
         metaData: line
@@ -108,6 +107,7 @@ const SessionViewer = (props) => {
               data={tableData.data}
               searchable={true}
               sortable={true}
+              noDataMessage="No current active user sessions"
             />
           </div>
         </div>
