@@ -20,7 +20,7 @@ class SessionApiController extends ApiController
     AppConfig $appConfig
   ) {
     $service = $req->query->get('service');
-    $timeInterval = $req->query->get('timeInterval');
+    $timeInterval = $req->query->get('time_interval');
     $expired = $req->query->get('expired') || false;
 
     // get sessions

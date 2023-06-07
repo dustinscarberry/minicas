@@ -2,29 +2,6 @@
 
 {% block panel %}
 
-<div class="dashboard-subheader">
-  <div class="container-fluid container-fixed-lg">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="breadcrumb-container">
-          <span class="breadcrumb">Analytics</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="dashboard-panels">
-  <div class="container-fluid container-fixed-lg">
-    <div class="columns-2">
-      <div class="dashboard-panel-block">
-        <h3 class="dashboard-panel-header">Current Authenticated Services</h3>
-        <ul>
-          {% for service in authenticatedServiceStats %}
-            <li>{{ service.name ~ ' - ' ~ service.activeSessions }}
-          {% endfor %}
-        </ul>
-      </div>
-  </div>
-</div>
+  <div id="session-analytics-root"></div>
 
 {% endblock %}

@@ -82,7 +82,6 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
     }
 
     return $query->orderBy('a.expiration', 'DESC')
-      ->setMaxResults(1000)
       ->getQuery()
       ->getResult();
   }

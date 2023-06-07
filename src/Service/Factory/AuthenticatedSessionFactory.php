@@ -94,7 +94,11 @@ class AuthenticatedSessionFactory
         $timeOffset = 43200;
       else if ($timeInterval == '1day')
         $timeOffset = 86400;
-      
+      else if ($timeInterval == '3days')
+        $timeOffset = 259200;
+      else if ($timeInterval == '1week')
+        $timeOffset = 604800;
+
       if ($timeOffset)
         $startTimestamp = time() - $timeOffset;
     }
