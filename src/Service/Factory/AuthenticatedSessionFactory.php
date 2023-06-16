@@ -35,8 +35,7 @@ class AuthenticatedSessionFactory
   public function updateSessionUsername(
     AuthenticatedSession $authenticatedSession,
     string $username
-  )
-  {
+  ) {
     $authenticatedSession->setUser($username);
     $this->em->flush();
 
@@ -80,6 +79,7 @@ class AuthenticatedSessionFactory
       ->findByHashId($hashId);
   }
 
+  // return sessions filtered by time, service, and expired
   public function getSessionsFiltered($serviceHashId, $timeInterval, $expired = false, $hideIncompleteSessions)
   {
     $startTimestamp = null;
@@ -127,5 +127,42 @@ class AuthenticatedSessionFactory
     return $this->em
       ->getRepository(AuthenticatedSession::class)
       ->findAllNotExpired($maxSessions, $hideIncompleteSessions);
+  }
+
+  // get overall session analytics data
+  public function getOverallSessionAnalytics($timeInterval, $hideIncompleteSessions = true)
+  {
+    $startTimestamp = null;
+
+    if ($timeInterval) {
+      if ($timeInterval == '1hour')
+        $timeOffset = 3600;
+      else if ($timeInterval == '3hours')
+        $timeOffset = 10800;
+      else if ($timeInterval == '12hours')
+        $timeOffset = 43200;
+      else if ($timeInterval == '1day')
+        $timeOffset = 86400;
+      else if ($timeInterval == '3days')
+        $timeOffset = 259200;
+      else if ($timeInterval == '1week')
+        $timeOffset = 604800;
+
+      if ($timeOffset)
+        $startTimestamp = time() - $timeOffset;
+    }
+
+    $totalSessions = $this->em
+      ->getRepository(AuthenticatedSession::class)
+      ->countSessions($startTimestamp, $hideIncompleteSessions);
+
+    $uniqueUsers = $this->em
+      ->getRepository(AuthenticatedSession::class)
+      ->countUniqueUsers($startTimestamp, $hideIncompleteSessions);
+    
+    return [
+      'totalSessions' => $totalSessions,
+      'uniqueUsers' => $uniqueUsers
+    ];
   }
 }

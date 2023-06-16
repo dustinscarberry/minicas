@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { isOk } from '../../../logic/utils';
 import { fetchServiceAnalytics } from './logic';
-import Loader from '../../shared/Loader';
+import InlineLoader from '../../shared/InlineLoader';
 import SelectBox from '../../shared/SelectBox';
 
 const AuthenticatedServices = (props) => {
@@ -13,6 +13,7 @@ const AuthenticatedServices = (props) => {
   }, [authenticatedServicesInterval]);
 
   const loadServiceAnalytics = async () => {
+    setAuthenticatedServices(undefined);
     const rsp = await fetchServiceAnalytics(authenticatedServicesInterval);
 
     if (isOk(rsp))
@@ -22,8 +23,6 @@ const AuthenticatedServices = (props) => {
   const handleChangeInterval = (e) => {
     setAuthenticatedServicesInterval(e.target.value);
   }
-
-  if (!authenticatedServices) return <Loader/>
 
   return <div className="dashboard-panel-block">
     <div>
@@ -43,9 +42,14 @@ const AuthenticatedServices = (props) => {
     </div>
     <ul>
 
-      {authenticatedServices.map(service => {
-        return <li key={service.name}>{service.name} - {service.sessions}</li>
-      })}
+      {!authenticatedServices
+        ? <InlineLoader/>
+        : authenticatedServices.length > 0
+          ? authenticatedServices.map(service => {
+            return <li key={service.name}>{service.name} - {service.sessions}</li>
+          })
+          : <span>No authenticated services found</span>
+      }
 
     </ul>
   </div>

@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { isOk } from '../../../logic/utils';
 import { fetchOverallAnalytics } from './logic';
-import Loader from '../../shared/Loader';
+import InlineLoader from '../../shared/InlineLoader';
 import SelectBox from '../../shared/SelectBox';
 
 const OverallStatistics = (props) => {
   const [overallStatistics, setOverallStatistics] = useState();
-  const [timeInterval, setTimeInterval] = useState('1day');
+  const [timeInterval, setTimeInterval] = useState('1hour');
 
   useEffect(() => {
     loadOverallStatistics();
   }, [timeInterval]);
 
   const loadOverallStatistics = async () => {
+    setOverallStatistics(undefined);
     const rsp = await fetchOverallAnalytics(timeInterval);
 
     if (isOk(rsp))
@@ -23,8 +24,6 @@ const OverallStatistics = (props) => {
     setTimeInterval(e.target.value);
   }
 
-  //if (!overallStatistics) return <Loader/>
-
   return <div className="dashboard-panel-block">
     <h3 className="dashboard-panel-header">Overall Statistics</h3>
     <SelectBox
@@ -33,13 +32,22 @@ const OverallStatistics = (props) => {
         {key: '1hour', value: '1 Hour'},
         {key: '3hours', value: '3 Hours'},
         {key: '12hours', value: '12 Hours'},
-        {key: '1day', value: '1 Day'}
+        {key: '1day', value: '1 Day'},
+        {key: '3days', value: '3 Days'},
+        {key: '1week', value: '1 Week'}
       ]}
       onChange={handleChangeInterval}
     />
     <ul>
-      <li>Total Sessions - xxxx</li>
-      <li>Unique Users - xxxx</li>
+
+      {!overallStatistics
+        ? <InlineLoader/>
+        : <>
+          <li>Total Sessions - {overallStatistics.totalSessions}</li>
+          <li>Unique Users - {overallStatistics.uniqueUsers}</li>
+        </>
+      }
+ 
     </ul>
   </div>
 }

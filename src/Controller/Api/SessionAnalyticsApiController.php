@@ -48,6 +48,9 @@ class SessionAnalyticsApiController extends ApiController
       }
     }
 
+    // sort by most active services first
+    usort($serviceAnalytics, fn ($a, $b) => strcmp($b['sessions'], $a['sessions']));
+
     return $this->respond($serviceAnalytics);
   }
 
@@ -58,26 +61,8 @@ class SessionAnalyticsApiController extends ApiController
     AuthenticatedSessionFactory $authSessionFactory,
     AppConfig $appConfig
   ) {
-    // get sessions filtered by time
     $timeInterval = $req->query->get('time_interval');
-
-    // get sessions
-    $sessions = $authSessionFactory->getSessionsFiltered(
-      null,
-      $timeInterval,
-      true,
-      $appConfig->getHideIncompleteSessions()
-    );
-
-    $overallAnalytics = null;
-
-    // get total sessions for time period
-    // get uniquie users for time period
-    
-
-
-
-
+    $overallAnalytics = $authSessionFactory->getOverallSessionAnalytics($timeInterval, $appConfig->getHideIncompleteSessions());
 
     return $this->respond($overallAnalytics);
   }

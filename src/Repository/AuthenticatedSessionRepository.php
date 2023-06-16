@@ -64,6 +64,9 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
       ->getResult();
   }
 
+  /**
+    * @return AuthenticatedSession[] Returns array of AuthenticatedSession objects filtered by various criteria
+  */
   public function findAllFiltered($service, $timeOffset, bool $expired, bool $hideIncompleteSessions = false)
   {
     $query = $this->createQueryBuilder('a');
@@ -84,6 +87,48 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
     return $query->orderBy('a.expiration', 'DESC')
       ->getQuery()
       ->getResult();
+  }
+
+  /**
+    * @return Integer Returns count of AuthenticatedSession objects in time period
+  */
+  public function countSessions($timeOffset = '1hour', bool $hideIncompleteSessions = false)
+  {
+    $query = $this->createQueryBuilder('a');
+
+    $query->select('count(a.id) as count');
+    
+    if ($hideIncompleteSessions)
+      $query->andWhere('a.user is not null');
+
+    if ($timeOffset) {
+      $query->andWhere('a.created > :timeOffset');
+      $query->setParameter('timeOffset', $timeOffset);
+    }
+
+    return $query->getQuery()
+      ->getSingleScalarResult();
+  }
+
+  /**
+    * @return Integer Returns count of unique AuthenticatedSession users in time period
+  */
+  public function countUniqueUsers($timeOffset, bool $hideIncompleteSessions = false)
+  {
+    $query = $this->createQueryBuilder('a');
+
+    $query->select('count(distinct a.user) as count');
+    
+    if ($hideIncompleteSessions)
+      $query->andWhere('a.user is not null');
+
+    if ($timeOffset) {
+      $query->andWhere('a.created > :timeOffset');
+      $query->setParameter('timeOffset', $timeOffset);
+    }
+
+    return $query->getQuery()
+      ->getSingleScalarResult();
   }
 
   /**
