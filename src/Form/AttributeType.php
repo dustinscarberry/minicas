@@ -10,14 +10,14 @@ use App\Entity\Attribute;
 
 class AttributeType extends AbstractType
 {
-  public function buildForm(FormBuilderInterface $builder, array $options)
+  public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
       ->add('friendlyName', TextType::class)
       ->add('adAttribute', TextType::class);
   }
 
-  public function configureOptions(OptionsResolver $resolver)
+  public function configureOptions(OptionsResolver $resolver): void
   {
     $resolver->setDefaults([
       'data_class' => Attribute::class

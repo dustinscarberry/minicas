@@ -27,7 +27,7 @@ class ServiceProviderType extends AbstractType
     $this->serviceCategoryFactory = $serviceCategoryFactory;
   }
 
-  public function buildForm(FormBuilderInterface $builder, array $options)
+  public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
       ->add('enabled', CheckboxType::class, [
@@ -101,7 +101,7 @@ class ServiceProviderType extends AbstractType
       ]);
   }
 
-  public function configureOptions(OptionsResolver $resolver)
+  public function configureOptions(OptionsResolver $resolver): void
   {
     $resolver->setDefaults([
       'data_class' => ServiceProvider::class
