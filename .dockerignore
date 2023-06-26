@@ -16,3 +16,5 @@ var/cache/*
 var/log/*
 logs
 .env.local
+docker/logs/app/*
+docker/logs/server/*
