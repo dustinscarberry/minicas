@@ -49,7 +49,7 @@ class SessionAnalyticsApiController extends ApiController
     }
 
     // sort by most active services first
-    usort($serviceAnalytics, fn ($a, $b) => strcmp($b['sessions'], $a['sessions']));
+    usort($serviceAnalytics, fn ($a, $b) => $b['sessions'] > $a['sessions']);
 
     return $this->respond($serviceAnalytics);
   }
