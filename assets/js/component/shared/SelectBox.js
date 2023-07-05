@@ -17,7 +17,7 @@ SelectBox.defaultProps = {
   name: undefined,
   value: '',
   options: [],
-  inclueBlank: false,
+  includeBlank: false,
   onChange: undefined
 }
 

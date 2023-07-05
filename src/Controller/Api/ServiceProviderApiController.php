@@ -9,6 +9,15 @@ use App\Service\Factory\ServiceProviderFactory;
 
 class ServiceProviderApiController extends ApiController
 {
+
+  #[Route('/api/v1/serviceproviders', name: 'getServiceProviders', methods: ['GET'])]
+  #[IsGranted('ROLE_ADMIN')]
+  public function getServiceProviders(ServiceProviderFactory $serviceProviderFactory)
+  {
+    $serviceProviders = $serviceProviderFactory->getServiceProviders();
+    return $this->respond($serviceProviders);
+  }
+
   #[Route('/api/v1/serviceproviders/{hashId}', name: 'deleteServiceProvider', methods: ['DELETE'])]
   #[IsGranted('ROLE_ADMIN')]
   public function deleteServiceProvider(

@@ -4,6 +4,7 @@ namespace App\Service\Factory;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\AuthenticatedSession;
+use App\Service\Factory\ServiceProviderFactory;
 use App\Service\Generator\SAML2Generator;
 use App\Model\AppConfig;
 
@@ -11,11 +12,16 @@ class AuthenticatedSessionFactory
 {
   private $em;
   private $appConfig;
+  private $serviceProviderFactory;
 
-  public function __construct(EntityManagerInterface $em, AppConfig $appConfig)
-  {
+  public function __construct(
+    EntityManagerInterface $em,
+    AppConfig $appConfig,
+    ServiceProviderFactory $serviceProviderFactory
+  ) {
     $this->em = $em;
     $this->appConfig = $appConfig;
+    $this->serviceProviderFactory = $serviceProviderFactory;
   }
 
   public function createSession($remoteIp)
@@ -80,7 +86,7 @@ class AuthenticatedSessionFactory
   }
 
   // return sessions filtered by time, service, and expired
-  public function getSessionsFiltered($serviceHashId, $timeInterval, $expired = false, $hideIncompleteSessions)
+  public function getSessionsFiltered(?string $serviceHashId, ?string $user, ?string $timeInterval, bool $expired = false, bool $hideIncompleteSessions)
   {
     $startTimestamp = null;
     $service = null;
@@ -104,13 +110,12 @@ class AuthenticatedSessionFactory
     }
 
     if ($serviceHashId) {
-      // get service to check
-      $service = null;
+      $service = $this->serviceProviderFactory->getServiceProvider($serviceHashId); 
     }
 
     return $this->em
       ->getRepository(AuthenticatedSession::class)
-      ->findAllFiltered($service, $startTimestamp, $expired, true);
+      ->findAllFiltered($service, $user, $startTimestamp, $expired, true);
   }
   
   //returns a valid authenticated session if found or null if not

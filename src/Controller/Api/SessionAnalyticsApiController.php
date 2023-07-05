@@ -23,6 +23,7 @@ class SessionAnalyticsApiController extends ApiController
     // get sessions
     $sessions = $authSessionFactory->getSessionsFiltered(
       null,
+      null,
       $timeInterval,
       true,
       $appConfig->getHideIncompleteSessions()

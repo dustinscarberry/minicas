@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\AuthenticatedSession;
+use App\Entity\ServiceProvider;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,7 +68,7 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
   /**
     * @return AuthenticatedSession[] Returns array of AuthenticatedSession objects filtered by various criteria
   */
-  public function findAllFiltered($service, $timeOffset, bool $expired, bool $hideIncompleteSessions = false)
+  public function findAllFiltered(?ServiceProvider $service, ?string $user, ?int $timeOffset, bool $expired, bool $hideIncompleteSessions = false)
   {
     $query = $this->createQueryBuilder('a');
 
@@ -82,6 +83,18 @@ class AuthenticatedSessionRepository extends ServiceEntityRepository
     if ($timeOffset) {
       $query->andWhere('a.created > :timeOffset');
       $query->setParameter('timeOffset', $timeOffset);
+    }
+
+    if ($user) {
+      $query->andWhere('a.user = :user');
+      $query->setParameter('user', $user);
+    }
+
+    if ($service) {
+      $query->innerJoin('a.authenticatedServices', 'auth_s');
+      $query->innerJoin('auth_s.service', 's');
+      $query->andWhere('s = :service');
+      $query->setParameter('service', $service);
     }
 
     return $query->orderBy('a.expiration', 'DESC')
