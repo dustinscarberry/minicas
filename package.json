@@ -7,8 +7,8 @@
     },
     "packageManager": "yarn@3.2.4",
     "dependencies": {
-        "@babel/core": "^7.22.5",
-        "@babel/preset-env": "^7.22.5",
+        "@babel/core": "^7.22.6",
+        "@babel/preset-env": "^7.22.6",
         "@babel/preset-react": "^7.22.5",
         "@symfony/webpack-encore": "^4.3.0",
         "axios": "^1.4.0",
@@ -20,7 +20,7 @@
         "react-dom": "^18.2.0",
         "sass": "^1.63.6",
         "sass-loader": "^13.3.2",
-        "webpack": "^5.88.0",
+        "webpack": "^5.88.1",
         "webpack-cli": "^5.1.4",
         "webpack-notifier": "^1.15.0"
     }
