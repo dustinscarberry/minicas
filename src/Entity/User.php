@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column(type: 'integer')]
   private $updated;
 
-  #[ORM\Column]
+  #[ORM\Column(nullable: true)]
   private ?int $lastLogin = null;
 
   #[ORM\Column(nullable: true)]
