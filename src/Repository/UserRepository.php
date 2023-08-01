@@ -22,11 +22,23 @@ class UserRepository extends ServiceEntityRepository
     /**
       * @return User Returns a User object by hashId
     */
-    public function findByHashId($hashId)
+    public function findByHashId(string $hashId)
     {
       return $this->createQueryBuilder('u')
         ->andWhere('u.hashId = :hashId')
         ->setParameter('hashId', $hashId)
+        ->getQuery()
+        ->getOneOrNullResult();
+    }
+
+    /**
+      * @return User Returns a User object by username
+    */
+    public function findByUsername(string $username)
+    {
+      return $this->createQueryBuilder('u')
+        ->andWhere('u.username = :username')
+        ->setParameter('username', $username)
         ->getQuery()
         ->getOneOrNullResult();
     }

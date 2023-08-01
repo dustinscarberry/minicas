@@ -50,6 +50,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   #[ORM\Column(type: 'integer')]
   private $updated;
 
+  #[ORM\Column]
+  private ?int $lastLogin = null;
+
+  #[ORM\Column(nullable: true)]
+  private ?int $lastFailedLogin = null;
+
+  #[ORM\Column(nullable: true)]
+  private ?int $failedLoginCount = null;
+
   #[ORM\PrePersist]
   #[ORM\PreUpdate]
   public function updateTimestamps()
@@ -218,5 +227,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
   public function getFullName()
   {
     return $this->getFirstName() . ' ' . $this->getLastName();
+  }
+
+  public function getLastLogin(): ?int
+  {
+      return $this->lastLogin;
+  }
+
+  public function setLastLogin(int $lastLogin): static
+  {
+      $this->lastLogin = $lastLogin;
+
+      return $this;
+  }
+
+  public function getLastFailedLogin(): ?int
+  {
+      return $this->lastFailedLogin;
+  }
+
+  public function setLastFailedLogin(?int $lastFailedLogin): static
+  {
+      $this->lastFailedLogin = $lastFailedLogin;
+
+      return $this;
+  }
+
+  public function getFailedLoginCount(): ?int
+  {
+      return $this->failedLoginCount;
+  }
+
+  public function setFailedLoginCount(?int $failedLoginCount): static
+  {
+      $this->failedLoginCount = $failedLoginCount;
+
+      return $this;
   }
 }

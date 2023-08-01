@@ -16,3 +16,4 @@ services:
       - LDAP_ADMIN_USER=cn=Account,ou=Groups,dc=sample,dc=com
       - LDAP_ADMIN_PASSWORD=xxxxxxxxxxx
       - LDAP_SEARCH_BASE=dc=example,dc=com
+      - ACCOUNT_LOCKOUT_TIME_IN_MINUTES=5

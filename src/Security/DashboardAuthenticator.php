@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
@@ -15,16 +16,21 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
+use Symfony\Component\Security\Core\Security;
+use App\Service\Factory\UserFactory;
 
 class DashboardAuthenticator extends AbstractAuthenticator implements AuthenticationEntryPointInterface
 {
   use TargetPathTrait;
 
   private $router;
-
-  public function __construct(RouterInterface $router)
+  private $possibleUser;
+  private $userFactory;
+ 
+  public function __construct(RouterInterface $router, UserFactory $userFactory)
   {
     $this->router = $router;
+    $this->userFactory = $userFactory;
   }
 
   /**
@@ -61,6 +67,19 @@ class DashboardAuthenticator extends AbstractAuthenticator implements Authentica
       'csrf_token' => $request->request->get('_csrf_token')
     ];
 
+    $this->possibleUser = $this->userFactory->getUserByUsername($credentials['username']);
+
+    if ($this->possibleUser) {
+      // check if user is locked out
+      if (
+        $this->possibleUser->getFailedLoginCount() >= 3
+        && $this->possibleUser->getLastFailedLogin()
+        && $this->possibleUser->getLastFailedLogin() + ($_ENV['ACCOUNT_LOCKOUT_TIME_IN_MINUTES'] * 60) > time()
+      ) {
+        throw new LockedException('Account is locked out due to multiple invalid logins');
+      }  
+    }
+
     return new Passport(
       new UserBadge($credentials['username']),
       new PasswordCredentials($credentials['password']),
@@ -79,6 +98,11 @@ class DashboardAuthenticator extends AbstractAuthenticator implements Authentica
    */
   public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
   {
+    // update user last login timestamp
+    $this->possibleUser->setLastLogin(time());
+    $this->possibleUser->setFailedLoginCount(0);
+    $this->userFactory->updateUser($this->possibleUser);
+
     if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName))
       return new RedirectResponse($targetPath);
 
@@ -94,8 +118,21 @@ class DashboardAuthenticator extends AbstractAuthenticator implements Authentica
    * If you return null, the request will continue, but the user will
    * not be authenticated. This is probably not what you want to do.
    */
-  public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+  public function onAuthenticationFailure(Request $req, AuthenticationException $exception): ?Response
   {
+    if ($this->possibleUser) {
+      // update user failed login counters
+      $this->possibleUser->setLastFailedLogin(time());
+      $this->possibleUser->setFailedLoginCount(
+        $this->possibleUser->getFailedLoginCount() != null
+          ? $this->possibleUser->getFailedLoginCount() + 1
+          : 1
+      );
+      $this->userFactory->updateUser($this->possibleUser);
+    }
+
+    $req->getSession()->set(Security::AUTHENTICATION_ERROR, $exception->getPrevious() ? $exception->getPrevious() : $exception);
+    
     // return login page
     return new RedirectResponse($this->router->generate('dashboardLogin'));
   }

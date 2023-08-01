@@ -87,6 +87,19 @@ class UserFactory
       ->findByHashId($hashId);
   }
 
+   /**
+   * Fetch user by username
+   *
+   * @param string $username
+   * @return User|null
+   */
+  public function getUserByUsername(string $username): ?User
+  {
+    return $this->em
+      ->getRepository(User::class)
+      ->findByUsername($username);
+  }
+
   /**
    * Fetch all users
    *
